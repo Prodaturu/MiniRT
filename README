@@ -1,3 +1,3 @@
-#MiniRT
+# MiniRT
 
-##introduction to full of suprises world of race tracing
+## introduction to full of suprises world of race tracing
