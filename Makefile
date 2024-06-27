@@ -1,11 +1,12 @@
 .silent:
 
 NAME	:= miniRT
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g #-fsanitize=address
+CC		:= cc -fsanitize=address
+CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g
 LIBMLX	:= ./MLX42
 SRCS 	:= main.c 
 LIBFT	:= ./libft
-GNL 	:= ./get_next_line
+GNL 	:= ./gnl42
 # BONUS	:= bonus.c
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include
@@ -14,11 +15,10 @@ INCLUDE := -L $(LIBFT) -lft -L $(GNL) -lgnl
 OBJS	:= ${SRCS:.c=.o}
 # BOBJS	:= ${BONUS:.c=.o}
 
-all: libmlx $(NAME)
+all: $(NAME)
 
-libmlx:
-	@git clone https://github.com/codam-coding-college/MLX42.git 
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -sC $(LIBMLX)/build -j4
+# libmlx:
+# 	@git clone https://github.com/codam-coding-college/MLX42.git 
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
@@ -26,6 +26,7 @@ libmlx:
 $(NAME): $(OBJS)
 	@make -sC $(LIBFT)
 	@make -sC $(GNL)
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -sC $(LIBMLX)/build -j4
 	@$(CC) $(OBJS) $(LIBS) $(HEADERS) $(INCLUDE) -o $(NAME)
 
 bonus: $(NAME)
@@ -33,7 +34,7 @@ bonus: $(NAME)
 clean:
 	@rm -rf $(OBJS) $(BOBJS)
 	@cd $(LIBFT) && $(MAKE) clean
-	@rm -rf MLX42
+	@cd $(GNL) && $(MAKE) clean
 
 fclean: clean
 	@rm -rf $(NAME)

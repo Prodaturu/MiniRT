@@ -2,3 +2,9 @@
 	path = libft
 	url = https://github.com/trosinski08/libft.git
 
+[submodule "gnl42"]
+	path = gnl42
+	url = https://github.com/trosinski08/gnl42.git
+[submodule "MLX42"]
+	path = MLX42
+	url = https://github.com/codam-coding-college/MLX42.git
