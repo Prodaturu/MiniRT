@@ -26,3 +26,6 @@ secrets.yml
 
 # But keep the .gitignore file
 !/.gitignore
+
+# MLX ignored
+MLX42/
