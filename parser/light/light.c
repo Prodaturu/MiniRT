@@ -6,22 +6,13 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 23:59:14 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/30 17:30:21 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:25:37 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static void	print_struct(t_main_rt *main_rt)
-{
-	printf("main_rt->light->coord->x: %f\n", main_rt->light->coord->x);
-	printf("main_rt->light->coord->y: %f\n", main_rt->light->coord->y);
-	printf("main_rt->light->coord->z: %f\n", main_rt->light->coord->z);
-	printf("main_rt->light->color->r: %d\n", main_rt->light->color->r);
-	printf("main_rt->light->color->g: %d\n", main_rt->light->color->g);
-	printf("main_rt->light->color->b: %d\n", main_rt->light->color->b);
-	printf("main_rt->light->ratio: %f\n", main_rt->light->ratio);
-}
+static void	print_struct(t_main_rt *main_rt);
 
 int	parse_light(char *line, t_main_rt *main_rt)
 {
@@ -41,6 +32,19 @@ int	parse_light(char *line, t_main_rt *main_rt)
 		return (ft_putendl_fd("Error: wrong ratio", 2), 1);
 	light->color = parse_color(split[3]);
 	main_rt->light = light;
-	print_struct(main_rt);
 	return (0);
 }
+/*paste line below in line before return (0) in parse_light
+print_struct(main_rt);
+then uncoment function below
+*/
+/*static void	print_struct(t_main_rt *main_rt)
+{
+	printf("main_rt->light->coord->x: %f\n", main_rt->light->coord->x);
+	printf("main_rt->light->coord->y: %f\n", main_rt->light->coord->y);
+	printf("main_rt->light->coord->z: %f\n", main_rt->light->coord->z);
+	printf("main_rt->light->color->r: %d\n", main_rt->light->color->r);
+	printf("main_rt->light->color->g: %d\n", main_rt->light->color->g);
+	printf("main_rt->light->color->b: %d\n", main_rt->light->color->b);
+	printf("main_rt->light->ratio: %f\n", main_rt->light->ratio);
+}*/

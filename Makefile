@@ -13,7 +13,8 @@ SRCS 	:= main.c \
 			./parser/plane/plane.c \
 			./parser/sphere/sphere.c \
 			./parser/utils/ft_atod.c \
-			./parser/utils/parse_utils.c
+			./parser/utils/parse_utils.c \
+			./mlx/create_img.c
 LIBFT	:= ./libft
 GNL 	:= ./gnl42
 

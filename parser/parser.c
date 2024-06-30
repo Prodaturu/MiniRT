@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:31:08 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/30 00:54:01 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:32:43 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ int	parser(int fd, t_main_rt *main_rt)
 		else
 			return (ft_putendl_fd("Error: parsing error", 2), 1);
 	}
-	return (0);
+	close(fd);
+	return (free(line), 0);
 }

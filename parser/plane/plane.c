@@ -6,22 +6,22 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:08:42 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/30 18:31:21 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:27:04 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static void	print_struct(t_plane_rt *plane)
-{
-	printf("plane id: %d\n", plane->id);
-	printf("plane coord: %f %f %f\n", plane->coord->x, plane->coord->y, \
-		plane->coord->z);
-	printf("plane vector: %f %f %f\n", plane->vec->x, plane->vec->y, \
-		plane->vec->z);
-	printf("plane color: %d %d %d\n", plane->color->r, \
-		plane->color->g, plane->color->b);
-}
+// static void	print_struct(t_plane_rt *plane)
+// {
+// 	printf("plane id: %d\n", plane->id);
+// 	printf("plane coord: %f %f %f\n", plane->coord->x, plane->coord->y,
+// 		plane->coord->z);
+// 	printf("plane vector: %f %f %f\n", plane->vec->x, plane->vec->y,
+// 		plane->vec->z);
+// 	printf("plane color: %d %d %d\n", plane->color->r,
+// 		plane->color->g, plane->color->b);
+// }
 
 static t_plane_rt	*find_1st(t_plane_rt *plane)
 {
@@ -85,7 +85,7 @@ int	parse_plane(char *line, t_main_rt *main_rt)
 	plane->next = NULL;
 	plane->prev = NULL;
 	append_node(&plane, plane->id);
-	print_struct(plane);
 	main_rt->plane = find_1st(plane);
 	return (0);
 }
+	// print_struct(plane);

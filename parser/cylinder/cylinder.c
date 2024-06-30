@@ -6,24 +6,24 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:08:18 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/30 18:39:05 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:26:48 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static void	print_struct(t_cyl_rt *cyl)
-{
-	printf("Cylinder id: %d\n", cyl->id);
-	printf("Cylinder center: %f %f %f\n", cyl->center->x, cyl->center->y, \
-		cyl->center->z);
-	printf("Cylinder vector: %f %f %f\n", cyl->vec->x, cyl->vec->y, \
-		cyl->vec->z);
-	printf("Cylinder diameter: %f\n", cyl->diameter);
-	printf("Cylinder height: %f\n", cyl->height);
-	printf("Cylinder color: %d %d %d\n", cyl->color->r, \
-		cyl->color->g, cyl->color->b);
-}
+// static void	print_struct(t_cyl_rt *cyl)
+// {
+// 	printf("Cylinder id: %d\n", cyl->id);
+// 	printf("Cylinder center: %f %f %f\n", cyl->center->x,
+//	cyl->center->y,	cyl->center->z);
+// 	printf("Cylinder vector: %f %f %f\n", cyl->vec->x, cyl->vec->y,
+// 		cyl->vec->z);
+// 	printf("Cylinder diameter: %f\n", cyl->diameter);
+// 	printf("Cylinder height: %f\n", cyl->height);
+// 	printf("Cylinder color: %d %d %d\n", cyl->color->r,
+// 		cyl->color->g, cyl->color->b);
+// }
 
 static t_cyl_rt	*find_1st(t_cyl_rt *cyl)
 {
@@ -89,7 +89,7 @@ int	parse_cylinder(char *line, t_main_rt *main_rt)
 	cyl->next = NULL;
 	cyl->prev = NULL;
 	append_node(&cyl, cyl->id);
-	print_struct(cyl);
 	main_rt->cyl = find_1st(cyl);
 	return (0);
 }
+	// print_struct(cyl);

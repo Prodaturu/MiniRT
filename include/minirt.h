@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/30 18:40:05 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:29:31 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft/include/libft.h"
 # include "../gnl42/include/get_next_line.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -24,6 +25,8 @@
 # include <stdbool.h>
 
 # define PI 3.14159265358979323846
+# define WIDTH 1024
+# define HEIGHT 768
 
 typedef struct s_color_rt
 {
@@ -59,7 +62,6 @@ typedef struct s_amb_rt
 	t_color_rt		*color;
 }				t_amb_rt;
 
-
 typedef struct s_cam_rt
 {
 	t_pov_rt		*pov;
@@ -83,7 +85,6 @@ typedef struct s_sphere_rt
 	struct s_sphere_rt	*next;
 	struct s_sphere_rt	*prev;
 }				t_sphere_rt;
-
 
 typedef struct s_plane_rt
 {
@@ -109,8 +110,6 @@ typedef struct s_cyl_rt
 
 typedef struct s_main_rt
 {
-	int				res_x;
-	int				res_y;
 	int				fd;
 	int				amb_counter;
 	int				cam_counter;
@@ -118,6 +117,7 @@ typedef struct s_main_rt
 	int				sphere_counter;
 	int				plane_counter;
 	int				cyl_counter;
+	mlx_t			*mlx;
 	t_amb_rt		*amb;
 	t_cam_rt		*cam;
 	t_light_rt		*light;
@@ -126,7 +126,6 @@ typedef struct s_main_rt
 	t_cyl_rt		*cyl;
 	t_color_rt		*color;
 }				t_main_rt;
-
 
 //ambient
 int			parse_ambient(char *line, t_main_rt *main_rt);
@@ -143,11 +142,13 @@ int			parse_cylinder(char *line, t_main_rt *main_rt);
 //parser
 int			parse_line(char *line, t_main_rt *main_rt);
 int			parser(int fd, t_main_rt *main_rt);
+//parser/utils
 double		ft_atod(char *str);
 t_coord_rt	*parse_coord(char *str);
 t_pov_rt	*parse_pov(char *str);
 t_vec_rt	*parse_vec(char *str);
 t_color_rt	*parse_color(char *str);
 //mlx
-int			init_mlx(t_main_rt *main_rt);
+mlx_t		*create_image(t_main_rt *main_rt);
+
 #endif

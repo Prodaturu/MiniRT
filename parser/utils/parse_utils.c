@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:51:27 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/30 17:24:56 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/06/30 23:17:23 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,8 @@ t_pov_rt	*parse_pov(char *str)
 		return (ft_putendl_fd("Error: malloc error", 2), (void *)0);
 	pov_coord = ft_split(str, ',');
 	pov->x = ft_atod(pov_coord[0]);
-	printf("pov->x: %f\n", pov->x);
 	pov->y = ft_atod(pov_coord[1]);
-	printf("pov->y: %f\n", pov->y);
 	pov->z = ft_atod(pov_coord[2]);
-	printf("pov->z: %f\n", pov->z);
 	return (pov);
 }
 

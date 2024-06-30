@@ -6,21 +6,21 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:49:07 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/30 18:30:57 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:27:37 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static void	print_struct(t_sphere_rt *sphere)
-{
-	printf("Sphere id: %d\n", sphere->id);
-	printf("Sphere center: %f %f %f\n", sphere->center->x, sphere->center->y, \
-		sphere->center->z);
-	printf("Sphere diameter: %f\n", sphere->diameter);
-	printf("Sphere color: %d %d %d\n", sphere->color->r, \
-		sphere->color->g, sphere->color->b);
-}
+// static void	print_struct(t_sphere_rt *sphere)
+// {
+// 	printf("Sphere id: %d\n", sphere->id);
+// 	printf("Sphere center: %f %f %f\n", sphere->center->x, sphere->center->y,
+// 		sphere->center->z);
+// 	printf("Sphere diameter: %f\n", sphere->diameter);
+// 	printf("Sphere color: %d %d %d\n", sphere->color->r,
+// 		sphere->color->g, sphere->color->b);
+// }
 
 static t_sphere_rt	*find_1st(t_sphere_rt *sphere)
 {
@@ -84,8 +84,7 @@ int	parse_sphere(char *line, t_main_rt *main_rt)
 	sphere->next = NULL;
 	sphere->prev = NULL;
 	append_node(&sphere, sphere->id);
-	print_struct(sphere);
 	main_rt->sphere = find_1st(sphere);
 	return (0);
 }
-
+// print_struct(sphere);
