@@ -1,13 +1,20 @@
 .silent:
 
 NAME	:= miniRT
-CC		:= cc -fsanitize=address
+CC		:= cc 
 CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g
 LIBMLX	:= ./MLX42
-SRCS 	:= main.c 
+SRCS 	:= main.c \
+			./parser/parser.c \
+			./parser/ambient/ambient.c \
+			./parser/camera/camera.c \
+			./parser/light/light.c \
+			./parser/cylinder/cylinder.c \
+			./parser/plane/plane.c \
+			./parser/sphere/sphere.c \
+			./utils/ft_atod.c
 LIBFT	:= ./libft
 GNL 	:= ./gnl42
-# BONUS	:= bonus.c
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm 
@@ -16,9 +23,6 @@ OBJS	:= ${SRCS:.c=.o}
 # BOBJS	:= ${BONUS:.c=.o}
 
 all: $(NAME)
-
-# libmlx:
-# 	@git clone https://github.com/codam-coding-college/MLX42.git 
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
