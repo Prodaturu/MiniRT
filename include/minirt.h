@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/30 01:11:44 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/06/30 18:40:05 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,27 +76,36 @@ typedef struct s_light_rt
 
 typedef struct s_sphere_rt
 {
-	t_coord_rt		*center;
-	double			diameter;
-	t_color_rt		*color;
+	int					id;
+	double				diameter;
+	t_coord_rt			*center;
+	t_color_rt			*color;
+	struct s_sphere_rt	*next;
+	struct s_sphere_rt	*prev;
 }				t_sphere_rt;
 
 
 typedef struct s_plane_rt
 {
-	t_coord_rt		*coord;
-	t_vec_rt		*vec;
-	t_color_rt		*color;
+	int					id;
+	t_coord_rt			*coord;
+	t_vec_rt			*vec;
+	t_color_rt			*color;
+	struct s_plane_rt	*next;
+	struct s_plane_rt	*prev;
 }				t_plane_rt;
 
-typedef struct s_cylinder_rt
+typedef struct s_cyl_rt
 {
-	t_coord_rt		*center;
-	t_vec_rt		*vec;
+	int				id;
 	double			diameter;
 	double			height;
+	t_coord_rt		*center;
+	t_vec_rt		*vec;
 	t_color_rt		*color;
-}				t_cylinder_rt;
+	struct s_cyl_rt	*next;
+	struct s_cyl_rt	*prev;
+}				t_cyl_rt;
 
 typedef struct s_main_rt
 {
@@ -108,34 +117,37 @@ typedef struct s_main_rt
 	int				light_counter;
 	int				sphere_counter;
 	int				plane_counter;
-	int				cylinder_counter;
+	int				cyl_counter;
 	t_amb_rt		*amb;
 	t_cam_rt		*cam;
 	t_light_rt		*light;
 	t_sphere_rt		*sphere;
 	t_plane_rt		*plane;
-	t_cylinder_rt	*cylinder;
+	t_cyl_rt		*cyl;
 	t_color_rt		*color;
 }				t_main_rt;
 
 
 //ambient
-int		parse_ambient(char *line, t_main_rt *main_rt);
+int			parse_ambient(char *line, t_main_rt *main_rt);
 //camera
-int		parse_camera(char *line, t_main_rt *main_rt);
+int			parse_camera(char *line, t_main_rt *main_rt);
 //light
-int		parse_light(char *line, t_main_rt *main_rt);
+int			parse_light(char *line, t_main_rt *main_rt);
 //sphere
-int		parse_sphere(char *line, t_main_rt *main_rt);
+int			parse_sphere(char *line, t_main_rt *main_rt);
 //plane
-int		parse_plane(char *line, t_main_rt *main_rt);
+int			parse_plane(char *line, t_main_rt *main_rt);
 //cylinder
-int		parse_cylinder(char *line, t_main_rt *main_rt);
+int			parse_cylinder(char *line, t_main_rt *main_rt);
 //parser
-int		parse_line(char *line, t_main_rt *main_rt);
-int		parser(int fd, t_main_rt *main_rt);
+int			parse_line(char *line, t_main_rt *main_rt);
+int			parser(int fd, t_main_rt *main_rt);
+double		ft_atod(char *str);
+t_coord_rt	*parse_coord(char *str);
+t_pov_rt	*parse_pov(char *str);
+t_vec_rt	*parse_vec(char *str);
+t_color_rt	*parse_color(char *str);
 //mlx
-int		init_mlx(t_main_rt *main_rt);
-//utils
-double	ft_atod(char *str);
+int			init_mlx(t_main_rt *main_rt);
 #endif

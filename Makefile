@@ -12,7 +12,8 @@ SRCS 	:= main.c \
 			./parser/cylinder/cylinder.c \
 			./parser/plane/plane.c \
 			./parser/sphere/sphere.c \
-			./utils/ft_atod.c
+			./parser/utils/ft_atod.c \
+			./parser/utils/parse_utils.c
 LIBFT	:= ./libft
 GNL 	:= ./gnl42
 
