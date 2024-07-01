@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 23:08:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/01 02:05:03 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 02:45:47 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	color_image(mlx_image_t *img, t_main_rt *main_rt)
 	color_x = get_rgba(main_rt->amb->color->r, \
 		main_rt->amb->color->g, main_rt->amb->color->b, 0);
 	color_y = get_rgba(main_rt->light->color->r, \
-		main_rt->light->color->g, main_rt->light->color->b, 0);
+		main_rt->light->color->g, main_rt->light->color->b, 255);
 	while (x < WIDTH)
 	{
 		y = 0;
@@ -57,6 +57,8 @@ mlx_t	*create_image(t_main_rt *main_rt)
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	mlx_image_t	*string;
+	const char	*str;
 
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (!mlx)
@@ -66,6 +68,8 @@ mlx_t	*create_image(t_main_rt *main_rt)
 		return (ft_putendl_fd("Error: mlx image error", 2), (void *)0);
 	main_rt->mlx = mlx;
 	color_image(img, main_rt);
+	str = "HALLO\nJAGGY";
+	string = mlx_put_string(mlx, str, (WIDTH * 0.45), (HEIGHT / 2));
 	mlx_key_hook(mlx, &my_keyhook, NULL);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
