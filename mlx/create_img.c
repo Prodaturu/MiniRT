@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 23:08:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/01 00:30:01 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 02:05:03 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,32 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	}
 }
 
-void	color_image(mlx_image_t *img)
+int	get_rgba(int r, int g, int b, int a)
+{
+	return (r << 24 | g << 16 | b << 8 | a);
+}
+
+void	color_image(mlx_image_t *img, t_main_rt *main_rt)
 {
 	int	x;
 	int	y;
+	int	color_x;
+	int	color_y;
 
 	x = 0;
+	color_x = get_rgba(main_rt->amb->color->r, \
+		main_rt->amb->color->g, main_rt->amb->color->b, 0);
+	color_y = get_rgba(main_rt->light->color->r, \
+		main_rt->light->color->g, main_rt->light->color->b, 0);
 	while (x < WIDTH)
 	{
 		y = 0;
 		while (y < HEIGHT)
 		{
 			if (x % 2 == 0 || y % 2 == 0)
-				mlx_put_pixel(img, x, y, 0x00000000);
+				mlx_put_pixel(img, x, y, color_x);
 			else
-				mlx_put_pixel(img, x, y, 0xFFFFFFFF);
+				mlx_put_pixel(img, x, y, color_y);
 			y++;
 		}
 		x++;
@@ -54,7 +65,7 @@ mlx_t	*create_image(t_main_rt *main_rt)
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		return (ft_putendl_fd("Error: mlx image error", 2), (void *)0);
 	main_rt->mlx = mlx;
-	color_image(img);
+	color_image(img, main_rt);
 	mlx_key_hook(mlx, &my_keyhook, NULL);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);

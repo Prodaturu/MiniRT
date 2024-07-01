@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:51:27 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/30 23:17:23 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 01:54:59 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_color_rt	*parse_color(char *str)
 	color->r = ft_atoi(col[0]);
 	color->g = ft_atoi(col[1]);
 	color->b = ft_atoi(col[2]);
+	ft_free(col);
 	if (color->r < 0 || color->r > 255 || color->g < 0 || \
 		color->g > 255 || color->b < 0 || color->b > 255)
 		return (ft_putendl_fd("Error: wrong color", 2), (void *)0);
@@ -42,6 +43,7 @@ t_vec_rt	*parse_vec(char *str)
 	vec->x = ft_atod(vec_coord[0]);
 	vec->y = ft_atod(vec_coord[1]);
 	vec->z = ft_atod(vec_coord[2]);
+	ft_free(vec_coord);
 	if (vec->x < -1 || vec->x > 1 || vec->y < -1 || \
 		vec->y > 1 || vec->z < -1 || vec->z > 1)
 		return (ft_putendl_fd("Error: wrong vector coordinates", 2), (void *)0);
@@ -60,6 +62,7 @@ t_pov_rt	*parse_pov(char *str)
 	pov->x = ft_atod(pov_coord[0]);
 	pov->y = ft_atod(pov_coord[1]);
 	pov->z = ft_atod(pov_coord[2]);
+	ft_free(pov_coord);
 	return (pov);
 }
 
@@ -75,5 +78,6 @@ t_coord_rt	*parse_coord(char *str)
 	coord->x = ft_atod(coord_coord[0]);
 	coord->y = ft_atod(coord_coord[1]);
 	coord->z = ft_atod(coord_coord[2]);
+	ft_free(coord_coord);
 	return (coord);
 }

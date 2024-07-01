@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/01 00:29:31 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 01:39:15 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ t_coord_rt	*parse_coord(char *str);
 t_pov_rt	*parse_pov(char *str);
 t_vec_rt	*parse_vec(char *str);
 t_color_rt	*parse_color(char *str);
+void		ft_free_all(t_main_rt *main_rt);
+void		ft_free(char **str);
 //mlx
 mlx_t		*create_image(t_main_rt *main_rt);
 

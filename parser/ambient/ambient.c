@@ -6,19 +6,13 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:29:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/30 23:15:22 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/01 01:31:50 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-// static void	print_struct(t_amb_rt *amb)
-// {
-// 	printf("main_rt->amb->ratio: %f\n", amb->ratio);
-// 	printf("main_rt->amb->color->r: %d\n", amb->color->r);
-// 	printf("main_rt->amb->color->g: %d\n", amb->color->g);
-// 	printf("main_rt->amb->color->b: %d\n", amb->color->b);
-// }
+// static void	print_struct(t_amb_rt *amb);
 
 int	parse_ambient(char *line, t_main_rt *main_rt)
 {
@@ -39,6 +33,14 @@ int	parse_ambient(char *line, t_main_rt *main_rt)
 	if (amb->ratio < 0 || amb->ratio > 1)
 		return (ft_putendl_fd("Error: wrong ratio", 2), 1);
 	main_rt->amb = amb;
+	ft_free(split);
 	return (0);
 }
-	// print_struct(main_rt->amb);
+// print_struct(main_rt->amb);
+// static void	print_struct(t_amb_rt *amb)
+// {
+// 	printf("main_rt->amb->ratio: %f\n", amb->ratio);
+// 	printf("main_rt->amb->color->r: %d\n", amb->color->r);
+// 	printf("main_rt->amb->color->g: %d\n", amb->color->g);
+// 	printf("main_rt->amb->color->b: %d\n", amb->color->b);
+// }

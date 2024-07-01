@@ -14,6 +14,7 @@ SRCS 	:= main.c \
 			./parser/sphere/sphere.c \
 			./parser/utils/ft_atod.c \
 			./parser/utils/parse_utils.c \
+			./parser/utils/ft_free.c \
 			./mlx/create_img.c
 LIBFT	:= ./libft
 GNL 	:= ./gnl42
