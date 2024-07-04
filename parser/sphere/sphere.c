@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:49:07 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/01 01:49:30 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:20:35 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 static t_sphere_rt	*find_1st(t_sphere_rt *sphere);
 static t_sphere_rt	*find_last(t_sphere_rt *sphere);
 static void			append_node(t_sphere_rt **sphere, int id);
-
 
 int	parse_sphere(char *line, t_main_rt *main_rt)
 {

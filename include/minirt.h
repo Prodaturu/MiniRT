@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/01 01:39:15 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/04 00:28:51 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct s_light_rt
 	t_color_rt		*color;
 }				t_light_rt;
 
+// --- --- --- Geometry related structs --- --- --- //
+
 typedef struct s_sphere_rt
 {
 	int					id;
@@ -107,6 +109,8 @@ typedef struct s_cyl_rt
 	struct s_cyl_rt	*next;
 	struct s_cyl_rt	*prev;
 }				t_cyl_rt;
+
+// --- --- --- Main miniRT struct --- --- --- //
 
 typedef struct s_main_rt
 {

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atod.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:39:44 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/06/28 18:25:58 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/03 08:17:48 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
+
 
 bool	is_space(char c)
 {

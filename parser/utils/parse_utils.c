@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:51:27 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/01 01:54:59 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/04 01:42:07 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ t_vec_rt	*parse_vec(char *str)
 	if (vec->x < -1 || vec->x > 1 || vec->y < -1 || \
 		vec->y > 1 || vec->z < -1 || vec->z > 1)
 		return (ft_putendl_fd("Error: wrong vector coordinates", 2), (void *)0);
+	if ((vec->x * vec->x + vec->y * vec->y + vec->z * vec->z) > 1.05
+		|| (vec->x * vec->x + vec->y * vec->y + vec->z * vec->z) < 0.95)
+		return (ft_putendl_fd("Error: not a unit vector", 2), (void *)0);
 	return (vec);
 }
 

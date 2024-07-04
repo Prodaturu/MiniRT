@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/01 00:32:54 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/04 01:48:23 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ int	main(int argc, char **argv)
 		if (fd < 0)
 			return (ft_putendl_fd("Error: file not found", 2), 1);
 	}
-	if (!(parser(fd, main_rt)))
+	if (!parser(fd, main_rt))
 		mlx = create_image(main_rt);
+		// post_parsing(main_rt); 
 	else
 		return (ft_putendl_fd("Error: parsing error", 2), 1);
 	return (0);
 }
+
 // do_your_math(main_rt); // to do
 // free_rt(main_rt);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ambient.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:29:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/01 01:31:50 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:20:13 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	parse_ambient(char *line, t_main_rt *main_rt)
 	ft_free(split);
 	return (0);
 }
+
 // print_struct(main_rt->amb);
 // static void	print_struct(t_amb_rt *amb)
 // {
