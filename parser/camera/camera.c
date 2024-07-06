@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 20:15:33 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/01 01:32:32 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/06 23:14:52 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	parse_camera(char *line, t_main_rt *main_rt)
 	if (!cam)
 		return (ft_putendl_fd("Error: malloc error", 2), 1);
 	split = ft_split(line, ' ');
+	if (split[1] == NULL || split[2] == NULL || split[3] == NULL)
+		return (ft_putendl_fd("Error: not enough arguments", 2), 1);
 	if (split[4] != NULL)
-		return (ft_putendl_fd("Error: too tooo too many arguments", 2), 1);
+		return (ft_putendl_fd("Error: to many arguments", 2), 1);
 	main_rt->cam_counter++;
 	cam->pov = parse_pov(split[1]);
 	cam->vec = parse_vec(split[2]);

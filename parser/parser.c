@@ -3,17 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:31:08 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/03 22:47:11 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/07 01:22:24 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
 
+static int	syntax_checker(char *line)
+{
+	char	*temp;
+
+	temp = line;
+	while (*temp != '\0')
+	{
+		if (ft_strchr(VALID_SET, *temp))
+			temp++;
+		else
+			return (ft_putendl_fd("Error: invalid character", 2), 1);
+	}
+	return (0);
+}
+
 int	parse_line(char *line, t_main_rt *main_rt)
 {
+	if (syntax_checker(line))
+		return (1);
 	if (line[0] == 'A' && line[1] == ' ' && (main_rt->amb_counter < 1))
 		return (parse_ambient(line, main_rt));
 	else if (line[0] == 'C' && line[1] == ' ' && (main_rt->cam_counter < 1))
@@ -42,7 +59,7 @@ int	parser(int fd, t_main_rt *main_rt)
 		if (!(parse_line(line, main_rt)))
 			line = get_next_line(fd);
 		else
-			return (ft_putendl_fd("Error: parsing error", 2), 1);
+			return (1);
 	}
 	close(fd);
 	return (free(line), 0);
