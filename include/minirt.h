@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/07 01:07:34 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:15:18 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ typedef struct s_main_rt
 	int				plane_counter;
 	int				cyl_counter;
 	mlx_t			*mlx;
+	mlx_image_t		*img;
 	t_amb_rt		*amb;
 	t_cam_rt		*cam;
 	t_light_rt		*light;
@@ -156,6 +157,6 @@ t_color_rt	*parse_color(char *str);
 void		ft_free_all(t_main_rt *main_rt);
 void		ft_free(char **str);
 //mlx
-mlx_t		*create_image(t_main_rt *main_rt);
+mlx_t		*renderer(t_main_rt *main_rt);
 
 #endif

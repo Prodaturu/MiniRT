@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/07 01:35:44 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:15:18 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ void	main_rt_init(t_main_rt *main_rt)
 	main_rt->sphere_counter = 0;
 	main_rt->plane_counter = 0;
 	main_rt->cyl_counter = 0;
+	main_rt->img = NULL;
+	main_rt->amb = NULL;
+	main_rt->cam = NULL;
+	main_rt->light = NULL;
+	main_rt->sphere = NULL;
+	main_rt->plane = NULL;
+	main_rt->cyl = NULL;
+	main_rt->color = NULL;
 }
 
 t_main_rt	*open_and_init(int *fd, t_main_rt *main_rt, char **argv)
@@ -52,8 +60,7 @@ int	main(int argc, char **argv)
 	else
 		main_rt = open_and_init(&fd, main_rt, argv);
 	if (!parser(fd, main_rt))
-		mlx = create_image(main_rt);
-		// post_parsing(main_rt); 
+		mlx = renderer(main_rt);
 	else
 		return (ft_putendl_fd("Error: parsing error", 2), 1);
 	return (0);
