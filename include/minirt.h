@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/12 21:03:28 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/12 21:45:09 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft/include/libft.h"
 # include "../gnl42/include/get_next_line.h"
+# include "./render_structs.h"
 # include "../MLX42/include/MLX42/MLX42.h"
 # include <unistd.h>
 # include <stdlib.h>
@@ -29,12 +30,34 @@
 # define HEIGHT 768
 # define VALID_SET "ACLsplcy +-.0123456789,\n"
 
+# define RESET "\x1B[0m"
+# define RED "\x1B[31m"
+# define GREEN 0x00FF00
+# define BLUE 0x0000FF
+# define WHITE 0xFFFFFF
+
+/**
+ * @brief struct to store the scene data
+ * 
+ * @param sphere_count number of spheres in the scene
+ * @param plane_count number of planes in the scene
+ * @param cylinder_count number of cylinders in the scene
+ */
 typedef struct s_scene_rt
 {
 	int					sphere_count;
 	int					plane_count;
 	int					cylinder_count;
-}
+}			t_scene_rt;
+
+/**
+ * @brief main function to run the program
+ * 
+ * @param argc number of arguments
+ * @param argv arguments
+ * @return int 
+ */
+int	main(int argc, char**argv);
 
 #endif
 

@@ -6,17 +6,41 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/12 21:00:53 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/12 21:43:23 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minirt.h"
 
+void	arg_check(int argc, char **argv)
+{
+	char *file_type;
+
+	if (argc != 2)
+	{
+		ft_putendl_fd("Error: path to file expected", 2);
+		exit(1);
+	}
+	file_type = ft_strrchr(argv[1], '.');
+	if (!file_type || (ft_strncmp(file_type, ".rt", 3) != 0)
+		|| (ft_strlen(file_type) != 3))
+	{
+		ft_putendl_fd("Error: provide a .rt file", 2);
+		printf(RED "provided: %s file, use .rt file\n" RESET, file_type);
+		exit(1);
+	}
+}
+
 int	main(int argc, char**argv)
 {
-	t_scene_rt	scene;
-	t_world_rt	world;
-	t_cam_rt	cam;
+	// t_scene_rt	scene;
+	// t_world_rt	world;
+	// t_cam_rt	cam;
+	arg_check(argc, argv);
+	// parse_rt(argv[1], &scene);
+	// world_init(&world, &cam, &scene);
+	// renderer(&world, &cam, &scene);
+	return (0);
 }
 
 // void	main_rt_init(t_main_rt *main_rt)
