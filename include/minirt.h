@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/12 20:58:23 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/12 21:03:28 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@
 # define WIDTH 1024
 # define HEIGHT 768
 # define VALID_SET "ACLsplcy +-.0123456789,\n"
+
+typedef struct s_scene_rt
+{
+	int					sphere_count;
+	int					plane_count;
+	int					cylinder_count;
+}
 
 #endif
 

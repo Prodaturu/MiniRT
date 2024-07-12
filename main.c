@@ -6,11 +6,18 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/12 20:56:21 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/12 21:00:53 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "./include/minirt.h"
+#include "./include/minirt.h"
+
+int	main(int argc, char**argv)
+{
+	t_scene_rt	scene;
+	t_world_rt	world;
+	t_cam_rt	cam;
+}
 
 // void	main_rt_init(t_main_rt *main_rt)
 // {
