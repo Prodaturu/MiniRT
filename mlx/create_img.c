@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 23:08:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/11 18:18:32 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/12 07:10:07 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,40 @@ void	color_image(mlx_image_t *img, t_main_rt *main_rt)
 	}
 }
 
-mlx_t	*renderer(t_main_rt *main_rt)
+// mlx_t	*renderer(t_main_rt *main_rt)
+// {
+// 	mlx_t		*mlx;
+// 	mlx_image_t	*img;
+
+// 	main_rt->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
+// 	mlx = main_rt->mlx;
+// 	if (!mlx)
+// 		return (ft_putendl_fd("Error: mlx error", 2), (void *)0);
+// 	main_rt->img = mlx_new_image(mlx, WIDTH, HEIGHT);
+// 	img = main_rt->img;
+// 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
+// 		return (ft_putendl_fd("Error: mlx image error", 2), (void *)0);
+// 	create_images(mlx, img, main_rt);
+// 	mlx_key_hook(mlx, &my_keyhook, NULL);
+// 	mlx_loop(mlx);
+// 	mlx_terminate(mlx);
+// 	return (mlx);
+// }
+
+int	*renderer(t_main_rt *main_rt)
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 
-	main_rt->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
-	mlx = main_rt->mlx;
+	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (!mlx)
 		return (ft_putendl_fd("Error: mlx error", 2), (void *)0);
-	main_rt->img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	img = main_rt->img;
-	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
+	img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	if (!img)
 		return (ft_putendl_fd("Error: mlx image error", 2), (void *)0);
-	create_images(mlx, img, main_rt);
-	mlx_key_hook(mlx, &my_keyhook, NULL);
+	mlx_image_to_window(mlx, img, 0, 0);
+	color_image(img, main_rt);
+	mlx_key_hook(mlx, &on_keypress, NULL);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
-	return (mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/11 18:47:00 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/12 07:05:34 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,8 +226,8 @@ typedef struct s_main_rt
 	int				cyl_counter;
 	int				num_windows;
 	mlx_t			**windows;
-	// mlx_t			*mlx;
-	// mlx_image_t		*img;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
 	t_amb_rt		*amb;
 	t_cam_rt		*cam;
 	t_light_rt		*light;
