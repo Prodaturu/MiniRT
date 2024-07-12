@@ -3,89 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:08:18 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/01 01:37:02 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/12 20:57:08 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static void		append_node(t_cyl_rt **cyl, int id);
-static t_cyl_rt	*find_last(t_cyl_rt *cyl);
-static t_cyl_rt	*find_1st(t_cyl_rt *cyl);
-int				parse_cylinder(char *line, t_main_rt *main_rt);
-// static void	print_struct(t_cyl_rt *cyl);
+// static void		append_node(t_cyl_rt **cyl, int id);
+// static t_cyl_rt	*find_last(t_cyl_rt *cyl);
+// static t_cyl_rt	*find_1st(t_cyl_rt *cyl);
+// int				parse_cylinder(char *line, t_main_rt *main_rt);
+// // static void	print_struct(t_cyl_rt *cyl);
 
-int	parse_cylinder(char *line, t_main_rt *main_rt)
-{
-	t_cyl_rt	*cyl;
-	char		**split;
+// int	parse_cylinder(char *line, t_main_rt *main_rt)
+// {
+// 	t_cyl_rt	*cyl;
+// 	char		**split;
 
-	cyl = (t_cyl_rt *)malloc(sizeof(t_cyl_rt));
-	if (!cyl)
-		return (ft_putendl_fd("Error: malloc error", 2), 1);
-	cyl->id = main_rt->cyl_counter;
-	main_rt->cyl_counter++;
-	split = ft_split(line, ' ');
-	if (split[6] != NULL)
-		return (ft_putendl_fd("Error: too many arguments", 2), 1);
-	cyl->center = parse_coord(split[1]);
-	cyl->vec = parse_vec(split[2]);
-	cyl->diameter = ft_atod(split[3]);
-	cyl->height = ft_atod(split[4]);
-	cyl->color = parse_color(split[5]);
-	cyl->next = NULL;
-	cyl->prev = NULL;
-	append_node(&cyl, cyl->id);
-	main_rt->cyl = find_1st(cyl);
-	ft_free(split);
-	return (0);
-}
+// 	cyl = (t_cyl_rt *)malloc(sizeof(t_cyl_rt));
+// 	if (!cyl)
+// 		return (ft_putendl_fd("Error: malloc error", 2), 1);
+// 	cyl->id = main_rt->cyl_counter;
+// 	main_rt->cyl_counter++;
+// 	split = ft_split(line, ' ');
+// 	if (split[6] != NULL)
+// 		return (ft_putendl_fd("Error: too many arguments", 2), 1);
+// 	cyl->center = parse_coord(split[1]);
+// 	cyl->vec = parse_vec(split[2]);
+// 	cyl->diameter = ft_atod(split[3]);
+// 	cyl->height = ft_atod(split[4]);
+// 	cyl->color = parse_color(split[5]);
+// 	cyl->next = NULL;
+// 	cyl->prev = NULL;
+// 	append_node(&cyl, cyl->id);
+// 	main_rt->cyl = find_1st(cyl);
+// 	ft_free(split);
+// 	return (0);
+// }
 
-static t_cyl_rt	*find_1st(t_cyl_rt *cyl)
-{
-	if (NULL == cyl)
-		return (NULL);
-	while (cyl->prev)
-		cyl = cyl->prev;
-	return (cyl);
-}
+// static t_cyl_rt	*find_1st(t_cyl_rt *cyl)
+// {
+// 	if (NULL == cyl)
+// 		return (NULL);
+// 	while (cyl->prev)
+// 		cyl = cyl->prev;
+// 	return (cyl);
+// }
 
-static t_cyl_rt	*find_last(t_cyl_rt *cyl)
-{
-	if (NULL == cyl)
-		return (NULL);
-	while (cyl->next)
-		cyl = cyl->next;
-	return (cyl);
-}
+// static t_cyl_rt	*find_last(t_cyl_rt *cyl)
+// {
+// 	if (NULL == cyl)
+// 		return (NULL);
+// 	while (cyl->next)
+// 		cyl = cyl->next;
+// 	return (cyl);
+// }
 
-static void	append_node(t_cyl_rt **cyl, int id)
-{
-	t_cyl_rt	*node;
-	t_cyl_rt	*last_node;
+// static void	append_node(t_cyl_rt **cyl, int id)
+// {
+// 	t_cyl_rt	*node;
+// 	t_cyl_rt	*last_node;
 
-	if (NULL == cyl)
-		return ;
-	node = malloc(sizeof(t_cyl_rt));
-	if (NULL == node)
-		return ;
-	node->next = NULL;
-	node->id = id;
-	if (NULL == *cyl)
-	{
-		*cyl = node;
-		node->prev = NULL;
-	}
-	else
-	{
-		last_node = find_last(*cyl);
-		last_node->next = node;
-		node->prev = last_node;
-	}
-}
+// 	if (NULL == cyl)
+// 		return ;
+// 	node = malloc(sizeof(t_cyl_rt));
+// 	if (NULL == node)
+// 		return ;
+// 	node->next = NULL;
+// 	node->id = id;
+// 	if (NULL == *cyl)
+// 	{
+// 		*cyl = node;
+// 		node->prev = NULL;
+// 	}
+// 	else
+// 	{
+// 		last_node = find_last(*cyl);
+// 		last_node->next = node;
+// 		node->prev = last_node;
+// 	}
+// }
 
 // print_struct(cyl);
 // line above should be pasted before return (0) in parse_cylinder

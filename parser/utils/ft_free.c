@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 01:23:40 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/01 01:53:29 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/12 19:15:53 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_free_all(t_main_rt *main_rt)
 	if (main_rt->cam)
 	{
 		free(main_rt->cam->pov);
-		free(main_rt->cam->vec);
+		free(main_rt->cam->orient_vec);
 		free(main_rt->cam);
 	}
 	if (main_rt->light)
