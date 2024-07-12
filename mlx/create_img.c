@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 23:08:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/11 17:17:19 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:18:32 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,16 @@ mlx_t	*renderer(t_main_rt *main_rt)
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
-	mlx_image_t	*string;
-	const char	*str;
 
-	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
+	main_rt->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
+	mlx = main_rt->mlx;
 	if (!mlx)
 		return (ft_putendl_fd("Error: mlx error", 2), (void *)0);
-	img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	main_rt->img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	img = main_rt->img;
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		return (ft_putendl_fd("Error: mlx image error", 2), (void *)0);
-	main_rt->mlx = mlx;
-	main_rt->img = img;
-	create_images(mlx, img);
+	create_images(mlx, img, main_rt);
 	mlx_key_hook(mlx, &my_keyhook, NULL);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);

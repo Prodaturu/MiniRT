@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/11 17:15:18 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:47:00 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ typedef struct s_color_rt
 	int				b;
 }				t_color_rt;
 
+/**
+ * @brief s_pov_rt struct to store point of view coordinates
+ * 
+ * @param x point of view x coordinate
+ * @param y point of view y coordinate
+ * @param z point of view z coordinate
+ */
+
 typedef struct s_pov_rt
 {
 	double			x;
@@ -43,6 +51,13 @@ typedef struct s_pov_rt
 	double			z;
 }				t_pov_rt;
 
+/**
+ * @brief s_vec_rt struct to store object vectors
+ * 
+ * @param x vector component in x direction
+ * @param y vector component in y direction
+ * @param z vector component in z direction
+ */
 typedef struct s_vec_rt
 {
 	double			x;
@@ -50,6 +65,13 @@ typedef struct s_vec_rt
 	double			z;
 }				t_vec_rt;
 
+/**
+ * @brief s_coord_rt struct to store object coordinates
+ * 
+ * @param x x coordinate
+ * @param y y coordinate
+ * @param z z coordinate
+ */
 typedef struct s_coord_rt
 {
 	double			x;
@@ -57,11 +79,26 @@ typedef struct s_coord_rt
 	double			z;
 }				t_coord_rt;
 
+/**
+ * @brief s_amb_rt struct to store ambient light data
+ * 
+ * @param ratio ambient light ratio
+ * @param color pointer to ambient light color
+ */
+
 typedef struct s_amb_rt
 {
 	double			ratio;
 	t_color_rt		*color;
 }				t_amb_rt;
+
+/**
+ * @brief s_cam_rt struct to store camera data
+ * 
+ * @param pov pointer to point of view coordinates
+ * @param vec pointer to camera vector
+ * @param fov camera field of view
+ */
 
 typedef struct s_cam_rt
 {
@@ -69,6 +106,14 @@ typedef struct s_cam_rt
 	t_vec_rt		*vec;
 	double			fov;
 }				t_cam_rt;
+
+/**
+ * @brief s_light_rt struct to store light data
+ * 
+ * @param coord pointer to light coordinates
+ * @param ratio light ratio
+ * @param color pointer to light color
+ */
 
 typedef struct s_light_rt
 {
@@ -78,6 +123,17 @@ typedef struct s_light_rt
 }				t_light_rt;
 
 // --- --- --- Geometry related structs --- --- --- //
+
+/**
+ * @brief s_sphere_rt struct to store sphere data
+ * 
+ * @param id sphere id
+ * @param diameter sphere diameter
+ * @param center pointer to sphere center coordinates
+ * @param color pointer to sphere color
+ * @param next pointer to next sphere
+ * @param prev pointer to previous sphere
+ */
 
 typedef struct s_sphere_rt
 {
@@ -89,6 +145,17 @@ typedef struct s_sphere_rt
 	struct s_sphere_rt	*prev;
 }				t_sphere_rt;
 
+/**
+ * @brief s_plane_rt struct to store plane data
+ * 
+ * @param id plane id
+ * @param coord pointer to plane coordinates
+ * @param vec pointer to plane vector
+ * @param color pointer to plane color
+ * @param next pointer to next plane
+ * @param prev pointer to previous plane
+ */
+
 typedef struct s_plane_rt
 {
 	int					id;
@@ -98,6 +165,20 @@ typedef struct s_plane_rt
 	struct s_plane_rt	*next;
 	struct s_plane_rt	*prev;
 }				t_plane_rt;
+
+/**W 
+ * 
+ * @brief s_cyl_rt struct to store cylinder data
+ * 
+ * @param id cylinder id
+ * @param diameter cylinder diameter
+ * @param height cylinder height
+ * @param center pointer to cylinder center coordinates
+ * @param vec pointer to cylinder vector
+ * @param color pointer to cylinder color
+ * @param next pointer to next cylinder
+ * @param prev pointer to previous cylinder
+ */
 
 typedef struct s_cyl_rt
 {
@@ -113,6 +194,27 @@ typedef struct s_cyl_rt
 
 // --- --- --- Main miniRT struct --- --- --- //
 
+/**
+ * @brief s_main_rt struct to store main miniRT data
+ * 
+ * @param fd file descriptor
+ * @param amb_counter ambient light counter
+ * @param cam_counter camera counter
+ * @param light_counter light counter
+ * @param sphere_counter sphere counter
+ * @param plane_counter plane counter
+ * @param cyl_counter cylinder counter
+ * @param num_windows number of windows
+ * @param windows pointer to windows
+ * @param amb pointer to ambient light
+ * @param cam pointer to camera
+ * @param light pointer to light
+ * @param sphere pointer to sphere
+ * @param plane pointer to plane
+ * @param cyl pointer to cylinder
+ * @param color pointer to color
+ */
+
 typedef struct s_main_rt
 {
 	int				fd;
@@ -122,8 +224,10 @@ typedef struct s_main_rt
 	int				sphere_counter;
 	int				plane_counter;
 	int				cyl_counter;
-	mlx_t			*mlx;
-	mlx_image_t		*img;
+	int				num_windows;
+	mlx_t			**windows;
+	// mlx_t			*mlx;
+	// mlx_image_t		*img;
 	t_amb_rt		*amb;
 	t_cam_rt		*cam;
 	t_light_rt		*light;
