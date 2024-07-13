@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/13 19:06:26 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/13 20:59:22 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../gnl42/include/get_next_line.h"
 # include "./render_structs.h"
 # include "../MLX42/include/MLX42/MLX42.h"
+# include "./garbage_collector.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>

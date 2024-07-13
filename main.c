@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/13 18:16:44 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/13 20:59:31 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,12 @@ void	syntax_checker(int argc, char **argv)
 int	main(int argc, char**argv)
 {
 	t_scene_rt	scene;
+	t_garbage	*garb_col;
 	t_world_rt	world;
 	t_cam_rt	cam;
 
 	syntax_checker(argc, argv);
+	// garb_col = garbage_collector_init();
 	parse_rt(argv[1], &scene);
 	// world_init(&world, &cam, &scene);
 	// renderer(&world, &cam, &scene);
