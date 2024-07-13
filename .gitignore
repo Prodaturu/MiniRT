@@ -24,8 +24,16 @@ secrets.yml
 # Ignore all hidden files
 .*
 
-# But keep the .gitignore file
+# Ignore all .o files
+*.o
+
+# But keep the .gitignore file (remove "!" for final push to school)
 !/.gitignore
 
 # MLX ignored
 MLX42/
+
+# ignore compiled files
+miniRT
+gnl42
+libft

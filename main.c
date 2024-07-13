@@ -6,15 +6,30 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/12 21:43:23 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/13 18:16:44 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minirt.h"
 
-void	arg_check(int argc, char **argv)
+// static int	syntax_checker(char *line)
+// {
+// 	char	*temp;
+
+// 	temp = line;
+// 	while (*temp != '\0')
+// 	{
+// 		if (ft_strchr(VALID_SET, *temp))
+// 			temp++;
+// 		else
+// 			return (ft_putendl_fd("Error: invalid character", 2), 1);
+// 	}
+// 	return (0);
+// }
+
+void	syntax_checker(int argc, char **argv)
 {
-	char *file_type;
+	char	*file_type;
 
 	if (argc != 2)
 	{
@@ -29,15 +44,18 @@ void	arg_check(int argc, char **argv)
 		printf(RED "provided: %s file, use .rt file\n" RESET, file_type);
 		exit(1);
 	}
+	if (DEBUG)
+		printf(GREEN "File type is: %s\n" RESET, file_type);
 }
 
 int	main(int argc, char**argv)
 {
-	// t_scene_rt	scene;
-	// t_world_rt	world;
-	// t_cam_rt	cam;
-	arg_check(argc, argv);
-	// parse_rt(argv[1], &scene);
+	t_scene_rt	scene;
+	t_world_rt	world;
+	t_cam_rt	cam;
+
+	syntax_checker(argc, argv);
+	parse_rt(argv[1], &scene);
 	// world_init(&world, &cam, &scene);
 	// renderer(&world, &cam, &scene);
 	return (0);
@@ -61,30 +79,21 @@ int	main(int argc, char**argv)
 // 	main_rt->color = NULL;
 // }
 
-// t_main_rt	*open_and_init(int *fd, t_main_rt *main_rt, char **argv)
+// t_main_rt *open_and_init
+// (int *fd, t_main_rt *main_rt, char **argv)
 // {
 // 	*fd = open(argv[1], O_RDONLY);
 // 	main_rt = (t_main_rt *)malloc(sizeof(t_main_rt));
 // 	if (!main_rt)
-// 		return (ft_putendl_fd("Error: malloc error", 2), close(*fd), \
+// 		return (ft_putendl_fd("Error: malloc error", 2),
+//  close(*fd), \
 // 		(void *)0);
 // 	if (*fd >= 0)
 // 		main_rt_init(main_rt);
 // 	else
 // 		return (ft_putendl_fd("Error: file not found", 2), \
-// 		free(main_rt), (void *)0);
+// 	free(main_rt), (void *)0);
 // 	return (main_rt);
-// }
-
-// int	argument_check(int argc, char **argv, t_main_rt *main_rt, int *fd)
-// {
-// 	if (argc != 2)
-// 		return (ft_putendl_fd("Error: path to file expected", 2), 1);
-// 	else if (ft_strncmp(ft_strrchr(argv[1], '.'), ".rt", 3))
-// 		return (ft_putendl_fd("Error: provide .rt file", 2), 1);
-// 	else
-// 		main_rt = open_and_init(fd, main_rt, argv);
-// 	return (0);
 // }
 
 // int	main(int argc, char **argv)

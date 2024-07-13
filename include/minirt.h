@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/12 21:45:09 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/13 19:06:26 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,23 @@
 # include <math.h>
 # include <stdbool.h>
 
+# define DEBUG 1
+// # define DEBUG 0 // uncomment this line to disable debug mode
+
 # define PI 3.14159265358979323846
 # define WIDTH 1024
 # define HEIGHT 768
+
 # define VALID_SET "ACLsplcy +-.0123456789,\n"
 
 # define RESET "\x1B[0m"
 # define RED "\x1B[31m"
-# define GREEN 0x00FF00
-# define BLUE 0x0000FF
-# define WHITE 0xFFFFFF
+# define GREEN "\x1B[32m"
+# define YELLOW "\x1B[33m"
+# define BLUE "\x1B[34m"
+# define MAGENTA "\x1B[35m"
+# define CYAN "\x1B[36m"
+# define WHITE "\x1B[37m"
 
 /**
  * @brief struct to store the scene data
@@ -50,14 +57,45 @@ typedef struct s_scene_rt
 	int					cylinder_count;
 }			t_scene_rt;
 
+// --- --- --- main.c --- --- --- //
+
 /**
  * @brief main function to run the program
  * 
  * @param argc number of arguments
  * @param argv arguments
  * @return int 
+ * 
+ * @details Main function to run the program
+ * checks the syntax of the input file,
+ * parses the objects in the scene,
+ * updates the scene struct
+ * draws the scene using the mlx library
+ * and returns 0 if successful
+ * and 1 if there is an error anywhere during execution
  */
-int	main(int argc, char**argv);
+int				main(int argc, char**argv);
+
+/**
+ * @brief function to check the syntax of the input file
+ * 
+ * @param argc number of arguments
+ * @param argv arguments
+ */
+void			syntax_checker(int argc, char **argv);
+
+// --- --- --- parser.c --- --- --- //
+
+/**
+ * @brief function to parse the objects in the scene
+ * 
+ * @param file_name name of the file to parse
+ * @param scene pointer to the scene struct
+ * 
+ * @details This function will parse the objects
+ * in the scene and update the scene struct
+ */
+int				parser(char	*file_name, t_scene_rt *scene);
 
 #endif
 
