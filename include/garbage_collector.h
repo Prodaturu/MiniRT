@@ -6,13 +6,14 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 20:40:33 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/13 23:30:50 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/14 01:00:38 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GARBAGE_COLLECTOR_H
 # define GARBAGE_COLLECTOR_H
 
+# include "../libft/include/libft.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdbool.h>

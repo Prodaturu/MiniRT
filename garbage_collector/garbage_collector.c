@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 20:37:37 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/14 00:32:44 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/14 00:58:01 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,13 @@ void	add_to_garb_col(t_garbage *garb_col, void *ptr)
 		new_node->next = NULL;
 		garb_col->head = new_node;
 		garb_col->tail = new_node;
+		return ;
 	}
-	else
-	{
-		new_node->prev = garb_col->tail;
-		new_node->next = NULL;
-		garb_col->tail->next = new_node;
-		garb_col->tail = new_node;
-		garb_col->length++;
-	}
+	new_node->prev = garb_col->tail;
+	new_node->next = NULL;
+	garb_col->tail->next = new_node;
+	garb_col->tail = new_node;
+	garb_col->length++;
 	return ;
 }
 
@@ -69,15 +67,17 @@ int	display_allocations(t_garbage *garb_col)
 	t_garb_node	*current;
 	int			i;
 
+	i = -1;
 	current = garb_col->head;
 	printf("Current allocations:\n");
 	while (current)
 	{
-		printf("the pointer at indexed %d points to : \"%p\"\n",
-			current->ptr_data);
-		current = current->next;
 		i++;
+		printf("the pointer at indexed %d points to : \"%p\"\n",
+			i, current->ptr_data);
+		current = current->next;
 	}
+	return (i);
 }
 
 t_garbage	*garbage_collector_init(void)

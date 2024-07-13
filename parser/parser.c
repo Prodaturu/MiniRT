@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:31:08 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/13 19:27:26 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/14 01:00:58 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,32 @@ int	err_msg(char *msg, int ret)
 // {
 // }
 
-int	parser(char	*file_name, t_scene_rt *scene)
-{
-	char		*line_read;
-	int			fd;
+// int	parser(char	*file_name, t_scene_rt *scene)
+// {
+// 	char		*line_read;
+// 	int			fd;
 
-	// if (!parse_objects(scene))
-	// 	return (err_msg("Error: failed to parse objects", 1));
-	fd = open(file_name, O_RDONLY);
-	if (fd < 0)
-		return (err_msg("Error: failed to open file", 1));
-	line_read = get_next_line(fd);
-	while (line_read)
-	{
-		line_read = get_next_line(fd);
-		if (line_read && line_read[0] != '\n')
-		{
-			if (line_read[ft_strlen(line_read) - 1] == '\n')
-				line_read[ft_strlen(line_read) - 1] = '\0';
-			// element_in(line_read, scene);
-		}
-	}
-	// if (parse_check(scene))
-	// 	return (err_msg("Error: failed to parse objects", 1));
-	// else
-	return (close(fd), 0);
-}
+// 	// if (!parse_objects(scene))
+// 	// 	return (err_msg("Error: failed to parse objects", 1));
+// 	fd = open(file_name, O_RDONLY);
+// 	if (fd < 0)
+// 		return (err_msg("Error: failed to open file", 1));
+// 	line_read = get_next_line(fd);
+// 	while (line_read)
+// 	{
+// 		line_read = get_next_line(fd);
+// 		if (line_read && line_read[0] != '\n')
+// 		{
+// 			if (line_read[ft_strlen(line_read) - 1] == '\n')
+// 				line_read[ft_strlen(line_read) - 1] = '\0';
+// 			// element_in(line_read, scene);
+// 		}
+// 	}
+// 	// if (parse_check(scene))
+// 	// 	return (err_msg("Error: failed to parse objects", 1));
+// 	// else
+// 	return (close(fd), 0);
+// }
 // int	parser(int fd, t_main_rt *main_rt)
 // {
 // 	char		*line;
