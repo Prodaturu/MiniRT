@@ -6,26 +6,11 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/14 00:46:32 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/14 06:55:52 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minirt.h"
-
-// static int	syntax_checker(char *line)
-// {
-// 	char	*temp;
-
-// 	temp = line;
-// 	while (*temp != '\0')
-// 	{
-// 		if (ft_strchr(VALID_SET, *temp))
-// 			temp++;
-// 		else
-// 			return (ft_putendl_fd("Error: invalid character", 2), 1);
-// 	}
-// 	return (0);
-// }
 
 void	syntax_checker(int argc, char **argv)
 {
@@ -48,19 +33,17 @@ void	syntax_checker(int argc, char **argv)
 		printf(GREEN "File type is: %s\n" RESET, file_type);
 }
 
-int	main(int argc, char**argv)
+int	main(int argc, char **argv)
 {
-	// t_scene_rt	scene;
-	// t_garbage	*garb_col;
-	// t_world_rt	world;
-	// t_cam_rt	cam;
+	t_garbage	*garb_col;
+	t_scene_rt	scene;
 
 	syntax_checker(argc, argv);
-	// garb_col = garbage_collector_init();
-	// parse_rt(argv[1], &scene);
-	// world_init(&world, &cam, &scene);
-	// renderer(&world, &cam, &scene);
-	return (0);
+	garb_col = garbage_collector_init();
+	parse_rt(garb_col, argv[1], &scene);
+// 	world_init(&world, &cam, &scene);
+// 	renderer(&world, &cam, &scene);
+// 	return (0);
 }
 
 // void	main_rt_init(t_main_rt *main_rt)

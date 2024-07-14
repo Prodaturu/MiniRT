@@ -6,11 +6,49 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:31:08 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/14 01:00:58 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/14 06:54:49 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
+
+int	err_msg(t_garbage *garb_col, int ex_flag, char *msg, int ret)
+{
+	if (!msg)
+		return (ret);
+	printf("%s\n", msg);
+	garbage_collector_free(garb_col);
+	exit(ret);
+	return (ret);
+}
+
+void	parse_rt(t_garbage *garb_col, char *file_name, t_scene_rt *scene)
+{
+	int		*fd;
+	char	*line_read;
+
+	// if (!garb_col || !file_name || !scene)
+	// 	err_msg(garb_col, 1, "Error: invalid arguments", 1);
+	if (!init_scene_struct(scene))
+		err_msg(garb_col, 1, "Error: failed to initialize scene", 1);
+	fd = open(file_name, O_RDONLY);
+	if (fd < 0)
+		err_msg(garb_col, 1, "Error: failed to open file", 1);
+	while (line_read)
+	{
+		line_read = get_next_line(fd);
+		add_garbage(garb_col, line_read);
+		if (line_read && line_read[0] != '\n')
+		{
+			if (line_read[ft_strlen(line_read) - 1] == '\n')
+				line_read[ft_strlen(line_read) - 1] = '\0';
+			// element_in(line_read, scene);
+		}
+	}
+	// if (!parse_check(scene))
+	// 	err_msg(garb_col, 1, "Error: Provide mandatory elements", 1);
+	close(fd);
+}
 
 // int	parse_line(char *line, t_main_rt *main_rt)
 // {
@@ -32,13 +70,6 @@
 // 		return (0);
 // }
 
-int	err_msg(char *msg, int ret)
-{
-	ft_putendl_fd(msg, 2);
-	if (ret)
-		exit(ret);
-	return (ret);
-}
 
 // int	parse_objects(t_scene_rt *scene)
 // {
