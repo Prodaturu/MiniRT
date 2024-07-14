@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 20:40:33 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/14 01:00:38 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/14 05:01:22 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,31 @@ typedef struct s_garbage
 	t_garb_node		*tail;
 }					t_garbage;
 
-//* --- --- --- garbage_collector.c --- --- --- *//
+//* --- --- --- garbage_remover.c --- --- --- *//
+
+/**
+ * @brief Removes a node from the garbage collector and assigns the
+ * node to NULL to avoid double free
+ * 
+ * @param node pointer to the node to be removed
+ * 
+ * @note Helper function for free_garbage function
+ */
+void			free_node(t_garb_node *node);
+
+/**
+ * @brief Frees all the allocations that were requested to be handled by
+ * the garbage collector.
+ * After deleting all the nodes, the function proceeds to free the pointer
+ * to the garbage collector itself, destroying the garbage collector.
+ * So this function should be called at the end of the program.
+ * 
+ * @param garb_col pointer to the garbage collector
+ * 
+ * @note Called at end of program. Frees all allocations from 
+ * garbage collector including the garbage collector itself
+ */
+void			free_garbage(t_garbage *garb_col);
 
 /**
  * @brief Frees a specific node / allocation from the garbage collector
@@ -65,6 +89,16 @@ typedef struct s_garbage
  */
 void			free_specific_alloc(t_garbage *garb_col, void *ptr);
 
+//* --- --- --- garbage_collector.c --- --- --- *//
+
+/**
+ * @brief Adds a new node that is to be handled by the garbage collector
+ * 
+ * @param garb_col pointer to the garbage collector instance
+ * @param ptr pointer to the data to be stored
+ */
+void			add_to_garb_col(t_garbage *garb_col, void *ptr);
+
 /**
  * @brief Displays all the allocations passed to the garbage 
  * collector in the order they were added
@@ -77,15 +111,15 @@ void			free_specific_alloc(t_garbage *garb_col, void *ptr);
 int				display_allocations(t_garbage *garb_col);
 
 /**
- * @brief Initializes the first node of the garbage collector
- * and adds the pointer to the garbage collector
+ * @brief Initializes garbage collector. This function needs to be called
+ * before any other function to be able to use the garbage collector.
+ * sets the head, tail and length to NULL, NULL and 0 respectively.
  * 
  * @param garb_col pointer to the garbage collector
  * @param ptr pointer to the data to be stored
  * @return t_garb_node* pointer to nodes of the garbage collector
- * 
- * @note This function needs to be called before any other to 
- * be able to use the garbage collector
+ *
+ * @note Required to use "Garbage Collector"
  */
 t_garbage		*garbage_collector_init(void);
 

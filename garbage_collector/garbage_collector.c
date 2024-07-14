@@ -6,12 +6,11 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 20:37:37 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/14 03:41:06 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/14 04:21:38 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/garbage_collector.h"
-
 
 void	add_to_garb_col(t_garbage *garb_col, void *ptr)
 {
