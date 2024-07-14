@@ -6,6 +6,7 @@ CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g
 LIBMLX	:= ./MLX42
 SRCS 	:= main.c \
 			./garbage_collector/garbage_collector.c \
+			./garbage_collector/garbage_remover.c \
 			./parser/parser.c \
 			./parser/ambient/ambient.c \
 			./parser/camera/camera.c \
