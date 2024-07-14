@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_remover.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 03:37:57 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/14 04:07:02 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/15 00:06:35 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_garbage(t_garbage *garb_col)
 		free_node(next);
 	}
 	if (garb_col)
-		free_node(garb_col);
+		free(garb_col);
 	return ;
 }
 
