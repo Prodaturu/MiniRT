@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_structs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:06:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/12 21:18:10 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/14 23:52:00 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@
 # include <fcntl.h>
 # include <string.h>
 
-typedef struct s_cam_rt
+
+
+
+typedef struct s_cam
 {
 	int				fov;
-}		t_cam_rt;
+}		t_cam;
 
 typedef struct s_world_rt
 {

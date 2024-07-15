@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/14 06:55:52 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/15 01:27:51 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minirt.h"
+
+void	main_rt_init(t_main_rt *main_rt)
+{
+	main_rt->amb_counter = 0;
+	main_rt->light_counter = 0;
+	main_rt->cam_counter = 0;
+	main_rt->sphere_counter = 0;
+	main_rt->plane_counter = 0;
+	main_rt->cyl_counter = 0;
+	main_rt->img = NULL;
+	main_rt->amb = NULL;
+	main_rt->cam = NULL;
+	main_rt->light = NULL;
+	main_rt->sphere = NULL;
+	main_rt->plane = NULL;
+	main_rt->cyl = NULL;
+	main_rt->color = NULL;
+}
 
 void	syntax_checker(int argc, char **argv)
 {
@@ -37,32 +55,18 @@ int	main(int argc, char **argv)
 {
 	t_garbage	*garb_col;
 	t_scene_rt	scene;
+	t_main_rt	*main_rt;
 
 	syntax_checker(argc, argv);
 	garb_col = garbage_collector_init();
-	parse_rt(garb_col, argv[1], &scene);
+	main_rt = (t_main_rt *)malloc(sizeof(t_main_rt));
+	main_rt->garb_col = garb_col;
+	parser(garb_col, argv[1], &scene, main_rt);
 // 	world_init(&world, &cam, &scene);
 // 	renderer(&world, &cam, &scene);
 // 	return (0);
 }
 
-// void	main_rt_init(t_main_rt *main_rt)
-// {
-// 	main_rt->amb_counter = 0;
-// 	main_rt->light_counter = 0;
-// 	main_rt->cam_counter = 0;
-// 	main_rt->sphere_counter = 0;
-// 	main_rt->plane_counter = 0;
-// 	main_rt->cyl_counter = 0;
-// 	main_rt->img = NULL;
-// 	main_rt->amb = NULL;
-// 	main_rt->cam = NULL;
-// 	main_rt->light = NULL;
-// 	main_rt->sphere = NULL;
-// 	main_rt->plane = NULL;
-// 	main_rt->cyl = NULL;
-// 	main_rt->color = NULL;
-// }
 
 // t_main_rt *open_and_init
 // (int *fd, t_main_rt *main_rt, char **argv)

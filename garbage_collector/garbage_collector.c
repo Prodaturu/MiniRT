@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 20:37:37 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/14 04:21:38 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/15 01:31:01 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ void	add_to_garb_col(t_garbage *garb_col, void *ptr)
 		return ;
 	}
 	new_node->prev = garb_col->tail;
-	new_node->next = NULL;
 	garb_col->tail->next = new_node;
 	garb_col->tail = new_node;
+	new_node->next = NULL;
 	garb_col->length++;
+	printf("DEBUG: adding pointer \"%p\" to garbage collector\n", ptr);
 	return ;
 }
 

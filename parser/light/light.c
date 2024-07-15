@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 23:59:14 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/12 20:57:15 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/15 01:07:24 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 // // static void	print_struct(t_main_rt *main_rt);
 
-// int	parse_light(char *line, t_main_rt *main_rt)
-// {
-// 	char		**split;
-// 	t_light_rt	*light;
+int	parse_light(char *line, t_main_rt *main_rt)
+{
+	char		**split;
+	t_light_rt	*light;
 
-// 	light = (t_light_rt *)malloc(sizeof(t_light_rt));
-// 	if (!light)
-// 		return (ft_putendl_fd("Error: malloc error", 2), 1);
-// 	split = ft_split(line, ' ');
-// 	if (split[4] != NULL)
-// 		return (ft_putendl_fd("Error: too many arguments", 2), 1);
-// 	main_rt->light_counter++;
-// 	light->coord = parse_coord(split[1]);
-// 	light->ratio = ft_atod(split[2]);
-// 	if (light->ratio < 0 || light->ratio > 1)
-// 		return (ft_putendl_fd("Error: wrong ratio", 2), 1);
-// 	light->color = parse_color(split[3]);
-// 	main_rt->light = light;
-// 	ft_free(split);
-// 	return (0);
-// }
+	light = (t_light_rt *)malloc(sizeof(t_light_rt));
+	if (!light)
+		return (ft_putendl_fd("Error: malloc error", 2), 1);
+	split = ft_split(line, ' ');
+	if (split[4] != NULL)
+		return (ft_putendl_fd("Error: too many arguments", 2), 1);
+	main_rt->light_counter++;
+	light->coord = parse_coord(split[1]);
+	light->ratio = ft_atod(split[2]);
+	if (light->ratio < 0 || light->ratio > 1)
+		return (ft_putendl_fd("Error: wrong ratio", 2), 1);
+	light->color = parse_color(split[3]);
+	main_rt->light = light;
+	ft_free(split);
+	return (0);
+}
 /*paste line below in line before return (0) in parse_light
 print_struct(main_rt);
 then uncoment function below
