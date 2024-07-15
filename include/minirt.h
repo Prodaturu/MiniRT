@@ -96,7 +96,7 @@ void			syntax_checker(int argc, char **argv);
  * @details This function will parse the objects
  * in the scene and update the scene struct
  */
-int				parser(char	*file_name, t_scene_rt *scene);
+int				parse_rt(char	*file_name, t_scene_rt *scene);
 
 #endif
 
