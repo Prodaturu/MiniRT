@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:29:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/15 01:22:45 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:39:45 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // static void	print_struct(t_amb_rt *amb);
 
-int	parse_ambient(char *line, t_main_rt *main_rt)
+int	parse_ambient(char *line, t_parser *parser)
 {
 	char		**split;
 	t_amb_rt	*amb;
@@ -27,22 +27,21 @@ int	parse_ambient(char *line, t_main_rt *main_rt)
 	color = parse_color(split[2]);
 	if (split[3] != NULL)
 		return (ft_putendl_fd("Error: to many arguments", 2), 1);
-	main_rt->amb_counter++;
+	parser->amb_counter++;
 	amb->ratio = ft_atod(split[1]);
 	amb->color = color;
 	if (amb->ratio < 0 || amb->ratio > 1)
 		return (ft_putendl_fd("Error: wrong ratio", 2), 1);
-	main_rt->amb = amb;
-	add_to_garb_col(main_rt->garb_col, amb);
+	parser->amb = amb;
 	ft_free(split);
 	return (0);
 }
 
-// print_struct(main_rt->amb);
+// print_struct(parser->amb);
 // static void	print_struct(t_amb_rt *amb)
 // {
-// 	printf("main_rt->amb->ratio: %f\n", amb->ratio);
-// 	printf("main_rt->amb->color->r: %d\n", amb->color->r);
-// 	printf("main_rt->amb->color->g: %d\n", amb->color->g);
-// 	printf("main_rt->amb->color->b: %d\n", amb->color->b);
+// 	printf("parser->amb->ratio: %f\n", amb->ratio);
+// 	printf("parser->amb->color->r: %d\n", amb->color->r);
+// 	printf("parser->amb->color->g: %d\n", amb->color->g);
+// 	printf("parser->amb->color->b: %d\n", amb->color->b);
 // }

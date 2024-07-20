@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 03:37:57 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/15 00:06:35 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:50:38 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	free_garbage(t_garbage *garb_col)
 	while (current)
 	{
 		garb_col->length--;
+		//if (current->ptr_data != NULL && current->ptr_data != garb_col)
 		if (current->ptr_data != NULL)
 			free_node(current->ptr_data);
 		next = current;

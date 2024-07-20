@@ -17,9 +17,16 @@ SRCS 	:= main.c \
 			./parser/utils/ft_atod.c \
 			./parser/utils/parse_utils.c \
 			./parser/utils/ft_free.c \
-			./mlx/create_img.c
+			./mlx/create_img.c \
+			./scene/build_scene.c \
+			./scene/vector_arithmetic.c \
+			./scene/scene_utils.c
 LIBFT	:= ./libft
 GNL 	:= ./gnl42
+HEADERS_FILES := ./include/garbage_collector.h \
+			./include/minirt.h \
+			./include/parser.h \
+			./include/render_structs.h
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm 
@@ -29,7 +36,7 @@ OBJS	:= ${SRCS:.c=.o}
 
 all: $(NAME)
 
-%.o: %.c
+%.o: %.c $(HEADERS_FILES)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 $(NAME): $(OBJS)
