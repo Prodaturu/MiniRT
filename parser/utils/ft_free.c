@@ -6,13 +6,13 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 01:23:40 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/15 01:08:24 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:38:29 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-void	ft_free_all(t_main_rt *main_rt);
+int		err_msg(t_garbage *garb_col, int ex_flag, char *msg, int ret);
 void	ft_free(char **str);
 void	free_plane(t_plane_rt *plane);
 void	free_cylinder(t_cyl_rt *cylinder);
@@ -31,32 +31,16 @@ void	ft_free(char **str)
 	free(str);
 }
 
-void	ft_free_all(t_main_rt *main_rt)
+int	err_msg(t_garbage *garb_col, int ex_flag, char *msg, int ret)
 {
-	if (main_rt->amb)
-	{
-		free(main_rt->amb->color);
-		free(main_rt->amb);
-	}
-	if (main_rt->cam)
-	{
-		free(main_rt->cam->pov);
-		free(main_rt->cam->orient_vec);
-		free(main_rt->cam);
-	}
-	if (main_rt->light)
-	{
-		free(main_rt->light->coord);
-		free(main_rt->light->color);
-		free(main_rt->light);
-	}
-	if (main_rt->plane)
-		free_plane(main_rt->plane);
-	if (main_rt->sphere)
-		free_sphere(main_rt->sphere);
-	if (main_rt->cyl)
-		free_cylinder(main_rt->cyl);
-	free(main_rt);
+	(void)ex_flag;
+
+	if (!msg)
+		return (ret);
+	printf("%s\n", msg);
+	free_garbage(garb_col);
+	exit(ret);
+	return (ret);
 }
 
 void	free_plane(t_plane_rt *plane)
@@ -102,3 +86,30 @@ void	free_cylinder(t_cyl_rt *cylinder)
 		free(tmp);
 	}
 }
+// void	ft_free_all(t_parser *parser)
+// {
+// 	if (parser->amb)
+// 	{
+// 		free(parser->amb->color);
+// 		free(parser->amb);
+// 	}
+// 	if (parser->cam)
+// 	{
+// 		free(parser->cam->pov);
+// 		free(parser->cam->orient_vec);
+// 		free(parser->cam);
+// 	}
+// 	if (parser->light)
+// 	{
+// 		free(parser->light->coord);
+// 		free(parser->light->color);
+// 		free(parser->light);
+// 	}
+// 	if (parser->plane)
+// 		free_plane(parser->plane);
+// 	if (parser->sphere)
+// 		free_sphere(parser->sphere);
+// 	if (parser->cyl)
+// 		free_cylinder(parser->cyl);
+// 	free(parser);
+// }

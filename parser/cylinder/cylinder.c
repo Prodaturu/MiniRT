@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:08:18 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/15 01:13:00 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:38:07 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static void		append_node(t_cyl_rt **cyl, int id);
 static t_cyl_rt	*find_last(t_cyl_rt *cyl);
 static t_cyl_rt	*find_1st(t_cyl_rt *cyl);
-int				parse_cylinder(char *line, t_main_rt *main_rt);
+int				parse_cylinder(char *line, t_parser *parser);
 // static void	print_struct(t_cyl_rt *cyl);
 
-int	parse_cylinder(char *line, t_main_rt *main_rt)
+int	parse_cylinder(char *line, t_parser *parser)
 {
 	t_cyl_rt	*cyl;
 	char		**split;
@@ -26,8 +26,8 @@ int	parse_cylinder(char *line, t_main_rt *main_rt)
 	cyl = (t_cyl_rt *)malloc(sizeof(t_cyl_rt));
 	if (!cyl)
 		return (ft_putendl_fd("Error: malloc error", 2), 1);
-	cyl->id = main_rt->cyl_counter;
-	main_rt->cyl_counter++;
+	cyl->id = parser->cyl_counter;
+	parser->cyl_counter++;
 	split = ft_split(line, ' ');
 	if (split[6] != NULL)
 		return (ft_putendl_fd("Error: too many arguments", 2), 1);
@@ -39,7 +39,7 @@ int	parse_cylinder(char *line, t_main_rt *main_rt)
 	cyl->next = NULL;
 	cyl->prev = NULL;
 	append_node(&cyl, cyl->id);
-	main_rt->cyl = find_1st(cyl);
+	parser->cyl = find_1st(cyl);
 	ft_free(split);
 	return (0);
 }

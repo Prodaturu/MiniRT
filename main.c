@@ -6,31 +6,45 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/16 11:57:42 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/20 22:55:57 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minirt.h"
 
-void	main_rt_init(t_main_rt *main_rt)
+void	main_rt_init(t_main_rt *main_rt, t_garbage *garb_col);
+void	file_checker(int argc, char **argv);
+
+int	main(int argc, char **argv)
 {
-	main_rt->amb_counter = 0;
-	main_rt->light_counter = 0;
-	main_rt->cam_counter = 0;
+	t_garbage	*garb_col;
+	t_main_rt	*main_rt;
+
+	file_checker(argc, argv);
+	garb_col = garbage_collector_init();
+	main_rt = (t_main_rt *)malloc(sizeof(t_main_rt));
+	if (!main_rt)
+		return (ft_putendl_fd("Error: malloc error", 2), 1);
+	main_rt_init(main_rt, garb_col);
+	parser(garb_col, argv[1], main_rt);
+	init_scene_struct(main_rt, garb_col);
+// 	world_init(&world, &cam, &scene);
+// 	renderer(&world, &cam, &scene);
+	return (0);
+}
+
+void	main_rt_init(t_main_rt *main_rt, t_garbage *garb_col)
+{
+
 	main_rt->sphere_counter = 0;
 	main_rt->plane_counter = 0;
 	main_rt->cyl_counter = 0;
 	main_rt->img = NULL;
-	main_rt->amb = NULL;
-	main_rt->cam = NULL;
-	main_rt->light = NULL;
-	main_rt->sphere = NULL;
-	main_rt->plane = NULL;
-	main_rt->cyl = NULL;
 	main_rt->color = NULL;
+	add_to_garb_col(garb_col, main_rt);
 }
 
-void	syntax_checker(int argc, char **argv)
+void	file_checker(int argc, char **argv)
 {
 	char	*file_type;
 
@@ -51,21 +65,6 @@ void	syntax_checker(int argc, char **argv)
 		printf(GREEN "File type is: %s\n" RESET, file_type);
 }
 
-int	main(int argc, char **argv)
-{
-	t_garbage	*garb_col;
-	t_scene_rt	scene;
-	t_main_rt	*main_rt;
-
-	syntax_checker(argc, argv);
-	garb_col = garbage_collector_init();
-	main_rt = (t_main_rt *)malloc(sizeof(t_main_rt));
-	main_rt->garb_col = garb_col;
-	parser(garb_col, argv[1], &scene, main_rt);
-	init_cam(t_main_rt *main_rt, t_scene_rt *scene);
-	// 	renderer(&world, &cam, &scene);
-	// 	return (0);
-}
 
 
 // t_main_rt *open_and_init

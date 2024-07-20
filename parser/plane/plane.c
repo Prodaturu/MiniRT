@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:08:42 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/15 01:13:18 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:38:16 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,16 @@ static t_plane_rt	*find_last(t_plane_rt *plane);
 static void			append_node(t_plane_rt **plane, int id);
 // static void	print_struct(t_plane_rt *plane);
 
+int	is_on_plane(t_vector coord, t_vector vec, t_vector point)
+{
+	if (vec.vec_x * (point.vec_x - coord.vec_x) + vec.vec_y * \
+		(point.vec_y - coord.vec_y) + \
+		vec.vec_z * (point.vec_z - coord.vec_z) == 0)
+		return (1);
+	return (0);
+}
 
-int	parse_plane(char *line, t_main_rt *main_rt)
+int	parse_plane(char *line, t_parser *parser)
 {
 	t_plane_rt	*plane;
 	char		**split;
@@ -26,8 +34,8 @@ int	parse_plane(char *line, t_main_rt *main_rt)
 	plane = (t_plane_rt *)malloc(sizeof(t_plane_rt));
 	if (!plane)
 		return (ft_putendl_fd("Error: malloc error", 2), 1);
-	plane->id = main_rt->plane_counter;
-	main_rt->plane_counter++;
+	plane->id = parser->plane_counter;
+	parser->plane_counter++;
 	split = ft_split(line, ' ');
 	if (split[4] != NULL)
 		return (ft_putendl_fd("Error: too many arguments", 2), 1);
@@ -37,7 +45,7 @@ int	parse_plane(char *line, t_main_rt *main_rt)
 	plane->next = NULL;
 	plane->prev = NULL;
 	append_node(&plane, plane->id);
-	main_rt->plane = find_1st(plane);
+	parser->plane = find_1st(plane);
 	ft_free(split);
 	return (0);
 }
