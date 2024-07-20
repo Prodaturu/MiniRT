@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:31:08 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/15 01:20:46 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/16 06:27:19 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	init_scene_struct(t_scene_rt *scene)
 int	err_msg(t_garbage *garb_col, int ex_flag, char *msg, int ret)
 {
 	(void)ex_flag;
-
 	if (!msg)
 		return (ret);
 	printf("%s\n", msg);

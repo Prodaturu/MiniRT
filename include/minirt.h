@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/15 07:49:06 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/16 06:45:50 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_scene_rt
  * and 1 if there is an error anywhere during execution
  */
 int			main(int argc, char**argv);
+
 /**
  * @brief function to check the syntax of the input file
  * 
@@ -95,8 +96,6 @@ void		syntax_checker(int argc, char **argv);
  * @details This function will parse the objects
  * in the scene and update the scene struct
  */
-// int				parser(char	*file_name, t_scene_rt *scene);
-
 typedef struct s_color_rt
 {
 	int				r;
@@ -111,7 +110,6 @@ typedef struct s_color_rt
  * @param y point of view y coordinate
  * @param z point of view z coordinate
  */
-
 typedef struct s_coord_rt
 {
 	double			co_x;
@@ -153,7 +151,6 @@ typedef struct s_pov_rt
  * @param ratio ambient light ratio
  * @param color pointer to ambient light color
  */
-
 typedef struct s_amb_rt
 {
 	double			ratio;

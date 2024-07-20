@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/15 01:27:51 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/16 11:57:42 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	main(int argc, char **argv)
 	main_rt = (t_main_rt *)malloc(sizeof(t_main_rt));
 	main_rt->garb_col = garb_col;
 	parser(garb_col, argv[1], &scene, main_rt);
-// 	world_init(&world, &cam, &scene);
-// 	renderer(&world, &cam, &scene);
-// 	return (0);
+	init_cam(t_main_rt *main_rt, t_scene_rt *scene);
+	// 	renderer(&world, &cam, &scene);
+	// 	return (0);
 }
 
 
