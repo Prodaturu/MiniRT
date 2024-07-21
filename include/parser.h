@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:30:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 00:45:50 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:24:38 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,7 @@ typedef struct s_parser
 	int			sphere_counter;
 	int			plane_counter;
 	int			cyl_counter;
+	void		*garbage_head;
 	t_amb_rt	*amb;
 	t_cam_rt	*cam;
 	t_light_rt	*light;
@@ -291,10 +292,10 @@ int			parse_line(char *line, t_parser *parser);
 // int			parser(int fd, t_parser *parser);
 //parser/utils
 double		ft_atod(char *str);
-t_coord_rt	*parse_coord(char *str);
-t_pov_rt	*parse_pov(char *str);
-t_vec_rt	*parse_vec(char *str);
-t_color_rt	*parse_color(char *str);
+t_coord_rt	*parse_coord(char *str, t_parser *parser);
+t_pov_rt	*parse_pov(char *str, t_parser *parser);
+t_vec_rt	*parse_vec(char *st, t_parser *parser);
+t_color_rt	*parse_color(char *str, t_parser *parser);
 void		ft_free(char **str);
 int			err_msg(t_garbage *garb_col, int ex_flag, char *msg, int ret);
 

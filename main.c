@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/21 01:24:04 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:40:19 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	main(int argc, char **argv)
 	main_rt_init(main_rt, garb_col);
 	parser(garb_col, argv[1], main_rt);
 	init_scene_struct(main_rt, garb_col);
+	renderer(main_rt);
 	free_garbage(garb_col);
-	// free(garb_col);
-	// renderer(main_rt);
+	free(garb_col);
 	return (0);
 }
 
@@ -39,7 +39,7 @@ void	main_rt_init(t_main_rt *main_rt, t_garbage *garb_col)
 	main_rt->sphere_counter = 0;
 	main_rt->plane_counter = 0;
 	main_rt->cyl_counter = 0;
-	// main_rt->img = NULL;
+	main_rt->img = NULL;
 	main_rt->color = NULL;
 	add_to_garb_col(garb_col, main_rt);
 }

@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:31:08 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 02:29:46 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:16:50 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_parser	*parse_init(t_main_rt *main_rt, t_garbage *garb_col)
 	parser->sphere_counter = 0;
 	parser->plane_counter = 0;
 	parser->cyl_counter = 0;
+	parser->garbage_head = garb_col;
 	parser->amb = NULL;
 	parser->cam = NULL;
 	parser->light = NULL;

@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:08:42 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 00:18:48 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:28:30 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	parse_plane(char *line, t_parser *parser)
 	split = ft_split(line, ' ');
 	if (split[4] != NULL)
 		return (ft_putendl_fd("Error: too many arguments", 2), 1);
-	plane->coord = parse_coord(split[1]);
-	plane->vec = parse_vec(split[2]);
-	plane->color = parse_color(split[3]);
+	plane->coord = parse_coord(split[1], parser);
+	plane->vec = parse_vec(split[2], parser);
+	plane->color = parse_color(split[3], parser);
 	plane->next = NULL;
 	plane->prev = NULL;
 	if (NULL == parser->plane)
@@ -50,6 +50,7 @@ int	parse_plane(char *line, t_parser *parser)
 	else
 		append_node(&parser->plane, plane);
 	ft_free(split);
+	add_to_garb_col(parser->garbage_head, plane);
 	return (0);
 }
 

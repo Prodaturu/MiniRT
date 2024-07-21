@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 20:15:33 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 18:04:48 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:26:44 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ int	parse_camera(char *line, t_parser *parser)
 	if (split[4] != NULL)
 		return (ft_putendl_fd("Error: to many arguments", 2), 1);
 	parser->cam_counter++;
-	cam->pov = parse_pov(split[1]);
-	cam->orient_vec = parse_vec(split[2]);
+	cam->pov = parse_pov(split[1], parser);
+	cam->orient_vec = parse_vec(split[2], parser);
 	cam->fov = ft_atoi(split[3]);
 	if (cam->fov < 0 || cam->fov > 180)
 		return (ft_putendl_fd("Error: wrong fov", 2), 1);
 	parser->cam = cam;
 	ft_free(split);
+	add_to_garb_col(parser->garbage_head, cam);
 	return (0);
 }
 // print_struct(parser);

@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 01:23:54 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:45:39 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "../libft/include/libft.h"
 # include "../gnl42/include/get_next_line.h"
 # include "render_structs.h"
-// # include "../MLX42/include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include "garbage_collector.h"
 # include "parser.h"
 
@@ -115,8 +115,8 @@ typedef struct s_main_rt
 	int				plane_counter;
 	int				cyl_counter;
 	int				num_windows;
-	// mlx_t			*mlx;
-	// mlx_image_t		*img;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
 	t_parser		*parser;
 	t_garbage		*garb_col;
 	t_vector		*vector;
@@ -168,6 +168,6 @@ t_vector	*set_pov(t_pov_rt *pov, t_garbage *gc);
 void		world_init(t_main_rt *main_rt, t_garbage *gc);
 
 //mlx
-// mlx_t		*renderer(t_main_rt *main_rt);
+mlx_t		*renderer(t_main_rt *main_rt);
 
 #endif

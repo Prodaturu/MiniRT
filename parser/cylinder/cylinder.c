@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:08:18 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 00:24:24 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:27:50 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	parse_cylinder(char *line, t_parser *parser)
 	split = ft_split(line, ' ');
 	if (split[6] != NULL)
 		return (ft_putendl_fd("Error: too many arguments", 2), 1);
-	cyl->center = parse_coord(split[1]);
-	cyl->vec = parse_vec(split[2]);
+	cyl->center = parse_coord(split[1], parser);
+	cyl->vec = parse_vec(split[2], parser);
 	cyl->diameter = ft_atod(split[3]);
 	cyl->height = ft_atod(split[4]);
-	cyl->color = parse_color(split[5]);
+	cyl->color = parse_color(split[5], parser);
 	cyl->next = NULL;
 	cyl->prev = NULL;
 	if (NULL == parser->cyl)
@@ -42,6 +42,7 @@ int	parse_cylinder(char *line, t_parser *parser)
 	else
 		append_node(&parser->cyl, cyl);
 	ft_free(split);
+	add_to_garb_col(parser->garbage_head, cyl);
 	return (0);
 }
 

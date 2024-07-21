@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 23:59:14 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 17:38:10 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:28:12 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ int	parse_light(char *line, t_parser *parser)
 	if (split[4] != NULL)
 		return (ft_putendl_fd("Error: too many arguments", 2), 1);
 	parser->light_counter++;
-	light->coord = parse_coord(split[1]);
+	light->coord = parse_coord(split[1], parser);
 	light->ratio = ft_atod(split[2]);
 	if (light->ratio < 0 || light->ratio > 1)
 		return (ft_putendl_fd("Error: wrong ratio", 2), 1);
-	light->color = parse_color(split[3]);
+	light->color = parse_color(split[3], parser);
 	parser->light = light;
 	ft_free(split);
+	add_to_garb_col(parser->garbage_head, light);
 	return (0);
 }
 /*paste line below in line before return (0) in parse_light

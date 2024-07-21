@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 19:30:16 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 00:43:05 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:29:50 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,4 @@ void	world_init(t_main_rt *main_rt, t_garbage *gc)
 	else
 		add_to_garb_col(gc, world);
 	world->sphere = main_rt->parser->sphere;
-	while (world->sphere)
-	{
-		add_to_garb_col(gc, world->sphere);
-		world->sphere = world->sphere->next;
-	}
-	world->plane = main_rt->parser->plane;
-	while (world->plane)
-	{
-		add_to_garb_col(gc, world->plane);
-		world->plane = world->plane->next;
-	}
-	world->cylinder = main_rt->parser->cyl;
-	while (world->cylinder)
-	{
-		add_to_garb_col(gc, world->cylinder);
-		world->cylinder = world->cylinder->next;
-	}
 }

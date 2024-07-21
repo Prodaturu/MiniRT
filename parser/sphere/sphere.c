@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:49:07 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 00:15:17 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:28:50 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	parse_sphere(char *line, t_parser *parser)
 	split = ft_split(line, ' ');
 	if (split[4] != NULL)
 		return (ft_putendl_fd("Error: to many arguments", 2), 1);
-	sphere->center = parse_coord(split[1]);
+	sphere->center = parse_coord(split[1], parser);
 	sphere->diameter = ft_atod(split[2]);
-	sphere->color = parse_color(split[3]);
+	sphere->color = parse_color(split[3], parser);
 	sphere->next = NULL;
 	sphere->prev = NULL;
 	if (NULL == parser->sphere)
@@ -49,6 +49,7 @@ int	parse_sphere(char *line, t_parser *parser)
 	else
 		append_node(&parser->sphere, sphere);
 	ft_free(split);
+	add_to_garb_col(parser->garbage_head, sphere);
 	return (0);
 }
 
