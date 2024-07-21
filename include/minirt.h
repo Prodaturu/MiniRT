@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 19:46:55 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 01:23:54 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "../libft/include/libft.h"
 # include "../gnl42/include/get_next_line.h"
 # include "render_structs.h"
-# include "../MLX42/include/MLX42/MLX42.h"
+// # include "../MLX42/include/MLX42/MLX42.h"
 # include "garbage_collector.h"
 # include "parser.h"
 
@@ -91,7 +91,6 @@ typedef struct s_color
 	int				alpha;
 }				t_color;
 
-
 // --- --- --- Main miniRT struct --- --- --- //
 
 /**
@@ -116,15 +115,14 @@ typedef struct s_main_rt
 	int				plane_counter;
 	int				cyl_counter;
 	int				num_windows;
-	mlx_t			*mlx;
-	mlx_image_t		*img;
+	// mlx_t			*mlx;
+	// mlx_image_t		*img;
 	t_parser		*parser;
 	t_garbage		*garb_col;
 	t_vector		*vector;
 	t_scene			*scene;
 	t_color			*color;
 }				t_main_rt;
-
 
 // --- --- --- main.c --- --- --- //
 
@@ -159,7 +157,6 @@ int			parser(t_garbage *g_c, char *f_n, t_main_rt *m_rt);
 int			init_scene_struct(t_main_rt *main_rt, t_garbage *gc);
 t_vector	*get_vec(double x, double y, double z, t_garbage *gc);
 
-
 t_vector	*normalize(t_vector *vector, t_garbage *gc);
 t_vector	*vector_add(t_vector *vector, t_vector *help_vec, t_garbage *gc);
 t_vector	*vector_sub(t_vector *v_height, t_vector *v_width, t_garbage *gc);
@@ -168,9 +165,9 @@ t_vector	*cross(t_vector *a, t_vector *b, t_garbage *gc);
 t_vector	*scalar_mult(t_vector *a, double c, t_garbage *gc);
 t_vector	*set_orientation(t_vec_rt *orientation, t_garbage *gc);
 t_vector	*set_pov(t_pov_rt *pov, t_garbage *gc);
+void		world_init(t_main_rt *main_rt, t_garbage *gc);
 
 //mlx
-mlx_t		*renderer(t_main_rt *main_rt);
-
+// mlx_t		*renderer(t_main_rt *main_rt);
 
 #endif

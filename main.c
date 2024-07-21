@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/20 20:04:15 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 01:24:04 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ int	main(int argc, char **argv)
 	main_rt_init(main_rt, garb_col);
 	parser(garb_col, argv[1], main_rt);
 	init_scene_struct(main_rt, garb_col);
-// 	world_init(&world, &cam, &scene);
-// 	renderer(&world, &cam, &scene);
+	free_garbage(garb_col);
+	// free(garb_col);
+	// renderer(main_rt);
 	return (0);
 }
 
 void	main_rt_init(t_main_rt *main_rt, t_garbage *garb_col)
 {
-
 	main_rt->sphere_counter = 0;
 	main_rt->plane_counter = 0;
 	main_rt->cyl_counter = 0;
-	main_rt->img = NULL;
+	// main_rt->img = NULL;
 	main_rt->color = NULL;
 	add_to_garb_col(garb_col, main_rt);
 }
@@ -65,8 +65,6 @@ void	file_checker(int argc, char **argv)
 		printf(GREEN "File type is: %s\n" RESET, file_type);
 }
 
-
-
 // t_main_rt *open_and_init
 // (int *fd, t_main_rt *main_rt, char **argv)
 // {
@@ -74,12 +72,12 @@ void	file_checker(int argc, char **argv)
 // 	main_rt = (t_main_rt *)malloc(sizeof(t_main_rt));
 // 	if (!main_rt)
 // 		return (ft_putendl_fd("Error: malloc error", 2),
-//  close(*fd), \
+//  close(*fd),
 // 		(void *)0);
 // 	if (*fd >= 0)
 // 		main_rt_init(main_rt);
 // 	else
-// 		return (ft_putendl_fd("Error: file not found", 2), \
+// 		return (ft_putendl_fd("Error: file not found", 2),
 // 	free(main_rt), (void *)0);
 // 	return (main_rt);
 // }

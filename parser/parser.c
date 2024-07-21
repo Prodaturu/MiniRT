@@ -6,12 +6,11 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:31:08 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 17:54:37 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 02:29:46 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
-
 
 int			parse_line(char *line, t_parser *parser);
 int			checker(char *line);
@@ -33,9 +32,14 @@ int	parser(t_garbage *garb_col, char *file_n, t_main_rt *m)
 	while (line_read)
 	{
 		if (!parse_line(line_read, parser))
+		{
+			free(line_read);
 			line_read = get_next_line(fd);
+		}
 		else
-			return (err_msg(garb_col, 1, "Error: failed to parse line", 1), 1);
+			return (err_msg(garb_col, 1, \
+			"Error: failed to parse line", 1), \
+				free(line_read), 1);
 	}
 	return (close(fd), free(line_read), 0);
 }

@@ -6,11 +6,11 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:46:28 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 20:04:53 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 01:26:25 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minirt.h"
+#include "../include/minirt.h"
 
 t_vector	*get_vec(double x, double y, double z, t_garbage *gc);
 int			init_scene_struct(t_main_rt *main_rt, t_garbage *gc);
@@ -70,6 +70,8 @@ int	init_scene_struct(t_main_rt *main_rt, t_garbage *gc)
 	scene = malloc(sizeof(t_scene));
 	if (!scene)
 		return (1);
+	add_to_garb_col(gc, scene);
+	world_init(main_rt, gc);
 	help_vec = NULL;
 	scene->pixel_width = WIDTH;
 	scene->pixel_height = HEIGHT;

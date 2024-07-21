@@ -6,15 +6,14 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:49:07 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 17:38:21 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:15:17 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static t_sphere_rt	*find_1st(t_sphere_rt *sphere);
 static t_sphere_rt	*find_last(t_sphere_rt *sphere);
-static void			append_node(t_sphere_rt **sphere, int id);
+static void			append_node(t_sphere_rt **head, t_sphere_rt *new_node);
 int					parse_sphere(char *line, t_parser *parser);
 // static void	print_struct(t_sphere_rt *sphere);
 
@@ -45,19 +44,12 @@ int	parse_sphere(char *line, t_parser *parser)
 	sphere->color = parse_color(split[3]);
 	sphere->next = NULL;
 	sphere->prev = NULL;
-	append_node(&sphere, sphere->id);
-	parser->sphere = find_1st(sphere);
+	if (NULL == parser->sphere)
+		parser->sphere = sphere;
+	else
+		append_node(&parser->sphere, sphere);
 	ft_free(split);
 	return (0);
-}
-
-static t_sphere_rt	*find_1st(t_sphere_rt *sphere)
-{
-	if (NULL == sphere)
-		return (NULL);
-	while (sphere->prev)
-		sphere = sphere->prev;
-	return (sphere);
 }
 
 static t_sphere_rt	*find_last(t_sphere_rt *sphere)
@@ -69,28 +61,19 @@ static t_sphere_rt	*find_last(t_sphere_rt *sphere)
 	return (sphere);
 }
 
-static void	append_node(t_sphere_rt **sphere, int id)
+static void	append_node(t_sphere_rt **head, t_sphere_rt *new_node)
 {
-	t_sphere_rt	*node;
 	t_sphere_rt	*last_node;
 
-	if (NULL == sphere)
+	if (NULL == head || NULL == new_node)
 		return ;
-	node = malloc(sizeof(t_sphere_rt));
-	if (NULL == node)
-		return ;
-	node->next = NULL;
-	node->id = id;
-	if (NULL == *sphere)
-	{
-		*sphere = node;
-		node->prev = NULL;
-	}
+	if (NULL == *head)
+		*head = new_node;
 	else
 	{
-		last_node = find_last(*sphere);
-		last_node->next = node;
-		node->prev = last_node;
+		last_node = find_last(*head);
+		last_node->next = new_node;
+		new_node->prev = last_node;
 	}
 }
 

@@ -6,15 +6,16 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:08:42 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 17:38:16 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:18:48 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static t_plane_rt	*find_1st(t_plane_rt *plane);
 static t_plane_rt	*find_last(t_plane_rt *plane);
-static void			append_node(t_plane_rt **plane, int id);
+static void			append_node(t_plane_rt **head, t_plane_rt *plane);
+int					parse_plane(char *line, t_parser *parser);
+int					is_on_plane(t_vector coord, t_vector vec, t_vector point);
 // static void	print_struct(t_plane_rt *plane);
 
 int	is_on_plane(t_vector coord, t_vector vec, t_vector point)
@@ -44,19 +45,12 @@ int	parse_plane(char *line, t_parser *parser)
 	plane->color = parse_color(split[3]);
 	plane->next = NULL;
 	plane->prev = NULL;
-	append_node(&plane, plane->id);
-	parser->plane = find_1st(plane);
+	if (NULL == parser->plane)
+		parser->plane = plane;
+	else
+		append_node(&parser->plane, plane);
 	ft_free(split);
 	return (0);
-}
-
-static t_plane_rt	*find_1st(t_plane_rt *plane)
-{
-	if (NULL == plane)
-		return (NULL);
-	while (plane->prev)
-		plane = plane->prev;
-	return (plane);
 }
 
 static t_plane_rt	*find_last(t_plane_rt *plane)
@@ -68,28 +62,19 @@ static t_plane_rt	*find_last(t_plane_rt *plane)
 	return (plane);
 }
 
-static void	append_node(t_plane_rt **plane, int id)
+static void	append_node(t_plane_rt **head, t_plane_rt *new_node)
 {
-	t_plane_rt	*node;
 	t_plane_rt	*last_node;
 
-	if (NULL == plane)
+	if (NULL == head || NULL == new_node)
 		return ;
-	node = malloc(sizeof(t_plane_rt));
-	if (NULL == node)
-		return ;
-	node->next = NULL;
-	node->id = id;
-	if (NULL == *plane)
-	{
-		*plane = node;
-		node->prev = NULL;
-	}
+	if (NULL == *head)
+		*head = new_node;
 	else
 	{
-		last_node = find_last(*plane);
-		last_node->next = node;
-		node->prev = last_node;
+		last_node = find_last(*head);
+		last_node->next = new_node;
+		new_node->prev = last_node;
 	}
 }
 

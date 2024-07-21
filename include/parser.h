@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:30:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 18:10:36 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:45:50 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 // 	int					plane_count;
 // 	int					cylinder_count;
 // }			t_scene_rt;
-
 /**
  * @brief s_vec_rt struct to store object vectors
  * 
@@ -228,6 +227,14 @@ typedef struct s_cyl_rt
  * @param cyl pointer to cylinder
  * @param color pointer to combined color
  */
+
+typedef struct s_world_rt
+{
+	int				objects_count;
+	t_sphere_rt		*sphere;
+	t_plane_rt		*plane;
+	t_cyl_rt		*cylinder;
+}			t_world_rt;
 
 typedef struct s_parser
 {
