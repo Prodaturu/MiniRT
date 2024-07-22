@@ -6,30 +6,46 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:06:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/16 06:26:45 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:27:20 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_STRUCTS_H
 # define RENDER_STRUCTS_H
 
-# include <stdbool.h>
-# include <math.h>
-# include <stdarg.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <string.h>
+typedef struct s_vec
+{
+	double		vec_x;
+	double		vec_y;
+	double		vec_z;
+}				t_vec;
 
-// typedef struct s_cam
-// {
-// 	int				fov;
-// }				t_cam;
+typedef struct s_col
+{
+	double		r;
+	double		g;
+	double		b;
+}				t_col;
 
-// typedef struct s_world_rt
-// {
-// 	int				objects_count;
-// }			t_world_rt;
+typedef struct s_hit
+{
+	t_vec			normal;
+	t_vec			col_point;
+	t_col			*color;
+	struct t_hit	*record;
+	struct t_hit	*next;
+	double			t;
+}				t_hit;
+
+typedef struct s_ray
+{
+	t_vec	*origin;
+	t_vec	*direction;
+	t_hit	*hit;
+	double	scene_pixel_x;
+	double	scene_pixel_y;
+	double	t_max;
+	int		col;
+}				t_ray;
 
 #endif

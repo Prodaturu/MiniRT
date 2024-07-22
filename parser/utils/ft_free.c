@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 01:23:40 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 17:38:29 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:24:11 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	ft_free(char **str)
 int	err_msg(t_garbage *garb_col, int ex_flag, char *msg, int ret)
 {
 	(void)ex_flag;
-
 	if (!msg)
 		return (ret);
 	printf("%s\n", msg);

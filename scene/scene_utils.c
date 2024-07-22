@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 19:30:16 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 19:51:10 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:34:15 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ t_vector	*scalar_mult(t_vector *a, double c, t_garbage *gc)
 		err_msg(gc, 1, "error allocating vector\n", true);
 	else
 		add_to_garb_col(gc, result);
-
 	result->vec_x = c * a->vec_x;
 	result->vec_y = c * a->vec_y;
 	result->vec_z = c * a->vec_z;
-
 	return (result);
 }
 

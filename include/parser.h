@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:30:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 18:10:36 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/22 02:18:38 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 // 	int					plane_count;
 // 	int					cylinder_count;
 // }			t_scene_rt;
-
 /**
  * @brief s_vec_rt struct to store object vectors
  * 
@@ -229,6 +228,29 @@ typedef struct s_cyl_rt
  * @param color pointer to combined color
  */
 
+typedef enum s_object_type
+{
+	SPHERE,
+	CYLINDER,
+	PLANE
+}			t_object_type;
+
+typedef struct s_object
+{
+	t_object_type	type;
+	int				counter;
+	int				id;
+	t_sphere_rt		*sphere;
+	t_plane_rt		*plane;
+	t_cyl_rt		*cylinder;
+	t_color_rt		*color;
+}	t_object;
+
+typedef struct s_objects {
+	t_object	*object;
+	int			count;
+}				t_objects;
+
 typedef struct s_parser
 {
 	int			fd;
@@ -238,6 +260,8 @@ typedef struct s_parser
 	int			sphere_counter;
 	int			plane_counter;
 	int			cyl_counter;
+	void		*garbage_head;
+	t_objects	*objects;
 	t_amb_rt	*amb;
 	t_cam_rt	*cam;
 	t_light_rt	*light;
@@ -284,10 +308,10 @@ int			parse_line(char *line, t_parser *parser);
 // int			parser(int fd, t_parser *parser);
 //parser/utils
 double		ft_atod(char *str);
-t_coord_rt	*parse_coord(char *str);
-t_pov_rt	*parse_pov(char *str);
-t_vec_rt	*parse_vec(char *str);
-t_color_rt	*parse_color(char *str);
+t_coord_rt	*parse_coord(char *str, t_parser *parser);
+t_pov_rt	*parse_pov(char *str, t_parser *parser);
+t_vec_rt	*parse_vec(char *st, t_parser *parser);
+t_color_rt	*parse_color(char *str, t_parser *parser);
 void		ft_free(char **str);
 int			err_msg(t_garbage *garb_col, int ex_flag, char *msg, int ret);
 

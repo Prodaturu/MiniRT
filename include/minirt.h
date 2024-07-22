@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 01:08:07 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:27:08 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@
 # define CYAN "\x1B[36m"
 # define WHITE "\x1B[37m"
 
+typedef struct s_color
+{
+	double		red;
+	double		green;
+	double		blue;
+	double		alpha;
+}				t_color;
+
 /**
  * @brief s_vec_rt struct to store object vectors
  * 
@@ -73,32 +81,19 @@ typedef struct s_scene
 	t_vector		*v_width;
 	t_vector		*v_height;
 	t_vector		*pov;
+	t_objects		*objects;
+	t_color			*background_color;
+	void			*garbage_col;
 	double			focal_length;
 	double			pixel_width;
 	double			pixel_height;
 	double			half_width;
 	double			half_height;
 	double			fov;
+	int				depth;
 
 }			t_scene;
 
-/** 
- * @brief struct to store color data
- * 
- * @param red red color component
- * @param green green color component
- * @param blue blue color component
- * @param alpha alpha color component
- * @param rgb combined color
-*/
-typedef struct s_color
-{
-	int				red;
-	int				green;
-	int				blue;
-	int				rgb;
-	int				alpha;
-}				t_color;
 
 // --- --- --- Main miniRT struct --- --- --- //
 
@@ -126,6 +121,7 @@ typedef struct s_main_rt
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	t_parser		*parser;
+	t_objects		*objects;
 	t_garbage		*garb_col;
 	t_vector		*vector;
 	t_scene			*scene;
@@ -161,6 +157,8 @@ void		main_rt_init(t_main_rt *main_rt, t_garbage *garb_col);
 void		file_checker(int argc, char **argv);
 
 int			parser(t_garbage *g_c, char *f_n, t_main_rt *m_rt);
+int			is_on_sphere(t_vector center, int diameter, t_vector point);
+
 //build_scene
 int			init_scene_struct(t_main_rt *main_rt, t_garbage *gc);
 t_vector	*get_vec(double x, double y, double z, t_garbage *gc);
@@ -173,9 +171,16 @@ t_vector	*cross(t_vector *a, t_vector *b, t_garbage *gc);
 t_vector	*scalar_mult(t_vector *a, double c, t_garbage *gc);
 t_vector	*set_orientation(t_vec_rt *orientation, t_garbage *gc);
 t_vector	*set_pov(t_pov_rt *pov, t_garbage *gc);
-
+t_objects	*objects_init(t_main_rt *main_rt, t_garbage *gc);
+t_object	*obj_sphere(t_objects *obj, t_parser *parser, \
+t_garbage *gc, int *id);
+t_object	*obj_cylinder(t_objects *obj, t_parser *parser, \
+t_garbage *gc, int *id);
+t_object	*obj_plane(t_objects *obj, t_parser *parser, \
+t_garbage *gc, int *id);
 //mlx
 mlx_t		*renderer(t_main_rt *main_rt);
-
+void		scene_render(t_main_rt *main_rt);
+t_color		*ray_color(t_ray *ray, t_scene *scene, t_light_rt *light);
 
 #endif

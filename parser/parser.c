@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:31:08 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 01:06:32 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:27:30 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,14 @@ int	parser(t_garbage *garb_col, char *file_n, t_main_rt *m)
 	while (line_read)
 	{
 		if (!parse_line(line_read, parser))
+		{
+			free(line_read);
 			line_read = get_next_line(fd);
+		}
 		else
-			return (err_msg(garb_col, 1, "Error: failed to parse line", 1), 1);
+			return (err_msg(garb_col, 1, \
+			"Error: failed to parse line", 1), \
+				free(line_read), 1);
 	}
 	return (close(fd), free(line_read), 0);
 }
@@ -52,6 +57,7 @@ t_parser	*parse_init(t_main_rt *main_rt, t_garbage *garb_col)
 	parser->sphere_counter = 0;
 	parser->plane_counter = 0;
 	parser->cyl_counter = 0;
+	parser->garbage_head = garb_col;
 	parser->amb = NULL;
 	parser->cam = NULL;
 	parser->light = NULL;

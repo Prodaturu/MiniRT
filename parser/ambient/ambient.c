@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:29:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 17:39:45 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:25:57 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parse_ambient(char *line, t_parser *parser)
 	if (!amb)
 		return (ft_putendl_fd("Error: malloc error", 2), 1);
 	split = ft_split(line, ' ');
-	color = parse_color(split[2]);
+	color = parse_color(split[2], parser);
 	if (split[3] != NULL)
 		return (ft_putendl_fd("Error: to many arguments", 2), 1);
 	parser->amb_counter++;
@@ -34,6 +34,7 @@ int	parse_ambient(char *line, t_parser *parser)
 		return (ft_putendl_fd("Error: wrong ratio", 2), 1);
 	parser->amb = amb;
 	ft_free(split);
+	add_to_garb_col(parser->garbage_head, amb);
 	return (0);
 }
 

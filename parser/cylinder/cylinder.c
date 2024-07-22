@@ -6,15 +6,14 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:08:18 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 17:38:07 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:27:50 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static void		append_node(t_cyl_rt **cyl, int id);
+static void		append_node(t_cyl_rt **head, t_cyl_rt *cyl);
 static t_cyl_rt	*find_last(t_cyl_rt *cyl);
-static t_cyl_rt	*find_1st(t_cyl_rt *cyl);
 int				parse_cylinder(char *line, t_parser *parser);
 // static void	print_struct(t_cyl_rt *cyl);
 
@@ -31,26 +30,20 @@ int	parse_cylinder(char *line, t_parser *parser)
 	split = ft_split(line, ' ');
 	if (split[6] != NULL)
 		return (ft_putendl_fd("Error: too many arguments", 2), 1);
-	cyl->center = parse_coord(split[1]);
-	cyl->vec = parse_vec(split[2]);
+	cyl->center = parse_coord(split[1], parser);
+	cyl->vec = parse_vec(split[2], parser);
 	cyl->diameter = ft_atod(split[3]);
 	cyl->height = ft_atod(split[4]);
-	cyl->color = parse_color(split[5]);
+	cyl->color = parse_color(split[5], parser);
 	cyl->next = NULL;
 	cyl->prev = NULL;
-	append_node(&cyl, cyl->id);
-	parser->cyl = find_1st(cyl);
+	if (NULL == parser->cyl)
+		parser->cyl = cyl;
+	else
+		append_node(&parser->cyl, cyl);
 	ft_free(split);
+	add_to_garb_col(parser->garbage_head, cyl);
 	return (0);
-}
-
-static t_cyl_rt	*find_1st(t_cyl_rt *cyl)
-{
-	if (NULL == cyl)
-		return (NULL);
-	while (cyl->prev)
-		cyl = cyl->prev;
-	return (cyl);
 }
 
 static t_cyl_rt	*find_last(t_cyl_rt *cyl)
@@ -62,28 +55,19 @@ static t_cyl_rt	*find_last(t_cyl_rt *cyl)
 	return (cyl);
 }
 
-static void	append_node(t_cyl_rt **cyl, int id)
+static void	append_node(t_cyl_rt **head, t_cyl_rt *new_node)
 {
-	t_cyl_rt	*node;
 	t_cyl_rt	*last_node;
 
-	if (NULL == cyl)
+	if (NULL == head || NULL == new_node)
 		return ;
-	node = malloc(sizeof(t_cyl_rt));
-	if (NULL == node)
-		return ;
-	node->next = NULL;
-	node->id = id;
-	if (NULL == *cyl)
-	{
-		*cyl = node;
-		node->prev = NULL;
-	}
+	if (NULL == *head)
+		*head = new_node;
 	else
 	{
-		last_node = find_last(*cyl);
-		last_node->next = node;
-		node->prev = last_node;
+		last_node = find_last(*head);
+		last_node->next = new_node;
+		new_node->prev = last_node;
 	}
 }
 

@@ -6,43 +6,69 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 22:21:20 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/21 01:13:34 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:27:40 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
 
-/*
-void init_camera(t_scene *scene, t_camera *cam, t_garbage_collector *gc)
-{
-    double fov_radians;
-    t_vector *aux;
-    double half_diag;
+void	scene_render(t_main_rt *main_rt);
+t_ray	*get_ray(t_scene *scene, double x, double y);
 
-    if (!is_vector_normal(scene->camera.orientation, gc))
-        exit_function(gc, "camera vector is not normal\n", 1, true);
-    (*cam).width = WIDTH;
-    (*cam).height = (int)(((*cam).width) / (16.9 / 9.0));
-    (*cam).point = point(scene->camera.point->coordinate[0], scene->camera.point->coordinate[1], scene->camera.point->coordinate[2], gc);
-    (*cam).orientation = vector(scene->camera.orientation->coordinate[0], scene->camera.orientation->coordinate[1], scene->camera.orientation->coordinate[2], gc);
-    (*cam).fov = scene->camera.fov;
-    set_atributes(&half_diag, &fov_radians, cam);
-    set_normal_vector(cam, &aux, gc);
-    set_v_width_length(aux, cam, gc);
-    aux = vector_subtract((*cam).v_height, (*cam).v_width, gc);
-    (*cam).pixel00 = vector_add((*cam).v_cam_canvas, aux, gc);
-    (*cam).v_width = normalize((*cam).v_width, gc);
-    (*cam).v_height = normalize((*cam).v_height, gc);
+void	scene_render(t_main_rt *main_rt)
+{
+	t_scene		*scene;
+	t_ray		*ray;
+	t_color		*color;
+	int			x;
+	int			y;
+
+	x = 0;
+	y = 0;
+	scene = main_rt->scene;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			printf("DEBUG!!\n");
+			ray = get_ray(scene, x, y);
+			color = ray_color(ray, scene, main_rt->parser->light);
+			// set_pixel(x, y, color);
+			mlx_put_pixel(main_rt->img, x, y, ray->col);
+			x++;
+		}
+		y++;
+	}
 }
-*/
 
-mlx_t	init_viewport(t_parser *main_rt)
+t_ray	*get_ray(t_scene *scene, double x, double y)
 {
-	t_vector	help_vec;
-	double		half_diag;
+	t_ray		*ray;
+	t_garbage	*gc;
+	t_vector	*origin;
+	t_vector	*dir;
+	double		aspect_ratio;
 
-	main_rt->cam->pixel_width = WIDTH;
-	main_rt->cam->pixel_height = HEIGHT;
+	ray = malloc(sizeof(t_ray));
+	ray->origin = malloc(sizeof(t_vector));
+	ray->direction = malloc(sizeof(t_vector));
+	gc = scene->garbage_col;
+	aspect_ratio = (double)WIDTH / (double)HEIGHT;
+	x = (2 * x / (double)WIDTH - 1) * aspect_ratio;
+	y = (1 - 2 * y / (double)HEIGHT);
+	ray->scene_pixel_x = x * aspect_ratio * scene->fov;
+	ray->scene_pixel_y = y * scene->fov;
+	origin = vector_add(vector_add(scene->v_cam_canvas, \
+	scalar_mult(scene->v_width, ray->scene_pixel_x, gc), gc), \
+	scalar_mult(scene->v_height, ray->scene_pixel_y, gc), gc);
+	ray->origin = &(t_vec){origin->vec_x, origin->vec_y, origin->vec_z};
+	dir = normalize(vector_sub(origin, scene->pov, gc), gc);
+	ray->direction = &(t_vec){dir->vec_x, dir->vec_y, dir->vec_z};
+	add_to_garb_col(gc, ray);
+	add_to_garb_col(gc, ray->origin);
+	add_to_garb_col(gc, ray->direction);
+	return (ray);
 }
 
 // void	init_graphics(t_main_rt *main_rt)
@@ -50,7 +76,6 @@ mlx_t	init_viewport(t_parser *main_rt)
 // 	main_rt->mlx = mlx_init(WIDTH, HEIGHT, "RayTracer", true);
 // 	if (!main_rt->mlx)
 // 		print_msg(1, "window initialization failure");
-	
 // }
 
 // mlx_t	*post_processing(t_main_rt *main_rt)

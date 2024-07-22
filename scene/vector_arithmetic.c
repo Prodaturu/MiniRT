@@ -6,11 +6,11 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:40:46 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 20:03:50 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 01:26:43 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minirt.h"
+#include "../include/minirt.h"
 
 t_vector	*normalize(t_vector *vector, t_garbage *gc);
 t_vector	*vector_add(t_vector *vector, t_vector *help_vec, t_garbage *gc);
