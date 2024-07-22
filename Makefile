@@ -20,7 +20,11 @@ SRCS 	:= main.c \
 			./scene/build_scene.c \
 			./scene/vector_arithmetic.c \
 			./scene/scene_utils.c \
-			./mlx/create_img.c
+			./scene/objects.c \
+			./mlx/create_img.c \
+			./raytrace/raytrace_utils.c \
+			./raytrace/ray_color.c \
+			./raytrace/post_parse.c
 LIBFT	:= ./libft
 GNL 	:= ./gnl42
 HEADERS_FILES := ./include/garbage_collector.h \

@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 23:08:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 01:25:04 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/22 03:13:23 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ mlx_t	*renderer(t_main_rt *main_rt)
 	img = main_rt->img;
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		return (ft_putendl_fd("Error: mlx image error", 2), (void *)0);
-	color_images(img, main_rt);
+	printf("DEBUG!!\n");
+	scene_render(main_rt);
+	// color_images(img, main_rt);
 	mlx_key_hook(mlx, &my_keyhook, NULL);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);

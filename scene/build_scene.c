@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:46:28 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 01:26:25 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/22 02:42:25 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_vector	*get_vec(double x, double y, double z, t_garbage *gc)
 
 void	atributs_setter(double *half_diag, double *fov_radians, t_scene *scene)
 {
+	scene->pixel_width = WIDTH;
+	scene->pixel_height = HEIGHT;
 	*half_diag = sqrt(pow(scene->pixel_width, 2) + \
 		pow(scene->pixel_height, 2)) / 2;
 	*fov_radians = scene->fov * M_PI / 180;
@@ -64,6 +66,7 @@ int	init_scene_struct(t_main_rt *main_rt, t_garbage *gc)
 {
 	t_vector	*help_vec;
 	t_scene		*scene;
+	t_objects	*objects;
 	double		fov_radians;
 	double		half_diag;
 
@@ -71,10 +74,8 @@ int	init_scene_struct(t_main_rt *main_rt, t_garbage *gc)
 	if (!scene)
 		return (1);
 	add_to_garb_col(gc, scene);
-	world_init(main_rt, gc);
+	objects = objects_init(main_rt, gc);
 	help_vec = NULL;
-	scene->pixel_width = WIDTH;
-	scene->pixel_height = HEIGHT;
 	scene->fov = main_rt->parser->cam->fov;
 	scene->pov = set_pov(main_rt->parser->cam->pov, gc);
 	scene->orientation = set_orientation(main_rt->parser->cam->orient_vec, gc);
@@ -84,7 +85,10 @@ int	init_scene_struct(t_main_rt *main_rt, t_garbage *gc)
 	scene->start_pixel = vector_add(scene->v_cam_canvas, help_vec, gc);
 	scene->v_width = normalize(scene->v_width, gc);
 	scene->v_height = normalize(scene->v_height, gc);
+	scene->background_color = &(t_color){main_rt->parser->amb->color->r, \
+	main_rt->parser->amb->color->g, main_rt->parser->amb->color->b, \
+	255.0 / main_rt->parser->amb->ratio};
 	main_rt->scene = scene;
 	atributs_setter(&half_diag, &fov_radians, scene);
-	return (0);
+	return (scene->garbage_col = gc, scene->depth = 2, 0);
 }

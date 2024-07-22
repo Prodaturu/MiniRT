@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 19:30:16 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 13:29:50 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:34:15 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_vector	*scalar_mult(t_vector *a, double c, t_garbage *gc);
 t_vector	*set_orientation(t_vec_rt *orientation, t_garbage *gc);
 t_vector	*set_pov(t_pov_rt *pov, t_garbage *gc);
-void		world_init(t_main_rt *main_rt, t_garbage *gc);
 
 t_vector	*scalar_mult(t_vector *a, double c, t_garbage *gc)
 {
@@ -47,16 +46,4 @@ t_vector	*set_orientation(t_vec_rt *orientation, t_garbage *gc)
 	orientation_vec = get_vec(orientation->vc_x, orientation->vc_y, \
 	orientation->vc_z, gc);
 	return (orientation_vec);
-}
-
-void	world_init(t_main_rt *main_rt, t_garbage *gc)
-{
-	t_world_rt	*world;
-
-	world = (t_world_rt *)malloc(sizeof(t_world_rt));
-	if (world == NULL)
-		err_msg(gc, 1, "error allocating world\n", true);
-	else
-		add_to_garb_col(gc, world);
-	world->sphere = main_rt->parser->sphere;
 }
