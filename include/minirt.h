@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 22:56:11 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/21 01:08:07 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,15 @@ typedef struct s_scene
 
 }			t_scene;
 
+/** 
+ * @brief struct to store color data
+ * 
+ * @param red red color component
+ * @param green green color component
+ * @param blue blue color component
+ * @param alpha alpha color component
+ * @param rgb combined color
+*/
 typedef struct s_color
 {
 	int				red;
@@ -90,7 +99,6 @@ typedef struct s_color
 	int				rgb;
 	int				alpha;
 }				t_color;
-
 
 // --- --- --- Main miniRT struct --- --- --- //
 
@@ -109,7 +117,6 @@ typedef struct s_color
  * @param scene pointer to scene struct
  * @param color pointer to combined color
  */
-
 typedef struct s_main_rt
 {
 	int				sphere_counter;
@@ -124,7 +131,6 @@ typedef struct s_main_rt
 	t_scene			*scene;
 	t_color			*color;
 }				t_main_rt;
-
 
 // --- --- --- main.c --- --- --- //
 
@@ -158,7 +164,6 @@ int			parser(t_garbage *g_c, char *f_n, t_main_rt *m_rt);
 //build_scene
 int			init_scene_struct(t_main_rt *main_rt, t_garbage *gc);
 t_vector	*get_vec(double x, double y, double z, t_garbage *gc);
-
 
 t_vector	*normalize(t_vector *vector, t_garbage *gc);
 t_vector	*vector_add(t_vector *vector, t_vector *help_vec, t_garbage *gc);

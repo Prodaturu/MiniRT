@@ -6,12 +6,11 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:31:08 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/20 22:56:21 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/21 01:06:32 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
-
 
 int			parse_line(char *line, t_parser *parser);
 int			checker(char *line);
