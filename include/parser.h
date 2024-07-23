@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:30:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/22 02:18:38 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/23 02:49:52 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,7 @@ typedef struct s_object
 	t_plane_rt		*plane;
 	t_cyl_rt		*cylinder;
 	t_color_rt		*color;
+	struct s_object	*next;
 }	t_object;
 
 typedef struct s_objects {

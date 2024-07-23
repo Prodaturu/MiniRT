@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:49:07 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/22 02:53:16 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:24:58 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	is_on_sphere(t_vector center, int diameter, t_vector point)
 	if (sqrt(pow(point.vec_x - center.vec_x, 2) \
 		+ pow(point.vec_y - center.vec_y, 2) + \
 		pow(point.vec_z - center.vec_z, 2)) <= diameter / 2)
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 int	parse_sphere(char *line, t_parser *parser)

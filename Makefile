@@ -2,7 +2,7 @@
 
 NAME	:= miniRT
 CC		:= cc 
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g
+CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g #-fsanitize=address
 LIBMLX	:= ./MLX42
 SRCS 	:= main.c \
 			./garbage_collector/garbage_collector.c \
@@ -33,7 +33,7 @@ HEADERS_FILES := ./include/garbage_collector.h \
 			./include/render_structs.h
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm 
+LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -fsanitize=address
 INCLUDE := -L $(LIBFT) -lft -L $(GNL) -lgnl
 OBJS	:= ${SRCS:.c=.o}
 # BOBJS	:= ${BONUS:.c=.o}

@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/22 03:14:05 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:04:43 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int argc, char **argv)
 	main_rt_init(main_rt, garb_col);
 	parser(garb_col, argv[1], main_rt);
 	init_scene_struct(main_rt, garb_col);
-	printf("DEBUG!!\n");
 	renderer(main_rt);
 	free_garbage(garb_col);
 	free(garb_col);

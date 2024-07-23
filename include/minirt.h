@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/22 02:53:54 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/23 01:30:59 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 // # define DEBUG 0 // uncomment this line to disable debug mode
 
 # define PI 3.14159265358979323846
-# define WIDTH 1024
-# define HEIGHT 768
+# define WIDTH 2
+# define HEIGHT 2
 # define YPSILON 0.000001
 
 # define RESET "\x1B[0m"
@@ -93,7 +93,6 @@ typedef struct s_scene
 	int				depth;
 
 }			t_scene;
-
 
 // --- --- --- Main miniRT struct --- --- --- //
 
@@ -183,5 +182,6 @@ t_garbage *gc, int *id);
 mlx_t		*renderer(t_main_rt *main_rt);
 void		scene_render(t_main_rt *main_rt);
 t_color		*ray_color(t_ray *ray, t_scene *scene, t_light_rt *light);
+int			get_rgba(int r, int g, int b, int a);
 
 #endif

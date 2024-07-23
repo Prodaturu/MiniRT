@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:46:28 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/22 02:42:25 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/23 01:28:15 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 t_vector	*get_vec(double x, double y, double z, t_garbage *gc);
 int			init_scene_struct(t_main_rt *main_rt, t_garbage *gc);
-void		atributs_setter(double *half_diag, double *fov_rad, t_scene *scene);
+void		atributs_setter(t_scene *scene);
 void		norm_vec_setter(t_scene *scene, t_vector **help_vec, t_garbage *gc);
 void		set_v_width_length(t_vector *help_vec, t_scene *sc, t_garbage *gc);
+void		set_background_color(t_scene *scene, t_amb_rt *amb, t_garbage *gc);
 
 t_vector	*get_vec(double x, double y, double z, t_garbage *gc)
 {
@@ -32,14 +33,18 @@ t_vector	*get_vec(double x, double y, double z, t_garbage *gc)
 	return (vec);
 }
 
-void	atributs_setter(double *half_diag, double *fov_radians, t_scene *scene)
+void	atributs_setter(t_scene *scene)
 {
+	double		fov_radians;
+	double		half_diag;
+
 	scene->pixel_width = WIDTH;
 	scene->pixel_height = HEIGHT;
-	*half_diag = sqrt(pow(scene->pixel_width, 2) + \
+	half_diag = sqrt(pow(scene->pixel_width, 2) + \
 		pow(scene->pixel_height, 2)) / 2;
-	*fov_radians = scene->fov * M_PI / 180;
-	scene->focal_length = *half_diag / tan(*fov_radians / 2);
+	fov_radians = scene->fov * M_PI / 180;
+	scene->focal_length = half_diag / tan(fov_radians / 2);
+	scene->fov = fov_radians;
 }
 
 void	norm_vec_setter(t_scene *scene, t_vector **help_vec, t_garbage *gc)
@@ -67,13 +72,12 @@ int	init_scene_struct(t_main_rt *main_rt, t_garbage *gc)
 	t_vector	*help_vec;
 	t_scene		*scene;
 	t_objects	*objects;
-	double		fov_radians;
-	double		half_diag;
 
 	scene = malloc(sizeof(t_scene));
 	if (!scene)
 		return (1);
 	add_to_garb_col(gc, scene);
+	main_rt->scene = scene;
 	objects = objects_init(main_rt, gc);
 	help_vec = NULL;
 	scene->fov = main_rt->parser->cam->fov;
@@ -85,10 +89,22 @@ int	init_scene_struct(t_main_rt *main_rt, t_garbage *gc)
 	scene->start_pixel = vector_add(scene->v_cam_canvas, help_vec, gc);
 	scene->v_width = normalize(scene->v_width, gc);
 	scene->v_height = normalize(scene->v_height, gc);
-	scene->background_color = &(t_color){main_rt->parser->amb->color->r, \
-	main_rt->parser->amb->color->g, main_rt->parser->amb->color->b, \
-	255.0 / main_rt->parser->amb->ratio};
-	main_rt->scene = scene;
-	atributs_setter(&half_diag, &fov_radians, scene);
+	set_background_color(scene, main_rt->parser->amb, gc);
+	atributs_setter(scene);
 	return (scene->garbage_col = gc, scene->depth = 2, 0);
+}
+
+void	set_background_color(t_scene *scene, t_amb_rt *amb, t_garbage *gc)
+{
+	scene->background_color = malloc(sizeof(t_color));
+	if (!scene->background_color)
+	{
+		ft_putendl_fd("Error: malloc error", 2);
+		return ;
+	}
+	scene->background_color->red = amb->color->r;
+	scene->background_color->green = amb->color->g;
+	scene->background_color->blue = amb->color->b;
+	scene->background_color->alpha = (int)(255 * amb->ratio);
+	add_to_garb_col(gc, scene->background_color);
 }

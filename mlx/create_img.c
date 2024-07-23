@@ -6,11 +6,14 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 23:08:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/22 03:13:23 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/23 00:43:53 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
+
+int		get_rgba(int r, int g, int b, int a);
+void	my_keyhook(mlx_key_data_t keydata, void *param);
 
 void	my_keyhook(mlx_key_data_t keydata, void *param)
 {
@@ -23,7 +26,8 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 
 int	get_rgba(int r, int g, int b, int a)
 {
-	return (r << 24 | g << 16 | b << 8 | a);
+	return ((unsigned int)r << 24 | (unsigned int)g << 16 | \
+	(unsigned int)b << 8 | (unsigned int)a);
 }
 
 // void	draw_image(mlx_image_t *img, t_main_rt *main_rt)
@@ -80,9 +84,7 @@ mlx_t	*renderer(t_main_rt *main_rt)
 	img = main_rt->img;
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		return (ft_putendl_fd("Error: mlx image error", 2), (void *)0);
-	printf("DEBUG!!\n");
 	scene_render(main_rt);
-	// color_images(img, main_rt);
 	mlx_key_hook(mlx, &my_keyhook, NULL);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);

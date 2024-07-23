@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:40:46 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 01:26:43 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:51:56 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,20 @@ t_vector	*normalize(t_vector *vector, t_garbage *gc)
 
 	len = sqrt(vector->vec_x * vector->vec_x + vector->vec_y * vector->vec_y \
 	+ vector->vec_z * vector->vec_z);
-	norm_vec = get_vec(vector->vec_x / len, vector->vec_y / len, \
-	vector->vec_z / len, gc);
+	norm_vec = (t_vector *) malloc(sizeof(t_vector));
+	if (len == 0 && vector->vec_x == 0)
+		norm_vec->vec_x = 0;
+	else
+		norm_vec->vec_x = vector->vec_x / len;
+	if (len == 0 && vector->vec_y == 0)
+		norm_vec->vec_y = 0;
+	else
+		norm_vec->vec_y = vector->vec_y / len;
+	if (len == 0 && vector->vec_z == 0)
+		norm_vec->vec_z = 0;
+	else
+		norm_vec->vec_z = vector->vec_z / len;
+	norm_vec = get_vec(norm_vec->vec_x, norm_vec->vec_y, norm_vec->vec_z, gc);
 	return (norm_vec);
 }
 
