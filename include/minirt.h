@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/22 20:27:08 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/23 02:34:04 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ typedef struct s_scene
 
 }			t_scene;
 
-
 // --- --- --- Main miniRT struct --- --- --- //
 
 /**
@@ -131,21 +130,30 @@ typedef struct s_main_rt
 // --- --- --- main.c --- --- --- //
 
 /**
- * @brief main function to run the program
- * 
- * @param argc number of arguments
- * @param argv arguments
- * @return int 
- * 
- * @details Main function to run the program
+ * @brief Main function to run the program
  * checks the syntax of the input file,
  * parses the objects in the scene,
  * updates the scene struct
  * draws the scene using the mlx library
  * and returns 0 if successful
  * and 1 if there is an error anywhere during execution
+ * 
+ * @param argc number of arguments
+ * @param argv arguments
+ * @return int 0 if successful, 1 if error
  */
 int			main(int argc, char**argv);
+
+/**
+ * @brief Initializes the main_rt struct,
+ * and sets the sphere, plane and cylinder counters to 0,
+ * and sets the img and color pointers to NULL,
+ * finally adds the main_rt struct to the garbage collector
+ * 
+ * @param main_rt pointer to main_rt struct that will be initialized
+ * @param garb_col pointer to garbage collector
+ * @return void
+ */
 void		main_rt_init(t_main_rt *main_rt, t_garbage *garb_col);
 
 /**
@@ -156,7 +164,22 @@ void		main_rt_init(t_main_rt *main_rt, t_garbage *garb_col);
  */
 void		file_checker(int argc, char **argv);
 
+/**
+ * @brief Checks if the garbage collector is initialized and
+ * If correct filetype, returns error message if not. 
+ * 
+ * Then opens the file and returns error message if fd is -1.
+ * 
+ * Call parser_init function to initialize parser struct
+ * In a loop reads the file line by line and calls parse_line function
+ * if anywhere an error occurs, returns an error message 
+ * and closes the file descriptor and frees the line_read pointerw
+ */
 int			parser(t_garbage *g_c, char *f_n, t_main_rt *m_rt);
+
+/**
+ * @brief function to check if the point is on sphere.0
+ */
 int			is_on_sphere(t_vector center, int diameter, t_vector point);
 
 //build_scene

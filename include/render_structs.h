@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:06:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/22 20:27:20 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/22 23:09:24 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ typedef struct s_hit
 	double			t;
 }				t_hit;
 
+/**
+ * @param scene_pixel_x x coordinates for scene pixel on canvas
+ * @param scene_pixel_y y coordinates for scene pixel on canvas
+ * @param t_max 
+ */
 typedef struct s_ray
 {
 	t_vec	*origin;
