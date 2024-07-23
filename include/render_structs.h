@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:06:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/22 19:42:11 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/23 03:48:44 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ typedef struct s_hit
 	double			t;
 }				t_hit;
 
+/**
+ * @param scene_pixel_x x coordinates for scene pixel on canvas
+ * @param scene_pixel_y y coordinates for scene pixel on canvas
+ * @param t_max 
+ */
 typedef struct s_ray
 {
 	t_vec	*origin;

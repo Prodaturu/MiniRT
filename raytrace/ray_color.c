@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 18:28:49 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/23 03:43:32 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/23 03:48:59 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,10 @@ t_color	*diffuse_lighting(t_scene *scene, t_light_rt *light, t_hit rec)
 	shadow_ray.direction = &(t_vec){light_dir->vec_x, light_dir->vec_y, \
 	light_dir->vec_z};
 	if (hit_objects(scene->objects, &shadow_ray, YPSILON, &rec))
+	{
 		diffuse = color_multiply_scalar(diffuse, 0.5);
+		// shadow_ray = 
+	}
 	return (diffuse);
 }
 
