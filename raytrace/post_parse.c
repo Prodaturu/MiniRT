@@ -6,13 +6,32 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 22:21:20 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/23 02:30:46 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/25 22:50:37 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
 
 void	scene_render(t_main_rt *main_rt);
+
+/**
+ * @brief calculates and returns a ray from the camera
+ * to a specific pixel on the scene's canvas in a 3D rendering context.
+ * It takes the scene and the pixel coordinates (x, y) as input.
+ * The process involves:
+ * Allocating memory for a new ray and its components
+ * Calculating the aspect ratio of the scene
+ * Adjusting input pixel co-ords (x, y) based on the aspect ratio 
+ * and scene's FOV to map them correctly onto the scene's canvas.
+ * Compute rays origin and co-ords based on the scene's camera and canvas
+ * dir is normalized from POV to calculated origin
+ * adds to garbage collector
+ * @return t_ray* returns the calculated ray
+ * 
+ * @param scene the scene struct
+ * @param x x coordinate of the pixel
+ * @param y y coordinate of the pixel
+ */
 t_ray	*get_ray(t_scene *scene, double x, double y);
 
 void	scene_render(t_main_rt *main_rt)
@@ -31,7 +50,6 @@ void	scene_render(t_main_rt *main_rt)
 		x = 0;
 		while (x < WIDTH)
 		{
-			printf("DEBUG!!\n");
 			ray = get_ray(scene, x, y);
 			color = ray_color(ray, scene, main_rt->parser->light);
 			// set_pixel(x, y, color);
@@ -46,13 +64,13 @@ t_ray	*get_ray(t_scene *scene, double x, double y)
 {
 	t_ray		*ray;
 	t_garbage	*gc;
-	t_vector	*origin;
-	t_vector	*dir;
+	t_vec		*origin;
+	t_vec		*dir;
 	double		aspect_ratio;
 
 	ray = malloc(sizeof(t_ray));
-	ray->origin = malloc(sizeof(t_vector));
-	ray->direction = malloc(sizeof(t_vector));
+	ray->origin = malloc(sizeof(t_vec));
+	ray->direction = malloc(sizeof(t_vec));
 	gc = scene->garbage_col;
 	aspect_ratio = (double)WIDTH / (double)HEIGHT;
 	x = (2 * x / (double)WIDTH - 1) * aspect_ratio;

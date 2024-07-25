@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:49:07 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/22 02:53:16 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:33:09 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static t_sphere_rt	*find_last(t_sphere_rt *sphere);
 static void			append_node(t_sphere_rt **head, t_sphere_rt *new_node);
 int					parse_sphere(char *line, t_parser *parser);
-int					is_on_sphere(t_vector center, int diameter, t_vector point);
+int					is_on_sphere(t_vec center, int diameter, t_vec point);
 // static void	print_struct(t_sphere_rt *sphere);
 
-int	is_on_sphere(t_vector center, int diameter, t_vector point)
+int	is_on_sphere(t_vec center, int diameter, t_vec point)
 {
 	if (sqrt(pow(point.vec_x - center.vec_x, 2) \
 		+ pow(point.vec_y - center.vec_y, 2) + \

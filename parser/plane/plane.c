@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:08:42 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 13:28:30 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:33:09 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static t_plane_rt	*find_last(t_plane_rt *plane);
 static void			append_node(t_plane_rt **head, t_plane_rt *plane);
 int					parse_plane(char *line, t_parser *parser);
-int					is_on_plane(t_vector coord, t_vector vec, t_vector point);
+int					is_on_plane(t_vec coord, t_vec vec, t_vec point);
 // static void	print_struct(t_plane_rt *plane);
 
-int	is_on_plane(t_vector coord, t_vector vec, t_vector point)
+int	is_on_plane(t_vec coord, t_vec vec, t_vec point)
 {
 	if (vec.vec_x * (point.vec_x - coord.vec_x) + vec.vec_y * \
 		(point.vec_y - coord.vec_y) + \

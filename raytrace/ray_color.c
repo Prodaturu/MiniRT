@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 18:28:49 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/22 23:13:37 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/25 22:54:18 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,63 @@ bool	hit(t_object object, t_ray *ray, double t_min, t_hit *rec);
 // Jeśli jest cień, zmniejsz intensywność l 38
 // Kolor tła l 42
 
-t_color	*ray_color(t_ray *ray, t_scene *scene, t_light_rt *light)
-{
-	t_hit		rec;
-	t_vector	*unit_direction;
-	t_color		*diffuse;
-	t_color		*background;
-	double		t;
 
-	if (scene->depth <= 0)
-		return (&(t_color){0.0, 0.0, 0.0, 255.0});
-	if (hit_objects(scene->objects, ray, YPSILON, &rec))
-	{
-		diffuse = diffuse_lighting(scene, light, rec);
-		return (diffuse);
-	}
-	unit_direction = normalize(get_vec(ray->direction->vec_x, \
-	ray->direction->vec_y, ray->direction->vec_z, scene->garbage_col), \
-	scene->garbage_col);
-	t = 0.5 * (unit_direction->vec_y + 1.0);
-	background = scene->background_color;
-	return (background);
+t_color *ray_color(t_ray *ray, t_scene *scene, t_light *light)
+{
+    t_vec *hit_point;
+    t_vec *light_dir = normalize(vector_sub(light->position, hit_point, scene->garbage_col), scene->garbage_col);
+    double light_distance = vector_length(vector_sub(light->position, hit_point, scene->garbage_col));
+    int in_shadow;
+
+	hit_point = ray->hit_point; // Assume this is the intersection point
+    t_ray *shadow_ray = malloc(sizeof(t_ray));
+    shadow_ray->origin = hit_point;
+    shadow_ray->direction = light_dir;
+
+	in_shadow = is_in_shadow(scene, shadow_ray, light_distance);
+
+    t_color *final_color;
+    if (in_shadow)
+        final_color = create_color(0, 0, 0); // Or some ambient color
+    else
+        final_color = calculate_lighting(hit_point, light, scene);
+
+    free(shadow_ray);
+    return final_color;
 }
+
+// t_color	*ray_color(t_ray *ray, t_scene *scene, t_light_rt *light)
+// {
+// 	t_hit		rec;
+// 	// t_vec		*unit_direction;
+// 	t_color		*diffuse;
+// 	t_color		*background;
+// 	int			in_shadow;
+// 	t_ray		*shadow_ray;
+
+// 	if (hit_objects(scene->objects, ray, YPSILON, &rec))
+// 	{
+// 		diffuse = diffuse_lighting(scene, light, rec);
+// 		return (diffuse);
+// 	}
+// 	background = scene->background_color;
+// 	// return (background);
+// 	shadow_ray->origin = hit_point;
+//     shadow_ray->direction = light_dir;
+// 	in_shadow = is_in_shadow(scene, shadow_ray, light_distance);
+
+//     t_color *final_color;
+//     if (in_shadow) {
+//         final_color = create_color(0, 0, 0); // Or some ambient color
+//     } else {
+//         // Calculate the normal shading here
+//         final_color = calculate_lighting(hit_point, light, scene);
+//     }
+
+//     free(shadow_ray);
+//     return final_color;
+// }
+
 // background = lerp((t_color){1.0, 1.0, 1.0}, (t_color){0.5, 0.7, 1.0}, t);
 //linear interpolation function in case when we need to blend two colors
 // t_color	lerp(t_color a, t_color b, double t)
@@ -54,7 +89,6 @@ t_color	*ray_color(t_ray *ray, t_scene *scene, t_light_rt *light)
 // 		(1.0 - t) * a.green + t * b.green,
 // 		(1.0 - t) * a.blue + t * b.blue});
 // }
-
 bool	hit_objects(t_objects *objects, t_ray *ray, double t_min, t_hit *rec)
 {
 	t_hit	temp_rec;
@@ -84,29 +118,27 @@ bool	hit_objects(t_objects *objects, t_ray *ray, double t_min, t_hit *rec)
 	return (hit_anything);
 }
 
-
 t_color	*color_multiply_scalar(t_color *color, double scalar)
 {
 	return (&(t_color){color->red * scalar, color->green * scalar, \
 	color->blue * scalar, color->alpha * scalar});
 }
 
-// t_vector	*normalize(t_vector *v)
+// t_vec	*normalize(t_vec *v)
 // {
 // 	double	mag;
 
 // 	mag = sqrt(v.vec_x * v.vec_x + v.vec_y * v.vec_y + v.vec_z * v.vec_z);
-// 	return ((t_vector){v.vec_x / mag, v.vec_y / mag, v.vec_z / mag});
+// 	return ((t_vec){v.vec_x / mag, v.vec_y / mag, v.vec_z / mag});
 // }
-
-double	dot(t_vector a, t_vector b)
+double	dot(t_vec a, t_vec b)
 {
 	return (a.vec_x * b.vec_x + a.vec_y * b.vec_y + a.vec_z * b.vec_z);
 }
 
 t_color	*diffuse_lighting(t_scene *scene, t_light_rt *light, t_hit rec)
 {
-	t_vector	*light_dir;
+	t_vec		*light_dir;
 	double		light_intensity;
 	t_color		*material_color;
 	t_color		*diffuse;
@@ -135,14 +167,14 @@ t_color	*diffuse_lighting(t_scene *scene, t_light_rt *light, t_hit rec)
 
 bool	hit(t_object object, t_ray *ray, double t_min, t_hit *rec)
 {
-	t_vector	center;
-	t_vector 	point;
+	t_vec	center;
+	t_vec	point;
 
 	(void)rec;
 	(void)t_min;
-	center = (t_vector){object.sphere->center->co_x, \
+	center = (t_vec){object.sphere->center->co_x, \
 	object.sphere->center->co_y, object.sphere->center->co_z};
-	point = (t_vector){ray->origin->vec_x, ray->origin->vec_y, \
+	point = (t_vec){ray->origin->vec_x, ray->origin->vec_y, \
 	ray->origin->vec_z};
 	if (object.type == SPHERE)
 		return (is_on_sphere(center, object.sphere->diameter, \

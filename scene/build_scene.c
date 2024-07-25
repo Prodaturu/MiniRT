@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   build_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:46:28 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/22 02:42:25 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:35:04 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
 
-t_vector	*get_vec(double x, double y, double z, t_garbage *gc);
+t_vec		*get_vec(double x, double y, double z, t_garbage *gc);
 int			init_scene_struct(t_main_rt *main_rt, t_garbage *gc);
 void		atributs_setter(double *half_diag, double *fov_rad, t_scene *scene);
-void		norm_vec_setter(t_scene *scene, t_vector **help_vec, t_garbage *gc);
-void		set_v_width_length(t_vector *help_vec, t_scene *sc, t_garbage *gc);
+void		norm_vec_setter(t_scene *scene, t_vec **help_vec, t_garbage *gc);
+void		set_v_width_length(t_vec *help_vec, t_scene *sc, t_garbage *gc);
 
-t_vector	*get_vec(double x, double y, double z, t_garbage *gc)
+t_vec	*get_vec(double x, double y, double z, t_garbage *gc)
 {
-	t_vector	*vec;
+	t_vec	*vec;
 
-	vec = (t_vector *)malloc(sizeof(t_vector));
+	vec = (t_vec *)malloc(sizeof(t_vec));
 	if (!vec)
 		return (ft_putendl_fd("Error: malloc error", 2), (void *)0);
 	vec->vec_x = x;
@@ -42,7 +42,7 @@ void	atributs_setter(double *half_diag, double *fov_radians, t_scene *scene)
 	scene->focal_length = *half_diag / tan(*fov_radians / 2);
 }
 
-void	norm_vec_setter(t_scene *scene, t_vector **help_vec, t_garbage *gc)
+void	norm_vec_setter(t_scene *scene, t_vec **help_vec, t_garbage *gc)
 {
 	if (scene->pov->vec_x == 0.0f && (scene->pov->vec_y == 1.0f \
 		|| scene->pov->vec_y == -1.0f) && scene->pov->vec_z == 0.0f)
@@ -51,7 +51,7 @@ void	norm_vec_setter(t_scene *scene, t_vector **help_vec, t_garbage *gc)
 		*help_vec = get_vec(0.0, 1.0, 0.0, gc);
 }
 
-void	set_v_width_length(t_vector *help_vec, t_scene *sc, t_garbage *gc)
+void	set_v_width_length(t_vec *help_vec, t_scene *sc, t_garbage *gc)
 {
 	sc->v_width = normalize(cross(help_vec, sc->orientation, gc), gc);
 	sc->v_width = scalar_mult(sc->v_width, (sc->pixel_width) \
@@ -64,7 +64,7 @@ void	set_v_width_length(t_vector *help_vec, t_scene *sc, t_garbage *gc)
 
 int	init_scene_struct(t_main_rt *main_rt, t_garbage *gc)
 {
-	t_vector	*help_vec;
+	t_vec		*help_vec;
 	t_scene		*scene;
 	t_objects	*objects;
 	double		fov_radians;

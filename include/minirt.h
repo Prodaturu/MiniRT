@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/23 02:34:04 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/25 22:49:33 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ typedef struct s_vector
  */
 typedef struct s_scene
 {
-	t_vector		*start_pixel;
-	t_vector		*orientation;
-	t_vector		*v_cam_canvas;
-	t_vector		*v_width;
-	t_vector		*v_height;
-	t_vector		*pov;
+	t_vec			*start_pixel;
+	t_vec			*orientation;
+	t_vec			*v_cam_canvas;
+	t_vec			*v_width;
+	t_vec			*v_height;
+	t_vec			*pov;
 	t_objects		*objects;
 	t_color			*background_color;
 	void			*garbage_col;
@@ -122,7 +122,7 @@ typedef struct s_main_rt
 	t_parser		*parser;
 	t_objects		*objects;
 	t_garbage		*garb_col;
-	t_vector		*vector;
+	t_vec			*vector;
 	t_scene			*scene;
 	t_color			*color;
 }				t_main_rt;
@@ -178,22 +178,22 @@ void		file_checker(int argc, char **argv);
 int			parser(t_garbage *g_c, char *f_n, t_main_rt *m_rt);
 
 /**
- * @brief function to check if the point is on sphere.0
+ * @brief function to check if the point is on sphere.
  */
-int			is_on_sphere(t_vector center, int diameter, t_vector point);
+int			is_on_sphere(t_vec center, int diameter, t_vec point);
 
 //build_scene
 int			init_scene_struct(t_main_rt *main_rt, t_garbage *gc);
-t_vector	*get_vec(double x, double y, double z, t_garbage *gc);
+t_vec		*get_vec(double x, double y, double z, t_garbage *gc);
 
-t_vector	*normalize(t_vector *vector, t_garbage *gc);
-t_vector	*vector_add(t_vector *vector, t_vector *help_vec, t_garbage *gc);
-t_vector	*vector_sub(t_vector *v_height, t_vector *v_width, t_garbage *gc);
-t_vector	*vector_mult(t_vector *vector, double mult, t_garbage *gc);
-t_vector	*cross(t_vector *a, t_vector *b, t_garbage *gc);
-t_vector	*scalar_mult(t_vector *a, double c, t_garbage *gc);
-t_vector	*set_orientation(t_vec_rt *orientation, t_garbage *gc);
-t_vector	*set_pov(t_pov_rt *pov, t_garbage *gc);
+t_vec		*normalize(t_vec *vector, t_garbage *gc);
+t_vec		*vector_add(t_vec *vector, t_vec *help_vec, t_garbage *gc);
+t_vec		*vector_sub(t_vec *v_height, t_vec *v_width, t_garbage *gc);
+t_vec		*vector_mult(t_vec *vector, double mult, t_garbage *gc);
+t_vec		*cross(t_vec *a, t_vec *b, t_garbage *gc);
+t_vec		*scalar_mult(t_vec *a, double c, t_garbage *gc);
+t_vec		*set_orientation(t_vec_rt *orientation, t_garbage *gc);
+t_vec		*set_pov(t_pov_rt *pov, t_garbage *gc);
 t_objects	*objects_init(t_main_rt *main_rt, t_garbage *gc);
 t_object	*obj_sphere(t_objects *obj, t_parser *parser, \
 t_garbage *gc, int *id);

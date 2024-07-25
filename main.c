@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/23 02:34:32 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:57:03 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,6 @@
 
 void	main_rt_init(t_main_rt *main_rt, t_garbage *garb_col);
 void	file_checker(int argc, char **argv);
-
-int	main(int argc, char **argv)
-{
-	t_garbage	*garb_col;
-	t_main_rt	*main_rt;
-
-	file_checker(argc, argv);
-	garb_col = garbage_collector_init();
-	main_rt = (t_main_rt *)malloc(sizeof(t_main_rt));
-	if (!main_rt)
-		return (ft_putendl_fd("Error: malloc error", 2), 1);
-	main_rt_init(main_rt, garb_col);
-	parser(garb_col, argv[1], main_rt);
-	init_scene_struct(main_rt, garb_col);
-	printf("DEBUG!!\n");
-	renderer(main_rt);
-	free_garbage(garb_col);
-	free(garb_col);
-	return (0);
-}
 
 void	main_rt_init(t_main_rt *main_rt, t_garbage *garb_col)
 {
@@ -64,6 +44,26 @@ void	file_checker(int argc, char **argv)
 	}
 	if (DEBUG)
 		printf(GREEN "File type is: %s\n" RESET, file_type);
+}
+
+int	main(int argc, char **argv)
+{
+	t_garbage	*garb_col;
+	t_main_rt	*main_rt;
+
+	file_checker(argc, argv);
+	garb_col = garbage_collector_init();
+	main_rt = (t_main_rt *)malloc(sizeof(t_main_rt));
+	if (!main_rt)
+		return (ft_putendl_fd("Error: malloc error", 2), 1);
+	main_rt_init(main_rt, garb_col);
+	parser(garb_col, argv[1], main_rt);
+	init_scene_struct(main_rt, garb_col);
+	printf("DEBUG!!\n");
+	renderer(main_rt);
+	free_garbage(garb_col);
+	free(garb_col);
+	return (0);
 }
 
 // t_main_rt *open_and_init
