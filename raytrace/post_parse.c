@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 22:21:20 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/25 22:50:37 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/25 22:55:52 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,35 @@ t_ray	*get_ray(t_scene *scene, double x, double y)
 	add_to_garb_col(gc, ray->direction);
 	return (ray);
 }
+
+// t_ray *get_ray(t_scene *scene, double x, double y) {
+//     t_ray *ray = malloc(sizeof(t_ray));
+//     ray->origin = malloc(sizeof(t_vec));
+//     ray->direction = malloc(sizeof(t_vec));
+//     t_garbage *gc = scene->garbage_col;
+
+//     // Aspect ratio and normalized device coordinates
+//     double aspect_ratio = (double)WIDTH / (double)HEIGHT;
+//     x = (2 * x / (double)WIDTH - 1) * aspect_ratio;
+//     y = (1 - 2 * y / (double)HEIGHT);
+
+//     // Calculate ray direction
+//     ray->scene_pixel_x = x * aspect_ratio * scene->fov;
+//     ray->scene_pixel_y = y * scene->fov;
+//     t_vec *origin = vector_add(vector_add(scene->v_cam_canvas, 
+//                    scalar_mult(scene->v_width, ray->scene_pixel_x, gc), gc), 
+//                    scalar_mult(scene->v_height, ray->scene_pixel_y, gc), gc);
+//     ray->origin = &(t_vec){origin->vec_x, origin->vec_y, origin->vec_z};
+//     t_vec *dir = normalize(vector_sub(origin, scene->pov, gc), gc);
+//     ray->direction = &(t_vec){dir->vec_x, dir->vec_y, dir->vec_z};
+
+//     // Register with garbage collector
+//     add_to_garb_col(gc, ray);
+//     add_to_garb_col(gc, ray->origin);
+//     add_to_garb_col(gc, ray->direction);
+
+//     return ray;
+// }
 
 // void	init_graphics(t_main_rt *main_rt)
 // {
