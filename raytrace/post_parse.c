@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 22:21:20 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/25 23:02:49 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/25 23:07:02 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,21 @@ void	scene_render(t_main_rt *main_rt);
  * @param y y coordinate of the pixel
  */
 t_ray	*get_ray(t_scene *scene, double x, double y);
+
+int is_in_shadow(t_scene *scene, t_ray *shadow_ray, double light_distance)
+{
+    t_object *obj;
+	obj = scene->objects;
+    while (obj) {
+        double t = intersect(obj, shadow_ray);
+        if (t > 0 && t < light_distance) {
+            return 1;
+        }
+        obj = obj->next;
+    }
+    return 0; // No intersection, the point is not in shadow
+}
+
 
 void	scene_render(t_main_rt *main_rt)
 {
