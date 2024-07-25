@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 18:28:49 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/25 22:54:18 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/25 23:00:00 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,31 @@ t_color *ray_color(t_ray *ray, t_scene *scene, t_light *light)
 // t_color	*ray_color(t_ray *ray, t_scene *scene, t_light_rt *light)
 // {
 // 	t_hit		rec;
+// 	// t_vector	*unit_direction;
+// 	t_color		*diffuse;
+// 	t_color		*background;
+// 	// double		t;
+
+// 	if (scene->depth <= 0)
+// 		return (&(t_color){0.0, 0.0, 0.0, 255.0});
+// 	if (!hit_objects(scene->objects, ray, YPSILON, &rec))
+// 	{
+// 		diffuse = diffuse_lighting(scene, light, rec);
+// 		// printf("diff: r %f\t g %f\t b %f\n", diffuse->red, \
+// 		// diffuse->green, diffuse->blue);
+// 		return (diffuse);
+// 	}
+// 	// unit_direction = normalize(get_vec(ray->direction->vec_x, 
+// 	// ray->direction->vec_y, ray->direction->vec_z, scene->garbage_col), 
+// 	// scene->garbage_col);
+// 	// t = 0.5 * (unit_direction->vec_y + 1.0);
+// 	background = scene->background_color;
+// 	return (background);
+// }
+
+// t_color	*ray_color(t_ray *ray, t_scene *scene, t_light_rt *light)
+// {
+// 	t_hit		rec;
 // 	// t_vec		*unit_direction;
 // 	t_color		*diffuse;
 // 	t_color		*background;
@@ -89,6 +114,29 @@ t_color *ray_color(t_ray *ray, t_scene *scene, t_light *light)
 // 		(1.0 - t) * a.green + t * b.green,
 // 		(1.0 - t) * a.blue + t * b.blue});
 // }
+
+t_col	*set_obj_color(t_object object, t_col *color)
+{
+	color = malloc(sizeof(t_col));
+	if (!color)
+		return (&(t_col){0.0, 0.0, 0.0});
+	color->r = object.sphere->color->r;
+	color->g = object.sphere->color->g;
+	color->b = object.sphere->color->b;
+	return (color);
+}
+
+t_col	*set_color(t_color_rt *color, t_col *rec_color)
+{
+	rec_color = malloc(sizeof(t_col));
+	if (!color)
+		return (&(t_col){0.0, 0.0, 0.0});
+	rec_color->r = color->r;
+	rec_color->g = color->g;
+	rec_color->b = color->b;
+	return (rec_color);
+}
+
 bool	hit_objects(t_objects *objects, t_ray *ray, double t_min, t_hit *rec)
 {
 	t_hit	temp_rec;
@@ -102,16 +150,22 @@ bool	hit_objects(t_objects *objects, t_ray *ray, double t_min, t_hit *rec)
 	closest_so_far = t_max;
 	hit_anything = false;
 	ray->t_max = t_max;
-	while (i < objects->count)
+	printf("objects->count: %d\n", objects->count);
+	while (i <= objects->count)
 	{
-		if (hit(objects->object[i], ray, t_min, &temp_rec))
+		if (!hit(objects->object[i], ray, t_min, &temp_rec))
 		{
+			
+			printf("iteracja: %d\n", i);
 			hit_anything = true;
 			closest_so_far = temp_rec.t;
 			*rec = temp_rec;
-			rec->color = &(t_col){(double)objects->object[i].color->r, \
-			(double)objects->object[i].color->g, \
-			(double)objects->object[i].color->b};
+			printf("%p\n", rec->color);
+			printf("%p\n", objects->object);
+			rec->color = set_color(objects->object->color, rec->color);
+			printf("obj color%d\n", objects->object->color->r);
+			printf("rec col%f\n", rec->color->r);
+			// printf("%p\n", rec->color);
 		}
 		i++;
 	}
@@ -167,22 +221,45 @@ t_color	*diffuse_lighting(t_scene *scene, t_light_rt *light, t_hit rec)
 
 bool	hit(t_object object, t_ray *ray, double t_min, t_hit *rec)
 {
-	t_vec	center;
-	t_vec	point;
+	t_vector	center;
+	// t_vector	point;
 
 	(void)rec;
 	(void)t_min;
-	center = (t_vec){object.sphere->center->co_x, \
+	(void)ray;
+	center = (t_vector){object.sphere->center->co_x, \
 	object.sphere->center->co_y, object.sphere->center->co_z};
-	point = (t_vec){ray->origin->vec_x, ray->origin->vec_y, \
-	ray->origin->vec_z};
-	if (object.type == SPHERE)
-		return (is_on_sphere(center, object.sphere->diameter, \
-		point));
+	// point = (t_vector){ray->origin->vec_x, ray->origin->vec_y, \
+	// ray->origin->vec_z};
+	// if (object.type == SPHERE)
+	// 	return (is_on_sphere(center, object.sphere->diameter, \
+	// 	point));
+	return (false);
+}
+
+// bool	hit(t_object object, t_ray *ray, double t_min, t_hit *rec)
+// {
+// 	t_vec	center;
+// 	t_vec	point;
+
+// 	(void)rec;
+// 	(void)t_min;
+// 	center = (t_vec){object.sphere->center->co_x, \
+// 	object.sphere->center->co_y, object.sphere->center->co_z};
+// 	point = (t_vec){ray->origin->vec_x, ray->origin->vec_y, \
+// 	ray->origin->vec_z};
+// 	if (object.type == SPHERE)
+// 		return (is_on_sphere(center, object.sphere->diameter, \
+// 		point));
+// 		// , ray, t_min, rec));
+// 	// if (object.type == PLANE)
+// 	// 	return (hit_plane(object, ray, t_min, rec));
+// 	// if (object.type == CYLINDER)
+// 	// 	return (hit_cylinder(object, ray, t_min, rec));
+// 	return (false);
+// }
 		// , ray, t_min, rec));
 	// if (object.type == PLANE)
 	// 	return (hit_plane(object, ray, t_min, rec));
 	// if (object.type == CYLINDER)
 	// 	return (hit_cylinder(object, ray, t_min, rec));
-	return (false);
-}

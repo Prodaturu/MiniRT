@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:49:07 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/23 18:33:09 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/25 23:01:30 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	is_on_sphere(t_vec center, int diameter, t_vec point)
 	if (sqrt(pow(point.vec_x - center.vec_x, 2) \
 		+ pow(point.vec_y - center.vec_y, 2) + \
 		pow(point.vec_z - center.vec_z, 2)) <= diameter / 2)
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 int	parse_sphere(char *line, t_parser *parser)
