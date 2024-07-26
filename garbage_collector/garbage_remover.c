@@ -6,11 +6,15 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 03:37:57 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/26 08:18:25 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 08:24:24 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/garbage_collector.h"
+
+// free all rt resources and then free `gc`
+// Free rt specific allocations
+// Finally, free `gc` last
 
 void	free_node(t_garb_node *node)
 {

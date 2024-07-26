@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/26 08:19:02 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 08:25:06 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 void	file_checker(int argc, char **argv);
 
-// malloc and malloc check for main_rt struct
-// 
+void	free_all(t_main_rt *rt)
+{
+	free_garbage(rt->garb_col);
+	free(rt->garb_col);
+	free(rt);
+}
+
 t_main_rt	*main_rt_init(t_garbage *gc)
 {
 	t_main_rt	*main_rt;
@@ -80,8 +85,7 @@ int	main(int argc, char **argv)
 	file_checker(argc, argv);
 	gc = garbage_collector_init();
 	rt = main_rt_init(gc);
-	add_to_gc(gc, rt);
-	free_garbage(gc);
+	free_all(rt);
 	return (0);
 }
 
