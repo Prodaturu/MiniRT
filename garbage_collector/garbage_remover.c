@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_remover.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 03:37:57 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/21 00:52:14 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/26 08:18:25 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_garbage(t_garbage *garb_col)
 	while (current)
 	{
 		garb_col->length--;
-		if (current->ptr_data != NULL)
+		if (current->ptr_data != NULL && current->ptr_data != garb_col)
 			free_node(current->ptr_data);
 		next = current;
 		current = current->prev;

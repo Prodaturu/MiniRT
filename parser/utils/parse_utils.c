@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:51:27 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 13:24:25 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_color_rt	*parse_color(char *str, t_parser *parser)
 	if (color->r < 0 || color->r > 255 || color->g < 0 || \
 		color->g > 255 || color->b < 0 || color->b > 255)
 		return (ft_putendl_fd("Error: wrong color", 2), (void *)0);
-	add_to_garb_col(parser->garbage_head, color);
+	add_to_gc(parser->garbage_head, color);
 	return (color);
 }
 
@@ -52,7 +52,7 @@ t_vec_rt	*parse_vec(char *str, t_parser *parser)
 		vec->vc_z * vec->vc_z) > 1.05 || (vec->vc_x * vec->vc_x + \
 		vec->vc_y * vec->vc_y + vec->vc_z * vec->vc_z) < 0.95)
 		return (ft_putendl_fd("Error: not a unit vector", 2), (void *)0);
-	add_to_garb_col(parser->garbage_head, vec);
+	add_to_gc(parser->garbage_head, vec);
 	return (vec);
 }
 
@@ -69,7 +69,7 @@ t_pov_rt	*parse_pov(char *str, t_parser *parser)
 	pov->pv_y = ft_atod(pov_coord[1]);
 	pov->pv_z = ft_atod(pov_coord[2]);
 	ft_free(pov_coord);
-	add_to_garb_col(parser->garbage_head, pov);
+	add_to_gc(parser->garbage_head, pov);
 	return (pov);
 }
 
@@ -86,6 +86,6 @@ t_coord_rt	*parse_coord(char *str, t_parser *parser)
 	coord->co_y = ft_atod(coord_coord[1]);
 	coord->co_z = ft_atod(coord_coord[2]);
 	ft_free(coord_coord);
-	add_to_garb_col(parser->garbage_head, coord);
+	add_to_gc(parser->garbage_head, coord);
 	return (coord);
 }

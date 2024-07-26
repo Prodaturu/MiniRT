@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 20:15:33 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/21 13:26:44 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	parse_camera(char *line, t_parser *parser)
 		return (ft_putendl_fd("Error: wrong fov", 2), 1);
 	parser->cam = cam;
 	ft_free(split);
-	add_to_garb_col(parser->garbage_head, cam);
+	add_to_gc(parser->garbage_head, cam);
 	return (0);
 }
 // print_struct(parser);

@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:46:28 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/25 23:03:10 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_vec	*get_vec(double x, double y, double z, t_garbage *gc)
 	vec->vec_x = x;
 	vec->vec_y = y;
 	vec->vec_z = z;
-	add_to_garb_col(gc, vec);
+	add_to_gc(gc, vec);
 	return (vec);
 }
 
@@ -76,7 +76,7 @@ int	init_scene_struct(t_main_rt *main_rt, t_garbage *gc)
 	scene = malloc(sizeof(t_scene));
 	if (!scene)
 		return (1);
-	add_to_garb_col(gc, scene);
+	add_to_gc(gc, scene);
 	main_rt->scene = scene;
 	objects = objects_init(main_rt, gc);
 	help_vec = NULL;
@@ -106,5 +106,5 @@ void	set_background_color(t_scene *scene, t_amb_rt *amb, t_garbage *gc)
 	scene->background_color->green = amb->color->g;
 	scene->background_color->blue = amb->color->b;
 	scene->background_color->alpha = (int)(255 * amb->ratio);
-	add_to_garb_col(gc, scene->background_color);
+	add_to_gc(gc, scene->background_color);
 }

@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 15:49:07 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/25 23:01:30 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	parse_sphere(char *line, t_parser *parser)
 	else
 		append_node(&parser->sphere, sphere);
 	ft_free(split);
-	add_to_garb_col(parser->garbage_head, sphere);
+	add_to_gc(parser->garbage_head, sphere);
 	return (0);
 }
 

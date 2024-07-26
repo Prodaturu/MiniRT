@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 23:34:38 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/23 03:04:00 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_garbage *gc, int *id);
 // 	if (objects == NULL)
 // 		err_msg(gc, 1, "error allocating world\n", true);
 // 	else
-// 		add_to_garb_col(gc, objects);
+// 		add_to_gc(gc, objects);
 // 	id = 0;
 // 	main_rt->objects = objects;
 // 	parser = main_rt->parser;
@@ -70,7 +70,7 @@ t_objects	*objects_init(t_main_rt *main_rt, t_garbage *gc)
 	if (objects == NULL)
 		err_msg(gc, 1, "error allocating world\n", true);
 	else
-		add_to_garb_col(gc, objects);
+		add_to_gc(gc, objects);
 	id = 0;
 	objects->object = NULL;
 	parser = main_rt->parser;
@@ -134,7 +134,7 @@ t_object	*obj_sphere(t_objects *objects, t_parser *parser, \
 	if (object == NULL)
 		err_msg(gc, 1, "error allocating world\n", true);
 	else
-		add_to_garb_col(gc, object);
+		add_to_gc(gc, object);
 	object->id = *id;
 	printf("id    sphere: %d\n", *id);
 	printf("id%d\n", *id);
@@ -143,7 +143,7 @@ t_object	*obj_sphere(t_objects *objects, t_parser *parser, \
 	objects->object = object;
 	object->sphere = parser->sphere;
 	object->color = parser->sphere->color;
-	add_to_garb_col(gc, object->sphere);
+	add_to_gc(gc, object->sphere);
 	return (object);
 }
 
@@ -156,7 +156,7 @@ t_object	*obj_plane(t_objects *objects, t_parser *parser, \
 	if (object == NULL)
 		err_msg(gc, 1, "error allocating world\n", true);
 	else
-		add_to_garb_col(gc, object);
+		add_to_gc(gc, object);
 	object->id = *id;
 	printf("id    plane: %d\n", *id);
 	printf("id%d\n", *id);
@@ -165,7 +165,7 @@ t_object	*obj_plane(t_objects *objects, t_parser *parser, \
 	object->type = PLANE;
 	object->plane = parser->plane;
 	object->color = parser->plane->color;
-	add_to_garb_col(gc, object->plane);
+	add_to_gc(gc, object->plane);
 	return (object);
 }
 
@@ -178,7 +178,7 @@ t_object	*obj_cylinder(t_objects *objects, t_parser *parser, \
 	if (object == NULL)
 		err_msg(gc, 1, "error allocating world\n", true);
 	else
-		add_to_garb_col(gc, object);
+		add_to_gc(gc, object);
 	object->id = *id;
 	printf("id    cylinder: %d\n", *id);
 	printf("id%d\n", *id);
@@ -187,6 +187,6 @@ t_object	*obj_cylinder(t_objects *objects, t_parser *parser, \
 	objects->object = object;
 	object->cylinder = parser->cyl;
 	object->color = parser->cyl->color;
-	add_to_garb_col(gc, object->cylinder);
+	add_to_gc(gc, object->cylinder);
 	return (object);
 }

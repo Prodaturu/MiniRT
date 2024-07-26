@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:40:46 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/25 23:03:29 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_vec	*cross(t_vec *a, t_vec *b, t_garbage *gc)
 	if (result == NULL)
 		err_msg(gc, 1, "error allocating vector\n", true);
 	else
-		add_to_garb_col(gc, result);
+		add_to_gc(gc, result);
 	result->vec_x = a->vec_y * b->vec_z - a->vec_z * b->vec_y;
 	result->vec_y = a->vec_z * b->vec_x - a->vec_x * b->vec_z;
 	result->vec_z = a->vec_x * b->vec_y - a->vec_y * b->vec_x;

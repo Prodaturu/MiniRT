@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 19:30:16 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/25 23:03:23 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_vec	*scalar_mult(t_vec *a, double c, t_garbage *gc)
 	if (result == NULL)
 		err_msg(gc, 1, "error allocating vector\n", true);
 	else
-		add_to_garb_col(gc, result);
+		add_to_gc(gc, result);
 	result->vec_x = c * a->vec_x;
 	result->vec_y = c * a->vec_y;
 	result->vec_z = c * a->vec_z;

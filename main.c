@@ -6,23 +6,26 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/26 07:41:54 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 08:19:02 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minirt.h"
 
-void	main_rt_init(t_main_rt *main_rt, t_garbage *garb_col);
 void	file_checker(int argc, char **argv);
 
-void	main_rt_init(t_main_rt *main_rt, t_garbage *garb_col)
+// malloc and malloc check for main_rt struct
+// 
+t_main_rt	*main_rt_init(t_garbage *gc)
 {
-	main_rt->sphere_counter = 0;
-	main_rt->plane_counter = 0;
-	main_rt->cyl_counter = 0;
-	main_rt->img = NULL;
-	main_rt->color = NULL;
-	add_to_garb_col(garb_col, main_rt);
+	t_main_rt	*main_rt;
+
+	main_rt = (t_main_rt *)malloc(sizeof(t_main_rt));
+	if (!main_rt)
+		return (ft_putendl_fd("Error: malloc error", 2), exit(1), NULL);
+	main_rt->garb_col = gc;
+	add_to_gc(gc, main_rt);
+	return (main_rt);
 }
 
 void	file_checker(int argc, char **argv)
@@ -71,10 +74,14 @@ void	file_checker(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	// t_garbage	*gc;
-	// t_main_rt	*rt;
+	t_garbage	*gc;
+	t_main_rt	*rt;
 
 	file_checker(argc, argv);
+	gc = garbage_collector_init();
+	rt = main_rt_init(gc);
+	add_to_gc(gc, rt);
+	free_garbage(gc);
 	return (0);
 }
 

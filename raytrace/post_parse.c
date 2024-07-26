@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 22:21:20 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/25 23:07:02 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_ray	*get_ray(t_scene *scene, double x, double y)
 	scene->v_height->vec_z + scene->v_cam_canvas->vec_z, gc), gc);
 	ray->origin = (t_vec *)origin;
 	ray->direction = (t_vec *)dir;
-	add_to_garb_col(gc, ray);
+	add_to_gc(gc, ray);
 	return (ray);
 }
 
@@ -131,9 +131,9 @@ t_ray	*get_ray(t_scene *scene, double x, double y)
 //     ray->direction = &(t_vec){dir->vec_x, dir->vec_y, dir->vec_z};
 
 //     // Register with garbage collector
-//     add_to_garb_col(gc, ray);
-//     add_to_garb_col(gc, ray->origin);
-//     add_to_garb_col(gc, ray->direction);
+//     add_to_gc(gc, ray);
+//     add_to_gc(gc, ray->origin);
+//     add_to_gc(gc, ray->direction);
 
 //     return ray;
 // }
@@ -165,6 +165,6 @@ t_ray	*get_ray(t_scene *scene, double x, double y)
 // 	// dir = normalize(dir, gc);
 // 	ray->origin = (t_vec *)origin;
 // 	ray->direction = (t_vec *)dir;
-// 	add_to_garb_col(gc, ray);
+// 	add_to_gc(gc, ray);
 // 	return (ray);
 // }

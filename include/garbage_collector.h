@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 20:40:33 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/14 05:01:22 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void			free_specific_alloc(t_garbage *garb_col, void *ptr);
  * @param garb_col pointer to the garbage collector instance
  * @param ptr pointer to the data to be stored
  */
-void			add_to_garb_col(t_garbage *garb_col, void *ptr);
+void			add_to_gc(t_garbage *garb_col, void *ptr);
 
 /**
  * @brief Displays all the allocations passed to the garbage 

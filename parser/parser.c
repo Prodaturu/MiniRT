@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:31:08 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/22 20:27:30 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_parser	*parse_init(t_main_rt *main_rt, t_garbage *garb_col)
 	parser->cyl = NULL;
 	parser->color = NULL;
 	main_rt->parser = parser;
-	add_to_garb_col(garb_col, parser);
+	add_to_gc(garb_col, parser);
 	return (parser);
 }
 
