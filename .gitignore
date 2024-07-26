@@ -37,3 +37,6 @@ MLX42/
 miniRT
 gnl42
 libft
+
+#ignore test files
+test/
