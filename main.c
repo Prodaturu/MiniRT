@@ -6,20 +6,16 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:21:02 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/26 08:25:06 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/27 08:33:37 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minirt.h"
 
-void	file_checker(int argc, char **argv);
-
-void	free_all(t_main_rt *rt)
-{
-	free_garbage(rt->garb_col);
-	free(rt->garb_col);
-	free(rt);
-}
+// @note
+// free_rt_inits(rt) should be added at the start of free_all
+// @note
+// free_rt_inits(rt) should free all the rt specific allocations
 
 t_main_rt	*main_rt_init(t_garbage *gc)
 {
@@ -28,7 +24,7 @@ t_main_rt	*main_rt_init(t_garbage *gc)
 	main_rt = (t_main_rt *)malloc(sizeof(t_main_rt));
 	if (!main_rt)
 		return (ft_putendl_fd("Error: malloc error", 2), exit(1), NULL);
-	main_rt->garb_col = gc;
+	// main_rt->gc = gc;
 	add_to_gc(gc, main_rt);
 	return (main_rt);
 }
@@ -85,7 +81,8 @@ int	main(int argc, char **argv)
 	file_checker(argc, argv);
 	gc = garbage_collector_init();
 	rt = main_rt_init(gc);
-	free_all(rt);
+	parser(argv[1], rt);
+	free_garbage(gc);
 	return (0);
 }
 

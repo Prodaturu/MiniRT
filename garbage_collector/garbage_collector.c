@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 20:37:37 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/26 08:17:53 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 10:24:00 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,5 @@ t_garbage	*garbage_collector_init(void)
 	garb_col->length = 0;
 	garb_col->head = NULL;
 	garb_col->tail = NULL;
-	add_to_gc(garb_col, garb_col);
 	return (garb_col);
 }

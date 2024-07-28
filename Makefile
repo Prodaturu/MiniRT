@@ -7,24 +7,24 @@ LIBMLX	:= ./MLX42
 SRCS 	:= main.c \
 			./garbage_collector/garbage_collector.c \
 			./garbage_collector/garbage_remover.c \
-			./parser/parser.c \
-			./parser/ambient/ambient.c \
-			./parser/camera/camera.c \
-			./parser/light/light.c \
-			./parser/cylinder/cylinder.c \
-			./parser/plane/plane.c \
-			./parser/sphere/sphere.c \
-			./parser/utils/ft_atod.c \
-			./parser/utils/parse_utils.c \
-			./parser/utils/ft_free.c \
-			./scene/build_scene.c \
-			./scene/vector_arithmetic.c \
-			./scene/scene_utils.c \
-			./scene/objects.c \
-			./mlx/create_img.c \
-			./raytrace/raytrace_utils.c \
-			./raytrace/ray_color.c \
-			./raytrace/post_parse.c
+			# ./parser/parser.c \
+			# ./parser/ambient/ambient.c \
+			# ./parser/camera/camera.c \
+			# ./parser/light/light.c \
+			# ./parser/cylinder/cylinder.c \
+			# ./parser/plane/plane.c \
+			# ./parser/sphere/sphere.c \
+			# ./parser/utils/ft_atod.c \
+			# ./parser/utils/parse_utils.c \
+			# ./parser/utils/ft_free.c \
+			# ./scene/build_scene.c \
+			# ./scene/vector_arithmetic.c \
+			# ./scene/scene_utils.c \
+			# ./scene/objects.c \
+			# ./mlx/create_img.c \
+			# ./raytrace/raytrace_utils.c \
+			# ./raytrace/ray_color.c \
+			# ./raytrace/post_parse.c
 LIBFT	:= ./libft
 GNL 	:= ./gnl42
 HEADERS_FILES := ./include/garbage_collector.h \

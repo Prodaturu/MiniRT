@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 01:29:10 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/25 23:01:10 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:36:30 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,19 @@ typedef struct s_scene
 }			t_scene;
 
 // --- --- --- Main miniRT struct --- --- --- //
-
 /**
+ * @brief s_main_rt struct to store main miniRT data
+ * @param gc pointer to garbage collector
+ * @param objects pointer to objects struct(s)
+ * @param object_count number of objects in the scene
+ */
+typedef struct s_main_rt
+{
+	t_object		**objects;
+	size_t			object_count;
+}					t_main_rt;
+
+/*
  * @struct s_main_rt t_main_rt
  * @brief s_main_rt struct to store main miniRT data
  * 
@@ -111,21 +122,21 @@ typedef struct s_scene
  * @param scene pointer to scene struct
  * @param color pointer to combined color
  */
-typedef struct s_main_rt
-{
-	int				sphere_counter;
-	int				plane_counter;
-	int				cyl_counter;
-	int				num_windows;
-	mlx_t			*mlx;
-	mlx_image_t		*img;
-	t_parser		*parser;
-	t_objects		*objects;
-	t_garbage		*garb_col;
-	t_vec			*vector;
-	t_scene			*scene;
-	t_color			*color;
-}				t_main_rt;
+// typedef struct s_main_rt
+// {
+// 	int				sphere_counter;
+// 	int				plane_counter;
+// 	int				cyl_counter;
+// 	int				num_windows;
+// 	mlx_t			*mlx;
+// 	mlx_image_t		*img;
+// 	t_parser		*parser;
+// 	t_objects		*objects;
+// 	t_garbage		*garb_col;
+// 	t_vec			*vector;
+// 	t_scene			*scene;
+// 	t_color			*color;
+// }				t_main_rt;
 
 // --- --- --- main.c --- --- --- //
 
@@ -154,7 +165,7 @@ int			main(int argc, char**argv);
  * @param garb_col pointer to garbage collector
  * @return void
  */
-void		main_rt_init(t_main_rt *main_rt, t_garbage *garb_col);
+t_main_rt	*main_rt_init(t_garbage *gc);
 
 /**
  * @brief function to check the syntax of the input file
@@ -177,34 +188,34 @@ void		file_checker(int argc, char **argv);
  */
 int			parser(t_garbage *g_c, char *f_n, t_main_rt *m_rt);
 
-/**
- * @brief function to check if the point is on sphere.
- */
-int			is_on_sphere(t_vec center, int diameter, t_vec point);
+// /**
+//  * @brief function to check if the point is on sphere.
+//  */
+// int			is_on_sphere(t_vec center, int diameter, t_vec point);
 
-//build_scene
-int			init_scene_struct(t_main_rt *main_rt, t_garbage *gc);
-t_vec		*get_vec(double x, double y, double z, t_garbage *gc);
+// //build_scene
+// int			init_scene_struct(t_main_rt *main_rt, t_garbage *gc);
+// t_vec		*get_vec(double x, double y, double z, t_garbage *gc);
 
-t_vec		*normalize(t_vec *vector, t_garbage *gc);
-t_vec		*vector_add(t_vec *vector, t_vec *help_vec, t_garbage *gc);
-t_vec		*vector_sub(t_vec *v_height, t_vec *v_width, t_garbage *gc);
-t_vec		*vector_mult(t_vec *vector, double mult, t_garbage *gc);
-t_vec		*cross(t_vec *a, t_vec *b, t_garbage *gc);
-t_vec		*scalar_mult(t_vec *a, double c, t_garbage *gc);
-t_vec		*set_orientation(t_vec_rt *orientation, t_garbage *gc);
-t_vec		*set_pov(t_pov_rt *pov, t_garbage *gc);
-t_objects	*objects_init(t_main_rt *main_rt, t_garbage *gc);
-t_object	*obj_sphere(t_objects *obj, t_parser *parser, \
-t_garbage *gc, int *id);
-t_object	*obj_cylinder(t_objects *obj, t_parser *parser, \
-t_garbage *gc, int *id);
-t_object	*obj_plane(t_objects *obj, t_parser *parser, \
-t_garbage *gc, int *id);
-//mlx
-mlx_t		*renderer(t_main_rt *main_rt);
-void		scene_render(t_main_rt *main_rt);
-t_color		*ray_color(t_ray *ray, t_scene *scene, t_light_rt *light);
-int			get_rgba(int r, int g, int b, int a);
+// t_vec		*normalize(t_vec *vector, t_garbage *gc);
+// t_vec		*vector_add(t_vec *vector, t_vec *help_vec, t_garbage *gc);
+// t_vec		*vector_sub(t_vec *v_height, t_vec *v_width, t_garbage *gc);
+// t_vec		*vector_mult(t_vec *vector, double mult, t_garbage *gc);
+// t_vec		*cross(t_vec *a, t_vec *b, t_garbage *gc);
+// t_vec		*scalar_mult(t_vec *a, double c, t_garbage *gc);
+// t_vec		*set_orientation(t_vec_rt *orientation, t_garbage *gc);
+// t_vec		*set_pov(t_pov_rt *pov, t_garbage *gc);
+// t_objects	*objects_init(t_main_rt *main_rt, t_garbage *gc);
+// t_object	*obj_sphere(t_objects *obj, t_parser *parser,
+// t_garbage *gc, int *id);
+// t_object	*obj_cylinder(t_objects *obj, t_parser *parser,
+// t_garbage *gc, int *id);
+// t_object	*obj_plane(t_objects *obj, t_parser *parser,
+// t_garbage *gc, int *id);
+// //mlx
+// mlx_t		*renderer(t_main_rt *main_rt);
+// void		scene_render(t_main_rt *main_rt);
+// t_color		*ray_color(t_ray *ray, t_scene *scene, t_light_rt *light);
+// int			get_rgba(int r, int g, int b, int a);
 
 #endif

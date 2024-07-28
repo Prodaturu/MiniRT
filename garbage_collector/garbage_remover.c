@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 03:37:57 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/07/26 08:24:24 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/07/26 10:50:05 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_node(t_garb_node *node)
 {
 	if (!node)
 		return ;
+	printf("Freeing node at %p\n", (void *)node);
 	free(node);
 	node = NULL;
 }
@@ -29,20 +30,21 @@ void	free_garbage(t_garbage *garb_col)
 	t_garb_node	*current;
 	t_garb_node	*next;
 
+	if (!garb_col)
+		return ;
 	if (garb_col->length == 0)
 		return ;
 	current = garb_col->tail;
 	while (current)
 	{
+		next = current->prev;
 		garb_col->length--;
 		if (current->ptr_data != NULL && current->ptr_data != garb_col)
 			free_node(current->ptr_data);
-		next = current;
-		current = current->prev;
-		free_node(next);
+		free_node(current);
+		current = next;
 	}
-	if (garb_col)
-		free(garb_col);
+	free(garb_col);
 	return ;
 }
 
