@@ -1,319 +1,96 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/20 14:30:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/23 02:49:52 by trosinsk         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PARSER_H
 # define PARSER_H
 
-# define VALID_SET "ACLsplcy +-.0123456789,\n"
+# include <stddef.h>
+# include <stdbool.h>
+# include "render_structs.h"
 
-// typedef struct s_scene_rt
-// {
-// 	int					sphere_count;
-// 	int					plane_count;
-// 	int					cylinder_count;
-// }			t_scene_rt;
-/**
- * @brief s_vec_rt struct to store object vectors
- * 
- * @param vc_x vector component in x direction
- * @param vc_y vector component in y direction
- * @param vc_z vector component in z direction
- */
-
-typedef struct s_vec_rt
+typedef struct s_ambient
 {
-	double			vc_x;
-	double			vc_y;
-	double			vc_z;
-}				t_vec_rt;
+	double	ratio;
+	t_color	color;
+}	t_ambient;
 
-/**
- * @brief s_pov_rt struct to store point of view coordinates
- * 
- * @param x point of view x coordinate
- * @param y point of view y coordinate
- * @param z point of view z coordinate
- */
-
-typedef struct s_coord_rt
+typedef struct s_camera
 {
-	double			co_x;
-	double			co_y;
-	double			co_z;
-}				t_coord_rt;
+	t_vec	position;
+	t_vec	direction;
+	t_vec	right;
+	t_vec	up;
+	double	fov_degrees;
+	struct s_camera	*next;
+}	t_camera;
 
-/**
- * @brief color struct to store color data
- * @param r red color value
- * @param g green color value
- * @param b blue color value
- 
- */
-
-typedef struct s_color_rt
+typedef struct s_light
 {
-	int				r;
-	int				g;
-	int				b;
-}				t_color_rt;
+	t_vec	position;
+	double	ratio;
+	t_color	color;
+	struct s_light	*next;
+}	t_light;
 
-/**
- * @brief s_amb_rt struct to store ambient light data
- * 
- * @param ratio ambient light ratio
- * @param color pointer to ambient light color
- */
-
-typedef struct s_amb_rt
+typedef enum e_object_type
 {
-	double			ratio;
-	t_color_rt		*color;
-}				t_amb_rt;
-
-/**
- * @brief s_pov_rt struct to store object coordinates
- * 
- * @param pv_x x coordinate
- * @param pv_y y coordinate
- * @param pv_z z coordinate
- */
-typedef struct s_pov_rt
-{
-	double			pv_x;
-	double			pv_y;
-	double			pv_z;
-}				t_pov_rt;
-
-/**
- * @brief s_light_rt struct to store light data
- * 
- * @param coord pointer to light coordinates
- * @param ratio light ratio
- * @param color pointer to light color
- */
-
-typedef struct s_light_rt
-{
-	t_coord_rt		*coord;
-	double			ratio;
-	t_color_rt		*color;
-}				t_light_rt;
-
-/**
- * @brief s_cam_rt struct to store camera data
- * 
- * @param orient_vec pointer to camera orientation vector
- * @param start_pixel pointer to start pixel coordinates
- * @param v_cam_canvas pointer to camera canvas vector
- * @param v_width pointer to width vector
- * @param v_height pointer to height vector
- * @param pov pointer to point of view coordinates
- * @param half_width half width of the camera
- * @param half_height half height of the camera
- * @param focal_length camera focal length
- * @param pixel_width pixel width
- * @param pixel_height pixel height
- * @param fov camera field of view
- * @param hsize horizontal size
- * @param vsize vertical size
- */
-
-typedef struct s_cam_rt
-{
-	t_pov_rt		*pov;
-	t_vec_rt		*orient_vec;
-	double			fov;
-	int				hsize;
-	int				vsize;
-}				t_cam_rt;
-
-// --- --- --- Geometry related structs --- --- --- //
-
-/**
- * @brief s_sphere_rt struct to store sphere data
- * 
- * @param id sphere id
- * @param diameter sphere diameter
- * @param center pointer to sphere center coordinates
- * @param color pointer to sphere color
- * @param next pointer to next sphere
- * @param prev pointer to previous sphere
- */
-
-typedef struct s_sphere_rt
-{
-	int					id;
-	double				diameter;
-	t_coord_rt			*center;
-	t_color_rt			*color;
-	struct s_sphere_rt	*next;
-	struct s_sphere_rt	*prev;
-}				t_sphere_rt;
-
-/**
- * @brief s_plane_rt struct to store plane data
- * 
- * @param id plane id
- * @param coord pointer to plane coordinates
- * @param vec pointer to plane vector
- * @param color pointer to plane color
- * @param next pointer to next plane
- * @param prev pointer to previous plane
- */
-
-typedef struct s_plane_rt
-{
-	int					id;
-	t_coord_rt			*coord;
-	t_vec_rt			*vec;
-	t_color_rt			*color;
-	struct s_plane_rt	*next;
-	struct s_plane_rt	*prev;
-}				t_plane_rt;
-
-/**
- * 
- * @brief s_cyl_rt struct to store cylinder data
- * 
- * @param id cylinder id
- * @param diameter cylinder diameter
- * @param height cylinder height
- * @param center pointer to cylinder center coordinates
- * @param vec pointer to cylinder vector
- * @param color pointer to cylinder color
- * @param next pointer to next cylinder
- * @param prev pointer to previous cylinder
- */
-
-typedef struct s_cyl_rt
-{
-	int				id;
-	double			diameter;
-	double			height;
-	t_coord_rt		*center;
-	t_vec_rt		*vec;
-	t_color_rt		*color;
-	struct s_cyl_rt	*next;
-	struct s_cyl_rt	*prev;
-}				t_cyl_rt;
-
-/**
- * @struct parser struct to store the parsed data
- * @brief struct to store the parsed data
- * 
- * @param fd file descriptor
- * @param amb_counter ambient light counter
- * @param cam_counter camera counter
- * @param light_counter light counter
- * @param sphere_counter sphere counter
- * @param plane_counter plane counter
- * @param cyl_counter cylinder counter
- * @param num_windows number of windows
- * @param img pointer to mlx_image_t struct
- * @param amb pointer to ambient light
- * @param cam pointer to camera
- * @param light pointer to light
- * @param sphere pointer to sphere
- * @param plane pointer to plane
- * @param cyl pointer to cylinder
- * @param color pointer to combined color
- */
-
-typedef enum s_object_type
-{
-	SPHERE,
-	CYLINDER,
-	PLANE
-}			t_object_type;
+	OBJ_SPHERE,
+	OBJ_PLANE,
+	OBJ_CYLINDER,
+	OBJ_SQUARE,
+	OBJ_TRIANGLE
+}	t_object_type;
 
 typedef struct s_object
 {
-	t_object_type	type;
-	int				counter;
-	int				id;
-	t_sphere_rt		*sphere;
-	t_plane_rt		*plane;
-	t_cyl_rt		*cylinder;
-	t_color_rt		*color;
-	struct s_object	*next;
+	t_object_type		type;
+	t_vec				position;
+	t_vec				direction;
+	t_color				color;
+	double				radius;
+	double				height;
+	double				size;
+	t_vec				vertex_b;
+	t_vec				vertex_c;
+	struct s_object		*next;
 }	t_object;
 
-typedef struct s_objects {
-	t_object	*object;
-	int			count;
-}				t_objects;
-
-typedef struct s_parser
+typedef struct s_scene
 {
-	int			fd;
-	int			amb_counter;
-	int			cam_counter;
-	int			light_counter;
-	int			sphere_counter;
-	int			plane_counter;
-	int			cyl_counter;
-	void		*garbage_head;
-	t_objects	*objects;
-	t_amb_rt	*amb;
-	t_cam_rt	*cam;
-	t_light_rt	*light;
-	t_sphere_rt	*sphere;
-	t_plane_rt	*plane;
-	t_cyl_rt	*cyl;
-	t_color_rt	*color;
-}			t_parser;
+	bool		has_resolution;
+	bool		has_ambient;
+	int			width;
+	int			height;
+	int			window_width;
+	int			window_height;
+	t_ambient	ambient;
+	t_camera	*cameras;
+	t_camera	*active_camera;
+	t_light		*lights;
+	t_object	*objects;
+	size_t		camera_count;
+	size_t		light_count;
+	size_t		object_count;
+}	t_scene;
 
-// --- --- --- parser.c --- --- --- //
+int		parse_scene_file(const char *path, t_scene *scene, char *err, size_t size);
+int		parse_resolution(char **tokens, int count, t_scene *scene, char *err, size_t size);
+int		parse_ambient(char **tokens, int count, t_scene *scene, char *err, size_t size);
+int		parse_camera(char **tokens, int count, t_scene *scene, char *err, size_t size);
+int		parse_light(char **tokens, int count, t_scene *scene, char *err, size_t size);
+int		parse_sphere(char **tokens, int count, t_scene *scene, char *err, size_t size);
+int		parse_plane(char **tokens, int count, t_scene *scene, char *err, size_t size);
+int		parse_cylinder(char **tokens, int count, t_scene *scene, char *err, size_t size);
+int		parse_square(char **tokens, int count, t_scene *scene, char *err, size_t size);
+int		parse_triangle(char **tokens, int count, t_scene *scene, char *err, size_t size);
+int		append_camera(t_scene *scene, t_camera camera, char *err, size_t size);
+int		append_light(t_scene *scene, t_light light, char *err, size_t size);
 
-/**
- * @brief function to parse the objects in the scene
- * 
- * @param file_name name of the file to parse
- * @param scene pointer to the scene struct
- * 
- * @details This function will parse the objects
- * in the scene and update the scene struct
- */
-// int	parser(t_garbage *g_c, char *file_n, t_scene *scene, t_parser *m);
-int			parse_line(char *line, t_parser *parser);
-
-/** parse_ambient:
- * @brief parses ambient light & updates parser struct
- * 
- * @param line The line of text containing the ambient light info
- * @param parser A pointer to the parser structure.
- * @return Returns 0 if successful, 1 if there is an error.
- */
-int			parse_ambient(char *line, t_parser *parser);
-//camera
-int			parse_camera(char *line, t_parser *parser);
-//light
-int			parse_light(char *line, t_parser *parser);
-//sphere
-int			parse_sphere(char *line, t_parser *parser);
-//plane
-int			parse_plane(char *line, t_parser *parser);
-//cylinder
-int			parse_cylinder(char *line, t_parser *parser);
-//parser
-int			parse_line(char *line, t_parser *parser);
-// int			parser(int fd, t_parser *parser);
-//parser/utils
-double		ft_atod(char *str);
-t_coord_rt	*parse_coord(char *str, t_parser *parser);
-t_pov_rt	*parse_pov(char *str, t_parser *parser);
-t_vec_rt	*parse_vec(char *st, t_parser *parser);
-t_color_rt	*parse_color(char *str, t_parser *parser);
-void		ft_free(char **str);
-int			err_msg(t_garbage *garb_col, int ex_flag, char *msg, int ret);
+char	**split_whitespace(const char *line, int *count);
+void	free_tokens(char **tokens);
+char	*trim_in_place(char *str);
+bool	parse_double_strict(const char *str, double *out);
+bool	parse_int_strict(const char *str, int *out);
+bool	parse_vec3(const char *str, t_vec *out);
+bool	parse_color_rgb(const char *str, t_color *out);
+bool	parse_unit_vec(const char *str, t_vec *out);
+void	set_error(char *err, size_t size, const char *fmt, ...);
 
 #endif

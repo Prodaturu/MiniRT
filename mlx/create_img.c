@@ -1,92 +1,118 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   create_img.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/30 23:08:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/25 23:01:18 by sprodatu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/minirt.h"
 
-int		get_rgba(int r, int g, int b, int a);
-void	my_keyhook(mlx_key_data_t keydata, void *param);
-
-void	my_keyhook(mlx_key_data_t keydata, void *param)
-{
-	(void)param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-	{
-		exit(0);
-	}
-}
-
-int	get_rgba(int r, int g, int b, int a)
-{
-	return ((unsigned int)r << 24 | (unsigned int)g << 16 | \
-	(unsigned int)b << 8 | (unsigned int)a);
-}
-
-// void	draw_image(mlx_image_t *img, t_main_rt *main_rt)
-// {
-// 	int	h_index;
-// 	int	w_index;
-
-// 	h_index = 0;
-// 	w_index = 0;
-// 	while (h_index < main_rt->cam->height)
-// 	{
-// 		w_index = 0;
-// 		while (w_index < main_rt->cam->width)
-// 		{
-// 			w_index++;
-// 		}
-// 		h_index++;
-// 	}
-// }
-
-void	color_images(mlx_image_t *img, t_main_rt *main_rt)
+static void	blit_framebuffer(t_main_rt *rt)
 {
 	int			x;
 	int			y;
-	int			color;
-	t_parser	*parser;
+	int			src_x;
+	int			src_y;
+	uint32_t	color;
 
-	x = 0;
-	parser = main_rt->parser;
-	color = get_rgba(parser->amb->color->r, parser->amb->color->g, \
-		parser->amb->color->b, parser->amb->ratio);
-	while (x < WIDTH)
+	y = 0;
+	while (y < rt->scene.window_height)
 	{
-		y = 0;
-		while (y < HEIGHT)
+		x = 0;
+		while (x < rt->scene.window_width)
 		{
-			mlx_put_pixel(img, x, y, (color + x * y));
-			y++;
+			src_x = (int)((double)x * (double)rt->scene.width
+					/ (double)rt->scene.window_width);
+			src_y = (int)((double)y * (double)rt->scene.height
+					/ (double)rt->scene.window_height);
+			color = rt->framebuffer[(size_t)src_y * (size_t)rt->scene.width + (size_t)src_x];
+			mlx_put_pixel(rt->img, x, y, color);
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
 
-mlx_t	*renderer(t_main_rt *main_rt)
+static void	switch_camera(t_main_rt *rt, int direction)
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
+	t_camera	*camera;
+	t_camera	*previous;
 
-	main_rt->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
-	mlx = main_rt->mlx;
-	if (!mlx)
-		return (ft_putendl_fd("Error: mlx error", 2), (void *)0);
-	main_rt->img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	img = main_rt->img;
-	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
-		return (ft_putendl_fd("Error: mlx image error", 2), (void *)0);
-	scene_render(main_rt);
-	mlx_key_hook(mlx, &my_keyhook, NULL);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
-	return (mlx);
+	if (rt->scene.camera_count < 2)
+		return ;
+	if (direction > 0)
+	{
+		rt->scene.active_camera = rt->scene.active_camera->next;
+		if (rt->scene.active_camera == NULL)
+			rt->scene.active_camera = rt->scene.cameras;
+	}
+	else
+	{
+		camera = rt->scene.cameras;
+		previous = camera;
+		while (camera != rt->scene.active_camera)
+		{
+			previous = camera;
+			camera = camera->next;
+		}
+		if (camera == rt->scene.cameras)
+		{
+			while (previous->next != NULL)
+				previous = previous->next;
+			rt->scene.active_camera = previous;
+		}
+		else
+			rt->scene.active_camera = previous;
+	}
+	scene_render(rt);
+	blit_framebuffer(rt);
+}
+
+static void	key_hook(mlx_key_data_t keydata, void *param)
+{
+	t_main_rt	*rt;
+
+	rt = param;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		mlx_close_window(rt->mlx);
+	else if ((keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D)
+		&& keydata.action == MLX_PRESS)
+		switch_camera(rt, 1);
+	else if ((keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_A)
+		&& keydata.action == MLX_PRESS)
+		switch_camera(rt, -1);
+}
+
+int	renderer(t_main_rt *rt, char *err, size_t size)
+{
+	int32_t	monitor_width;
+	int32_t	monitor_height;
+
+	monitor_width = rt->scene.width;
+	monitor_height = rt->scene.height;
+	mlx_get_monitor_size(0, &monitor_width, &monitor_height);
+	if (monitor_width > 0 && monitor_height > 0)
+	{
+		if (rt->scene.window_width > monitor_width)
+			rt->scene.window_width = monitor_width;
+		if (rt->scene.window_height > monitor_height)
+			rt->scene.window_height = monitor_height;
+	}
+	rt->mlx = mlx_init(rt->scene.window_width, rt->scene.window_height, "miniRT", true);
+	if (rt->mlx == NULL)
+		return (set_error(err, size, "failed to initialize MLX"), 0);
+	rt->img = mlx_new_image(rt->mlx, rt->scene.window_width, rt->scene.window_height);
+	if (rt->img == NULL || mlx_image_to_window(rt->mlx, rt->img, 0, 0) < 0)
+	{
+		mlx_terminate(rt->mlx);
+		rt->mlx = NULL;
+		return (set_error(err, size, "failed to create render image"), 0);
+	}
+	scene_render(rt);
+	if (rt->framebuffer == NULL)
+	{
+		mlx_terminate(rt->mlx);
+		rt->mlx = NULL;
+		return (set_error(err, size, "failed to allocate framebuffer"), 0);
+	}
+	blit_framebuffer(rt);
+	mlx_key_hook(rt->mlx, key_hook, rt);
+	mlx_loop(rt->mlx);
+	mlx_terminate(rt->mlx);
+	rt->mlx = NULL;
+	rt->img = NULL;
+	return (1);
 }

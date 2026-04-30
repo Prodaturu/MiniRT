@@ -1,91 +1,154 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/30 15:51:27 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minirt.h"
 
-t_color_rt	*parse_color(char *str, t_parser *parser)
+static char	*dup_string(const char *src)
 {
-	t_color_rt	*color;
-	char		**col;
+	size_t	len;
+	char	*dst;
 
-	color = (t_color_rt *)malloc(sizeof(t_color_rt));
-	if (!color)
-		return (ft_putendl_fd("Error: malloc error", 2), (void *)0);
-	col = ft_split(str, ',');
-	color->r = ft_atoi(col[0]);
-	color->g = ft_atoi(col[1]);
-	color->b = ft_atoi(col[2]);
-	ft_free(col);
-	if (color->r < 0 || color->r > 255 || color->g < 0 || \
-		color->g > 255 || color->b < 0 || color->b > 255)
-		return (ft_putendl_fd("Error: wrong color", 2), (void *)0);
-	add_to_gc(parser->garbage_head, color);
-	return (color);
+	len = strlen(src);
+	dst = malloc(len + 1);
+	if (dst == NULL)
+		return (NULL);
+	memcpy(dst, src, len + 1);
+	return (dst);
 }
 
-t_vec_rt	*parse_vec(char *str, t_parser *parser)
+static int	count_words(const char *line)
 {
-	t_vec_rt	*vec;
-	char		**vec_coord;
+	int		count;
+	bool	in_word;
 
-	vec = (t_vec_rt *)malloc(sizeof(t_vec_rt));
-	if (!vec)
-		return (ft_putendl_fd("Error: malloc error", 2), (void *)0);
-	vec_coord = ft_split(str, ',');
-	vec->vc_x = ft_atod(vec_coord[0]);
-	vec->vc_y = ft_atod(vec_coord[1]);
-	vec->vc_z = ft_atod(vec_coord[2]);
-	ft_free(vec_coord);
-	if (vec->vc_x < -1 || vec->vc_x > 1 || vec->vc_y < -1 || \
-		vec->vc_y > 1 || vec->vc_z < -1 || vec->vc_z > 1)
-		return (ft_putendl_fd("Error: wrong vector coordinates", 2), (void *)0);
-	if ((vec->vc_x * vec->vc_x + vec->vc_y * vec->vc_y + \
-		vec->vc_z * vec->vc_z) > 1.05 || (vec->vc_x * vec->vc_x + \
-		vec->vc_y * vec->vc_y + vec->vc_z * vec->vc_z) < 0.95)
-		return (ft_putendl_fd("Error: not a unit vector", 2), (void *)0);
-	add_to_gc(parser->garbage_head, vec);
-	return (vec);
+	count = 0;
+	in_word = false;
+	while (*line)
+	{
+		if (*line == ' ' || *line == '\t' || *line == '\n' || *line == '\r'
+			|| *line == '\v' || *line == '\f')
+			in_word = false;
+		else if (!in_word)
+		{
+			in_word = true;
+			count++;
+		}
+		line++;
+	}
+	return (count);
 }
 
-t_pov_rt	*parse_pov(char *str, t_parser *parser)
+char	*trim_in_place(char *str)
 {
-	t_pov_rt	*pov;
-	char		**pov_coord;
+	char	*end;
 
-	pov = (t_pov_rt *)malloc(sizeof(t_pov_rt));
-	if (!pov)
-		return (ft_putendl_fd("Error: malloc error", 2), (void *)0);
-	pov_coord = ft_split(str, ',');
-	pov->pv_x = ft_atod(pov_coord[0]);
-	pov->pv_y = ft_atod(pov_coord[1]);
-	pov->pv_z = ft_atod(pov_coord[2]);
-	ft_free(pov_coord);
-	add_to_gc(parser->garbage_head, pov);
-	return (pov);
+	while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r'
+		|| *str == '\v' || *str == '\f')
+		str++;
+	if (*str == '\0')
+		return (str);
+	end = str + strlen(str) - 1;
+	while (end > str && (*end == ' ' || *end == '\t' || *end == '\n'
+			|| *end == '\r' || *end == '\v' || *end == '\f'))
+		*end-- = '\0';
+	return (str);
 }
 
-t_coord_rt	*parse_coord(char *str, t_parser *parser)
+char	**split_whitespace(const char *line, int *count)
 {
-	t_coord_rt	*coord;
-	char		**coord_coord;
+	char	*copy;
+	char	*token;
+	char	*saveptr;
+	char	**tokens;
+	int		i;
 
-	coord = (t_coord_rt *)malloc(sizeof(t_coord_rt));
-	if (!coord)
-		return (ft_putendl_fd("Error: malloc error", 2), (void *)0);
-	coord_coord = ft_split(str, ',');
-	coord->co_x = ft_atod(coord_coord[0]);
-	coord->co_y = ft_atod(coord_coord[1]);
-	coord->co_z = ft_atod(coord_coord[2]);
-	ft_free(coord_coord);
-	add_to_gc(parser->garbage_head, coord);
-	return (coord);
+	*count = count_words(line);
+	tokens = calloc((size_t)*count + 1, sizeof(char *));
+	copy = dup_string(line);
+	if (tokens == NULL || copy == NULL)
+		return (free(tokens), free(copy), NULL);
+	i = 0;
+	token = strtok_r(copy, " \t\r\n\v\f", &saveptr);
+	while (token != NULL && i < *count)
+	{
+		tokens[i] = dup_string(token);
+		if (tokens[i] == NULL)
+			return (free(copy), free_tokens(tokens), NULL);
+		i++;
+		token = strtok_r(NULL, " \t\r\n\v\f", &saveptr);
+	}
+	free(copy);
+	return (tokens);
+}
+
+static bool	parse_three_parts(const char *str, double *a, double *b, double *c)
+{
+	char	*copy;
+	char	*part;
+	char	*saveptr;
+	double	values[3];
+	int		i;
+
+	copy = dup_string(str);
+	if (copy == NULL)
+		return (false);
+	i = 0;
+	part = strtok_r(copy, ",", &saveptr);
+	while (part != NULL && i < 3)
+	{
+		part = trim_in_place(part);
+		if (!parse_double_strict(part, &values[i]))
+			return (free(copy), false);
+		i++;
+		part = strtok_r(NULL, ",", &saveptr);
+	}
+	free(copy);
+	if (i != 3 || part != NULL)
+		return (false);
+	*a = values[0];
+	*b = values[1];
+	*c = values[2];
+	return (true);
+}
+
+bool	parse_vec3(const char *str, t_vec *out)
+{
+	return (parse_three_parts(str, &out->x, &out->y, &out->z));
+}
+
+bool	parse_color_rgb(const char *str, t_color *out)
+{
+	double	r;
+	double	g;
+	double	b;
+
+	if (!parse_three_parts(str, &r, &g, &b))
+		return (false);
+	if (r < 0.0 || r > 255.0 || g < 0.0 || g > 255.0 || b < 0.0 || b > 255.0)
+		return (false);
+	out->r = r / 255.0;
+	out->g = g / 255.0;
+	out->b = b / 255.0;
+	return (true);
+}
+
+bool	parse_unit_vec(const char *str, t_vec *out)
+{
+	double	length;
+
+	if (!parse_vec3(str, out))
+		return (false);
+	length = vec_length(*out);
+	if (length < EPSILON)
+		return (false);
+	*out = vec_normalize(*out);
+	return (true);
+}
+
+void	set_error(char *err, size_t size, const char *fmt, ...)
+{
+	va_list	args;
+
+	if (err == NULL || size == 0)
+		return ;
+	va_start(args, fmt);
+	vsnprintf(err, size, fmt, args);
+	va_end(args);
 }

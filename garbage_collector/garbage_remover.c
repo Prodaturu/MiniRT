@@ -12,10 +12,6 @@
 
 #include "../include/garbage_collector.h"
 
-// free all rt resources and then free `gc`
-// Free rt specific allocations
-// Finally, free `gc` last
-
 void	free_node(t_garb_node *node)
 {
 	if (!node)
@@ -45,26 +41,3 @@ void	free_garbage(t_garbage *garb_col)
 		free(garb_col);
 	return ;
 }
-
-// void	free_specific_alloc(t_garbage *garb_col, void *ptr)
-// {
-// 	t_garb_node	*current;
-// 	t_garb_node	*prev;
-
-// 	current = garb_col->head;
-// 	while (current)
-// 	{
-// 		if (current->ptr_data == ptr)
-// 		{
-// 			free(current->ptr_data);
-// 			if (prev == NULL)
-// 				garb_col->head = current->next;
-// 			else
-// 				prev->next = current->next;
-// 			free(current);
-// 			return ;
-// 		}
-// 		prev = current;
-// 		current = current->next;
-// 	}
-// }

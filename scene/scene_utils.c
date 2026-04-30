@@ -1,49 +1,46 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   scene_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/20 19:30:16 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/minirt.h"
 
-t_vec	*scalar_mult(t_vec *a, double c, t_garbage *gc);
-t_vec	*set_orientation(t_vec_rt *orientation, t_garbage *gc);
-t_vec	*set_pov(t_pov_rt *pov, t_garbage *gc);
-
-t_vec	*scalar_mult(t_vec *a, double c, t_garbage *gc)
+t_color	color_add(t_color a, t_color b)
 {
-	t_vec	*result;
-
-	result = (t_vec *)malloc(sizeof(t_vec));
-	if (result == NULL)
-		err_msg(gc, 1, "error allocating vector\n", true);
-	else
-		add_to_gc(gc, result);
-	result->vec_x = c * a->vec_x;
-	result->vec_y = c * a->vec_y;
-	result->vec_z = c * a->vec_z;
-	return (result);
+	return ((t_color){a.r + b.r, a.g + b.g, a.b + b.b});
 }
 
-t_vec	*set_pov(t_pov_rt *pov, t_garbage *gc)
+t_color	color_scale(t_color color, double scale)
 {
-	t_vec	*pov_vec;
-
-	pov_vec = get_vec(pov->pv_x, pov->pv_y, pov->pv_z, gc);
-	return (pov_vec);
+	return ((t_color){color.r * scale, color.g * scale, color.b * scale});
 }
 
-t_vec	*set_orientation(t_vec_rt *orientation, t_garbage *gc)
+t_color	color_mul(t_color a, t_color b)
 {
-	t_vec	*orientation_vec;
+	return ((t_color){a.r * b.r, a.g * b.g, a.b * b.b});
+}
 
-	orientation_vec = get_vec(orientation->vc_x, orientation->vc_y, \
-	orientation->vc_z, gc);
-	return (orientation_vec);
+t_color	color_clamp(t_color color)
+{
+	if (color.r < 0.0)
+		color.r = 0.0;
+	if (color.g < 0.0)
+		color.g = 0.0;
+	if (color.b < 0.0)
+		color.b = 0.0;
+	if (color.r > 1.0)
+		color.r = 1.0;
+	if (color.g > 1.0)
+		color.g = 1.0;
+	if (color.b > 1.0)
+		color.b = 1.0;
+	return (color);
+}
+
+uint32_t	rgba_from_color(t_color color)
+{
+	uint32_t	r;
+	uint32_t	g;
+	uint32_t	b;
+
+	color = color_clamp(color);
+	r = (uint32_t)lrint(color.r * 255.0);
+	g = (uint32_t)lrint(color.g * 255.0);
+	b = (uint32_t)lrint(color.b * 255.0);
+	return ((r << 24) | (g << 16) | (b << 8) | 0xFFu);
 }

@@ -12,11 +12,6 @@
 
 #include "../include/garbage_collector.h"
 
-// Allocate memory for new node
-// Initialize new node
-// handle the case when the garbage collector is empty (first call)
-// handle the case when the garbage collector is not empty
-
 void	add_to_gc(t_garbage *garb_col, void *ptr)
 {
 	t_garb_node	*new_node;

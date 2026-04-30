@@ -1,87 +1,29 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cylinder.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/30 16:08:18 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minirt.h"
 
-static void		append_node(t_cyl_rt **head, t_cyl_rt *cyl);
-static t_cyl_rt	*find_last(t_cyl_rt *cyl);
-int				parse_cylinder(char *line, t_parser *parser);
-// static void	print_struct(t_cyl_rt *cyl);
-
-int	parse_cylinder(char *line, t_parser *parser)
+int	parse_cylinder(char **tokens, int count, t_scene *scene, char *err, size_t size)
 {
-	t_cyl_rt	*cyl;
-	char		**split;
+	t_object	object;
+	double		diameter;
+	double		height;
 
-	cyl = (t_cyl_rt *)malloc(sizeof(t_cyl_rt));
-	if (!cyl)
-		return (ft_putendl_fd("Error: malloc error", 2), 1);
-	cyl->id = parser->cyl_counter;
-	parser->cyl_counter++;
-	split = ft_split(line, ' ');
-	if (split[6] != NULL)
-		return (ft_putendl_fd("Error: too many arguments", 2), 1);
-	cyl->center = parse_coord(split[1], parser);
-	cyl->vec = parse_vec(split[2], parser);
-	cyl->diameter = ft_atod(split[3]);
-	cyl->height = ft_atod(split[4]);
-	cyl->color = parse_color(split[5], parser);
-	cyl->next = NULL;
-	cyl->prev = NULL;
-	if (NULL == parser->cyl)
-		parser->cyl = cyl;
-	else
-		append_node(&parser->cyl, cyl);
-	ft_free(split);
-	add_to_gc(parser->garbage_head, cyl);
-	return (0);
+	if (count != 6)
+		return (set_error(err, size, "cylinder format: cy <x,y,z> <nx,ny,nz> <diameter> <height> <R,G,B>"), 0);
+	if (!parse_vec3(tokens[1], &object.position))
+		return (set_error(err, size, "cylinder center is invalid"), 0);
+	if (!parse_unit_vec(tokens[2], &object.direction))
+		return (set_error(err, size, "cylinder axis must be a non-zero vector"), 0);
+	if (!parse_double_strict(tokens[3], &diameter) || diameter <= 0.0)
+		return (set_error(err, size, "cylinder diameter must be > 0"), 0);
+	if (!parse_double_strict(tokens[4], &height) || height <= 0.0)
+		return (set_error(err, size, "cylinder height must be > 0"), 0);
+	if (!parse_color_rgb(tokens[5], &object.color))
+		return (set_error(err, size, "cylinder color must use RGB values in [0,255]"), 0);
+	object.type = OBJ_CYLINDER;
+	object.radius = diameter * 0.5;
+	object.height = height;
+	object.size = 0.0;
+	object.vertex_b = (t_vec){0.0, 0.0, 0.0};
+	object.vertex_c = (t_vec){0.0, 0.0, 0.0};
+	object.next = NULL;
+	return (append_object(scene, object, err, size));
 }
-
-static t_cyl_rt	*find_last(t_cyl_rt *cyl)
-{
-	if (NULL == cyl)
-		return (NULL);
-	while (cyl->next)
-		cyl = cyl->next;
-	return (cyl);
-}
-
-static void	append_node(t_cyl_rt **head, t_cyl_rt *new_node)
-{
-	t_cyl_rt	*last_node;
-
-	if (NULL == head || NULL == new_node)
-		return ;
-	if (NULL == *head)
-		*head = new_node;
-	else
-	{
-		last_node = find_last(*head);
-		last_node->next = new_node;
-		new_node->prev = last_node;
-	}
-}
-
-// print_struct(cyl);
-// line above should be pasted before return (0) in parse_cylinder
-// static void	print_struct(t_cyl_rt *cyl)
-// {
-// 	printf("Cylinder id: %d\n", cyl->id);
-// 	printf("Cylinder center: %f %f %f\n", cyl->center->x,
-//	cyl->center->y,	cyl->center->z);
-// 	printf("Cylinder vector: %f %f %f\n", cyl->vec->x, cyl->vec->y,
-// 		cyl->vec->z);
-// 	printf("Cylinder diameter: %f\n", cyl->diameter);
-// 	printf("Cylinder height: %f\n", cyl->height);
-// 	printf("Cylinder color: %d %d %d\n", cyl->color->r,
-// 		cyl->color->g, cyl->color->b);
-// }

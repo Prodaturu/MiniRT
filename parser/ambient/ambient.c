@@ -1,48 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ambient.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/28 18:29:34 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minirt.h"
 
-// static void	print_struct(t_amb_rt *amb);
-
-int	parse_ambient(char *line, t_parser *parser)
+int	parse_ambient(char **tokens, int count, t_scene *scene, char *err, size_t size)
 {
-	char		**split;
-	t_amb_rt	*amb;
-	t_color_rt	*color;
-
-	amb = (t_amb_rt *)malloc(sizeof(t_amb_rt));
-	if (!amb)
-		return (ft_putendl_fd("Error: malloc error", 2), 1);
-	split = ft_split(line, ' ');
-	color = parse_color(split[2], parser);
-	if (split[3] != NULL)
-		return (ft_putendl_fd("Error: to many arguments", 2), 1);
-	parser->amb_counter++;
-	amb->ratio = ft_atod(split[1]);
-	amb->color = color;
-	if (amb->ratio < 0 || amb->ratio > 1)
-		return (ft_putendl_fd("Error: wrong ratio", 2), 1);
-	parser->amb = amb;
-	ft_free(split);
-	add_to_gc(parser->garbage_head, amb);
-	return (0);
+	if (count != 3)
+		return (set_error(err, size, "ambient format: A <ratio> <R,G,B>"), 0);
+	if (scene->has_ambient)
+		return (set_error(err, size, "scene must contain exactly one ambient light"), 0);
+	if (!parse_double_strict(tokens[1], &scene->ambient.ratio)
+		|| scene->ambient.ratio < 0.0 || scene->ambient.ratio > 1.0)
+		return (set_error(err, size, "ambient ratio must be in [0.0, 1.0]"), 0);
+	if (!parse_color_rgb(tokens[2], &scene->ambient.color))
+		return (set_error(err, size, "ambient color must use RGB values in [0,255]"), 0);
+	scene->has_ambient = true;
+	return (1);
 }
-
-// print_struct(parser->amb);
-// static void	print_struct(t_amb_rt *amb)
-// {
-// 	printf("parser->amb->ratio: %f\n", amb->ratio);
-// 	printf("parser->amb->color->r: %d\n", amb->color->r);
-// 	printf("parser->amb->color->g: %d\n", amb->color->g);
-// 	printf("parser->amb->color->b: %d\n", amb->color->b);
-// }

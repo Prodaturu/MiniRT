@@ -1,192 +1,111 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   objects.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/21 23:34:38 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/07/26 07:47:21 by sprodatu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/minirt.h"
 
-t_objects	*objects_init(t_main_rt *main_rt, t_garbage *gc);
-t_object	*obj_sphere(t_objects *objects, t_parser *parser, \
-t_garbage *gc, int *id);
-t_object	*obj_cylinder(t_objects *objects, t_parser *parser, \
-t_garbage *gc, int *id);
-t_object	*obj_plane(t_objects *objects, t_parser *parser, \
-t_garbage *gc, int *id);
-
-// t_objects	*objects_init(t_main_rt *main_rt, t_garbage *gc)
-// {
-// 	t_objects	*objects;
-// 	t_object	*object;
-// 	t_parser	*parser;
-// 	int			id;
-
-// 	objects = (t_objects *)malloc(sizeof(t_objects));
-// 	if (objects == NULL)
-// 		err_msg(gc, 1, "error allocating world\n", true);
-// 	else
-// 		add_to_gc(gc, objects);
-// 	id = 0;
-// 	main_rt->objects = objects;
-// 	parser = main_rt->parser;
-// 	while (parser->sphere != NULL)
-// 	{
-// 		objects->object = obj_sphere(objects, parser, gc, &id);
-// 		parser->sphere = parser->sphere->next;
-// 	}
-// 	while (parser->plane != NULL)
-// 	{
-// 		objects->object = obj_plane(objects, parser, gc, &id);
-// 		parser->plane = parser->plane->next;
-// 	}
-// 	while (parser->cyl != NULL)
-// 	{
-// 		objects->object = obj_cylinder(objects, parser, gc, &id);
-// 		parser->cyl = parser->cyl->next;
-// 	}
-// 	object = objects->object;
-// 	parser->objects = objects;
-// 	objects->count = object->id;
-// 	printf("objects count: %d\n", objects->count);
-// 	printf("object id: %d\n", object->id);
-// 	main_rt->scene->objects = objects;
-// 	return (objects);
-// }
-
-t_objects	*objects_init(t_main_rt *main_rt, t_garbage *gc)
+int	append_camera(t_scene *scene, t_camera camera, char *err, size_t size)
 {
-	t_objects	*objects;
-	t_object	*last_object;
-	t_parser	*parser;
-	int			id;
+	t_camera	*node;
+	t_camera	*tail;
 
-	objects = (t_objects *)malloc(sizeof(t_objects));
-	if (objects == NULL)
-		err_msg(gc, 1, "error allocating world\n", true);
+	node = malloc(sizeof(*node));
+	if (node == NULL)
+		return (set_error(err, size, "memory allocation failed while adding a camera"), 0);
+	*node = camera;
+	node->next = NULL;
+	if (scene->cameras == NULL)
+		scene->cameras = node;
 	else
-		add_to_gc(gc, objects);
-	id = 0;
-	objects->object = NULL;
-	parser = main_rt->parser;
-	while (parser->sphere || parser->plane || parser->cyl)
 	{
-		if (parser->sphere)
-		{
-			if (!objects->object)
-			{
-				objects->object = obj_sphere(objects, parser, gc, &id);
-				last_object = objects->object;
-			}
-			else
-			{
-				objects->object = obj_sphere(objects, parser, gc, &id);
-				last_object = last_object->next;
-			}
-			parser->sphere = parser->sphere->next;
-		}
-		if (parser->plane)
-		{
-			if (!objects->object)
-			{
-				objects->object = obj_plane(objects, parser, gc, &id);
-				last_object = objects->object;
-			}
-			else
-			{
-				objects->object = obj_plane(objects, parser, gc, &id);
-				last_object = last_object->next;
-			}
-			parser->plane = parser->plane->next;
-		}
-		if (parser->cyl)
-		{
-			if (!objects->object)
-			{
-				objects->object = obj_cylinder(objects, parser, gc, &id);
-				last_object = objects->object;
-			}
-			else
-			{
-				objects->object = obj_cylinder(objects, parser, gc, &id);
-				last_object = last_object->next;
-			}
-			parser->cyl = parser->cyl->next;
-		}
+		tail = scene->cameras;
+		while (tail->next != NULL)
+			tail = tail->next;
+		tail->next = node;
 	}
-	objects->count = id;
-	printf("objects count: %d\n", objects->count);
-	main_rt->scene->objects = objects;
-	return (objects);
+	scene->camera_count++;
+	if (scene->active_camera == NULL)
+		scene->active_camera = node;
+	return (1);
 }
 
-t_object	*obj_sphere(t_objects *objects, t_parser *parser, \
-	t_garbage *gc, int *id)
+int	append_light(t_scene *scene, t_light light, char *err, size_t size)
 {
-	t_object	*object;
+	t_light	*node;
+	t_light	*tail;
 
-	object = (t_object *)malloc(sizeof(t_object));
-	if (object == NULL)
-		err_msg(gc, 1, "error allocating world\n", true);
+	node = malloc(sizeof(*node));
+	if (node == NULL)
+		return (set_error(err, size, "memory allocation failed while adding a light"), 0);
+	*node = light;
+	node->next = NULL;
+	if (scene->lights == NULL)
+		scene->lights = node;
 	else
-		add_to_gc(gc, object);
-	object->id = *id;
-	printf("id    sphere: %d\n", *id);
-	printf("id%d\n", *id);
-	(*id)++;
-	object->type = SPHERE;
-	objects->object = object;
-	object->sphere = parser->sphere;
-	object->color = parser->sphere->color;
-	add_to_gc(gc, object->sphere);
-	return (object);
+	{
+		tail = scene->lights;
+		while (tail->next != NULL)
+			tail = tail->next;
+		tail->next = node;
+	}
+	scene->light_count++;
+	return (1);
 }
 
-t_object	*obj_plane(t_objects *objects, t_parser *parser, \
-	t_garbage *gc, int *id)
+int	append_object(t_scene *scene, t_object object, char *err, size_t size)
 {
-	t_object	*object;
+	t_object	*node;
+	t_object	*tail;
 
-	object = (t_object *)malloc(sizeof(t_object));
-	if (object == NULL)
-		err_msg(gc, 1, "error allocating world\n", true);
+	node = malloc(sizeof(*node));
+	if (node == NULL)
+		return (set_error(err, size, "memory allocation failed while adding an object"), 0);
+	*node = object;
+	node->next = NULL;
+	if (scene->objects == NULL)
+		scene->objects = node;
 	else
-		add_to_gc(gc, object);
-	object->id = *id;
-	printf("id    plane: %d\n", *id);
-	printf("id%d\n", *id);
-	(*id)++;
-	objects->object = object;
-	object->type = PLANE;
-	object->plane = parser->plane;
-	object->color = parser->plane->color;
-	add_to_gc(gc, object->plane);
-	return (object);
+	{
+		tail = scene->objects;
+		while (tail->next != NULL)
+			tail = tail->next;
+		tail->next = node;
+	}
+	scene->object_count++;
+	return (1);
 }
 
-t_object	*obj_cylinder(t_objects *objects, t_parser *parser, \
-	t_garbage *gc, int *id)
+void	scene_free(t_scene *scene)
 {
-	t_object	*object;
+	t_camera	*camera;
+	t_camera	*next_camera;
+	t_light		*light;
+	t_light		*next_light;
+	t_object	*current;
+	t_object	*next;
 
-	object = (t_object *)malloc(sizeof(t_object));
-	if (object == NULL)
-		err_msg(gc, 1, "error allocating world\n", true);
-	else
-		add_to_gc(gc, object);
-	object->id = *id;
-	printf("id    cylinder: %d\n", *id);
-	printf("id%d\n", *id);
-	(*id)++;
-	object->type = CYLINDER;
-	objects->object = object;
-	object->cylinder = parser->cyl;
-	object->color = parser->cyl->color;
-	add_to_gc(gc, object->cylinder);
-	return (object);
+	camera = scene->cameras;
+	while (camera != NULL)
+	{
+		next_camera = camera->next;
+		free(camera);
+		camera = next_camera;
+	}
+	light = scene->lights;
+	while (light != NULL)
+	{
+		next_light = light->next;
+		free(light);
+		light = next_light;
+	}
+	current = scene->objects;
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current);
+		current = next;
+	}
+	scene->cameras = NULL;
+	scene->lights = NULL;
+	scene->active_camera = NULL;
+	scene->objects = NULL;
+	scene->camera_count = 0;
+	scene->light_count = 0;
+	scene->object_count = 0;
 }
